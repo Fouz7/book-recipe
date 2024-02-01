@@ -1,0 +1,31 @@
+.header{
+    background-color: #F49881;
+    justify-content: space-between;
+    font-family: Mulish, sans-serif;
+    font-weight: bold;
+    color: #fff;
+}
+
+.logo {
+    display: flex;
+    justify-content: space-between;
+    margin: 7px 0 7px 1rem;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+
+}
+
+.nav button {
+    font-family: Mulish, sans-serif;
+    font-weight: bold;
+    color: #fff;
+}
+
+
+
