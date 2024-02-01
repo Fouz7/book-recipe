@@ -9,7 +9,7 @@
 .logo {
     display: flex;
     justify-content: space-between;
-    margin: 7px 0 7px 1rem;
+    margin: 7px 0 7px 3rem;
     align-items: center;
     gap: 10px;
     cursor: pointer;
@@ -18,7 +18,7 @@
 .nav {
     display: flex;
     align-items: center;
-
+    margin-right: 3rem;
 }
 
 .nav button {
@@ -26,6 +26,30 @@
     font-weight: bold;
     color: #fff;
 }
+
+.sidenav-container {
+    height: 100vh;
+  }
+  
+.sidenav {
+    position: fixed;
+}
+
+.sidenav .nav {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.hamburger {
+    display: none;
+  }
+  
+  @media (max-width: 600px) {
+    .hamburger {
+      display: block;
+    }
+  }
 
 
 
