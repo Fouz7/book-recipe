@@ -43,21 +43,21 @@
 Follow these steps to get the project up and running.
 
 **Clone the Repository:**
-   ```sh
+   ```
    git clone https://gitlab.cloudias79.com/internal-apps/multi-tech-case-study/book-recipe/book-recipe-fe-angular.git
    ```
 
 **Restore the Dependencies:**
-    ```sh
+    ```
     npm i
     ```
 
 **Build the Project**
-    ```sh
+    ```
     ng build
     ```
 
 **Run the Application**
-    ```sh
+    ```
     ng serve
     ```
