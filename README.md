@@ -52,12 +52,12 @@ Follow these steps to get the project up and running.
     npm i
     ```
 
-**Build the Project**
+**Build the Project:**
     ```
     ng build
     ```
 
-**Run the Application**
+**Run the Application:**
     ```
     ng serve
     ```
