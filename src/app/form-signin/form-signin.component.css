@@ -1,0 +1,18 @@
+/* CSS Style for h1 */
+h1 {
+    font-family: Mulish, sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 45px;
+    letter-spacing: 0em;
+    text-align: center;
+    padding: 2.5rem 1rem;
+}
+
+body {
+    background-color: #F0F9F9;
+}
+
+img {
+    align-items: center;
+}
