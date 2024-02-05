@@ -16,12 +16,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { QuillConfigModule, QuillModule } from 'ngx-quill';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, AddrecipeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
@@ -33,7 +35,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     NgxDropzoneModule,
     QuillConfigModule.forRoot({
       modules: {
-        syntax: true,
+        syntax: false,
         toolbar: [
           [
             'bold',
