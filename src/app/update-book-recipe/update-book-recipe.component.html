@@ -1,0 +1,48 @@
+<app-header></app-header>
+<div class="container">
+  <h2>Update Recipe</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <!-- Category Dropdown -->
+    <div class="form-group">
+      <label for="categoryId">Category</label>
+      <select formControlName="categoryId" class="form-control" id="categoryId">
+        <option *ngIf="editRecipe" [ngValue]="editRecipe.categories?.categoryId">{{ editRecipe.categories?.categoryName }}</option>
+      </select>
+    </div>
+    <!-- Level Dropdown -->
+    <div class="form-group">
+      <label for="levelId">Level</label>
+      <select formControlName="levelId" class="form-control" id="levelId">
+        <option *ngIf="editRecipe" [ngValue]="editRecipe.levels?.levelId">{{ editRecipe.levels?.levelName }}</option>
+      </select>
+    </div>
+    <!-- Recipe Name Input -->
+    <div class="form-group">
+      <label for="recipeName">Recipe Name</label>
+      <input formControlName="recipeName" id="recipeName" type="text" class="form-control">
+    </div>
+    <!-- Image File Input -->
+    <div class="form-group">
+      <label for="imageFileName">Image Filename</label>
+      <input type="file" (change)="handleFileInput($event)" class="form-control" id="imageFileName">
+    </div>
+    <!-- Time Cook Input -->
+    <div class="form-group">
+      <label for="timeCook">Time Cook</label>
+      <input formControlName="timeCook" id="timeCook" type="number" class="form-control">
+    </div>
+    <!-- Ingredient Textarea -->
+    <div class="form-group">
+      <label for="ingredient">Ingredient</label>
+      <textarea formControlName="ingredient" id="ingredient" class="form-control" rows="4"></textarea>
+    </div>
+    <!-- How to Cook Textarea -->
+    <div class="form-group">
+      <label for="howToCook">How to Cook</label>
+      <textarea formControlName="howToCook" id="howToCook" class="form-control" rows="4"></textarea>
+    </div>
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
