@@ -1,18 +1,79 @@
 /* CSS Style for h1 */
 h1 {
     font-family: Mulish, sans-serif;
-    font-size: 36px;
-    font-weight: 700;
-    line-height: 45px;
+    font-size: 48px;
+    font-weight: 800;
     letter-spacing: 0em;
     text-align: center;
-    padding: 2.5rem 1rem;
+    padding: 0.5rem 1rem;
+    margin-top: 0px;
+    /* Gunakan margin-top untuk memberi jarak atas */
 }
 
 body {
     background-color: #F0F9F9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    /* 100% tinggi viewport */
+    margin: 0;
+    /* Hapus margin default */
+}
+
+.container {
+    text-align: center;
+}
+
+.image-custom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 60px;
 }
 
 img {
-    align-items: center;
+    width: 100px;
+    height: 100px;
+}
+
+.form {
+    width: 600px;
+    height: 414px;
+    padding: 0px 0px 36px 0px;
+    gap: 36px;
+}
+
+.atas {
+    background: #F49881;
+    width: 600px;
+    height: 52px;
+    border-radius: 0;
+}
+
+.login-text {
+    font-family: Mulish, sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: white;
+    margin: 0;
+}
+
+.bawah {
+    background: #FFFFFF;
+    width: 600px;
+    height: 414px;
+    border-radius: 0;
+}
+
+mat-card {
+    text-align: center;
+}
+
+label {
+    
 }

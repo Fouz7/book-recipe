@@ -1,25 +1,37 @@
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:wght@700&display=swap">
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:wght@700&display=swap">
+
+</head>
 
 <body>
-<h1>Buku Resep 79</h1>
 
-<img src="assets/pngwing 1.png">
+  <h1>Buku Resep 79</h1>
 
+  <div class="image-custom">
+    <img src="assets/pngwing 1.svg" alt="Logo">
+  </div>
 
-<mat-card>
-    <mat-card-content>Simple card</mat-card-content>
+  <mat-card class="atas">
+    <p class="login-text">Login</p>
   </mat-card>
-  
-<form method="post">
-    <label for="username">Username *</label><br>
-    <input type="text" id="username" name="username"><br>
-    <label for="password">Kata Sandi *</label><br>
-    <input type="password" id="password" name="password"><br>
-    <input type="submit" value="Login">
-</form>
 
-<p>Belum punya Akun? <a href="Daftar Disini">Daftar Disini</a></p>
-<h2>About</h2>
-<h2>Contact Buku Resep 79 429</h2>
+  <mat-card class="bawah">
+    <form method="post" class="form">
+      <label for="username">Username *</label><br>
+      <input type="text" id="username" name="username"><br>
+      <label for="password">Kata Sandi *</label><br>
+      <input type="password" id="password" name="password"><br>
+      <button type="submit" mat-flat-button>Login</button>
+    </form>
+    <p>Belum punya Akun? <a href="Daftar Disini">Daftar Disini</a></p>
+    <h2>About</h2>
+
+  </mat-card>
+
+
 
 </body>
+
+</html>
