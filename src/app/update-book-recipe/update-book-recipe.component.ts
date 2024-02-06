@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Category } from '../models/category';
-import { EditRecipe } from '../models/edit-recipe';
-import { Level } from '../models/level';
 import { EditRecipeService } from '../services/edit-recipe.service';
 
 @Component({
@@ -14,53 +11,79 @@ import { EditRecipeService } from '../services/edit-recipe.service';
 export class UpdateBookRecipeComponent implements OnInit {
 
   recipeId!: number;
-  editRecipe!: EditRecipe;
-  form!: FormGroup;
+  editRecipeForm!: FormGroup;
+  editRecipe: any;
+  selectedFile: File | undefined;
 
   constructor(
     private editRecipeService: EditRecipeService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
     this.recipeId = this.route.snapshot.params['recipeId'];
-    this.editRecipeService.find(this.recipeId).subscribe((data: EditRecipe) => {
-      this.editRecipe = data;
-      this.initializeForm();
+    this.editRecipeService.find(this.recipeId).subscribe((data: any) => {
+      this.editRecipe = data.data;
+      this.editRecipeForm = this.formBuilder.group({
+        categoryId: [this.editRecipe.categories?.categoryId || ''],
+        categoryName: [this.editRecipe.categories?.categoryName || '', Validators.required],
+        levelId: [this.editRecipe.levels?.levelId || ''],
+        levelName: [this.editRecipe.levels?.levelName || '', Validators.required],
+        recipeName: [this.editRecipe.recipeName || '', Validators.required],
+        imageFileName: [this.editRecipe.imageFilename || '', Validators.required],
+        timeCook: [this.editRecipe.timeCook || '', Validators.required],
+        ingredient: [this.editRecipe.ingridient || '', Validators.required],
+        howToCook: [this.editRecipe.howToCook || '', Validators.required]
+      });
     });
   }
+
 
   initializeForm() {
-    this.form = new FormGroup({
-      categoryId: new FormControl(this.editRecipe.categories?.categoryId || '', [Validators.required]),
-      levelId: new FormControl(this.editRecipe.levels?.levelId || '', [Validators.required]),
-      recipeName: new FormControl(this.editRecipe.recipeName || '', [Validators.required]),
-      imageFileName: new FormControl('', [Validators.required]), // Tentukan cara menangani file gambar
-      timeCook: new FormControl(this.editRecipe.timeCook || '', [Validators.required]),
-      ingredient: new FormControl(this.editRecipe.ingredient || '', [Validators.required]),
-      howToCook: new FormControl(this.editRecipe.howToCook || '', [Validators.required]),
+    this.editRecipeForm.patchValue({
+      categoryId: this.editRecipe.categories?.categoryId || '',
+      categoryName: this.editRecipe.categories?.categoryName || '',
+      levelId: this.editRecipe.levels?.levelId || '',
+      levelName: this.editRecipe.levels?.levelName || '',
+      recipeName: this.editRecipe.recipeName || '',
+      imageFileName: this.editRecipe.imageFilename || '',
+      timeCook: this.editRecipe.timeCook || '',
+      ingredient: this.editRecipe.ingredient || '',
+      howToCook: this.editRecipe.howToCook || '',
     });
   }
 
-  // Handle file input event
-  handleFileInput(event: Event) {
-    const inputElement = event.target as HTMLInputElement;
-    const files = inputElement.files;
-    if (files && files.length > 0) {
-      // Lakukan sesuatu dengan file yang dipilih
-    }
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
   }
 
-  // Handle form submission
   onSubmit() {
-    if (this.form.invalid) {
-      // Jika formulir tidak valid, berhenti di sini
+    if (this.editRecipeForm.invalid || !this.selectedFile) {
       return;
     }
-    // Formulir valid, lanjutkan dengan memperbarui resep
-    this.editRecipeService.updateRecipe(this.recipeId, this.form.value).subscribe((res: any) => {
-      console.log('Post berhasil diperbarui!');
+
+    const formData = new FormData();
+    formData.append('file', this.selectedFile);
+    formData.append('request', JSON.stringify({
+      recipeId: this.recipeId,
+      categories: {
+        categoryId: this.editRecipeForm.value.categoryId,
+        categoryName: this.editRecipeForm.value.categoryName
+      },
+      levels: {
+        levelId: this.editRecipeForm.value.levelId,
+        levelName: this.editRecipeForm.value.levelName
+      },
+      recipeName: this.editRecipeForm.value.recipeName,
+      timeCook: this.editRecipeForm.value.timeCook,
+      ingredient: this.editRecipeForm.value.ingredient,
+      howToCook: this.editRecipeForm.value.howToCook
+    }));
+
+    this.editRecipeService.updateRecipe(formData).subscribe((res: any) => {
+      console.log('Recipe updated successfully!', res);
     });
   }
 }

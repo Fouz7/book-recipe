@@ -1,10 +1,13 @@
-import { Category } from "./category";
-import { Level } from "./level";
-
 export interface EditRecipe {
   recipeId: number;
-  categories: Category;
-  levels: Level;
+  categories: {
+    categoryId: number;
+    categoryName: string;
+  };
+  levels: {
+    levelId: number;
+    levelName: string;
+  };
   recipeName: string;
   imageFilename: string;
   timeCook: number;
