@@ -4,11 +4,20 @@
         <h1>Buku Resep 79</h1>
     </div>
     <div class="nav">
-        <button mat-button routerLink="/daftar-resep-makanan">Daftar Resep Makanan</button>
-        <button mat-button routerLink="/resep-saya">Resep Saya</button>
-        <button mat-button routerLink="/shopping-list">Resep Favorit</button>
+        <button mat-button routerLinkActive="router-link-active" routerLink="/daftar-resep">Daftar Resep Makanan</button>
+        <button mat-button routerLinkActive="router-link-active" routerLink="/resep-saya">Resep Saya</button>
+        <button mat-button routerLinkActive="router-link-active" routerLink="/resep-favorit">Resep Favorit</button>
         <button mat-icon-button aria-label="Profile">
             <mat-icon>account_circle</mat-icon>
         </button>
+    </div>
+    <div class="menu">
+        <button mat-button (click)="sidebarVisible2 = true" >
+            <mat-icon>menu</mat-icon>
+        </button>
+
+        <p-sidebar [(visible)]="sidebarVisible2" [fullScreen]="true">
+            <h3>Right Sidebar</h3>
+        </p-sidebar>
     </div>
 </mat-toolbar>

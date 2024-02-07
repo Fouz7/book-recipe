@@ -1,0 +1,394 @@
+.body {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: #f49881;
+  justify-content: space-between;
+  font-family: Mulish, sans-serif;
+  font-weight: bold;
+  color: #fff;
+
+  .logo {
+    display: flex;
+    justify-content: space-between;
+    margin: 7px 0 7px 3rem;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    margin-right: 3rem;
+  }
+
+  .nav button {
+    font-family: Mulish, sans-serif;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .nav button.router-link-active {
+    color: blue;
+  }
+
+  .menu {
+    display: none;
+  }
+
+  @media (max-width: 600px) {
+    .nav {
+      display: none;
+    }
+    .menu {
+      display: block;
+    }
+
+    .logo {
+      display: flex;
+      justify-content: space-between;
+      margin: 0 0 0 0;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+
+      img {
+        width: 40px;
+      }
+
+      h1 {
+        font-size: 1rem;
+      }
+    }
+
+    p-sidebar {
+      background-color: blue !important;
+    }
+  }
+}
+
+/* mobile view */
+.dekstopFilter {
+  display: none;
+}
+
+h1 {
+  text-align: center;
+  font-weight: bold;
+  font-family: "Mulish";
+}
+
+.transparent-backdrop {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 2em;
+}
+
+.search-container {
+  position: relative;
+  width: 87%;
+  display: block;
+  margin: auto;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 20px 12px 40px;
+  box-sizing: border-box;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  background-color: transparent;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.search-input:focus {
+  border-color: #4caf50;
+}
+
+.search-icon,
+.clear-icon {
+  position: absolute;
+  color: #aaa;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.search-icon {
+  left: 10px;
+}
+
+.clear-icon {
+  right: 10px;
+}
+
+.filter {
+  position: relative;
+  width: 87%;
+  display: flex;
+  align-items: center;
+  margin: 0.4em auto;
+  gap: 0.5em;
+
+  .button {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    align-items: center;
+    background-color: transparent;
+    color: #3f51b5;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    width: 50%;
+    height: 50px;
+  }
+
+  .so {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    width: 50%;
+    height: 50px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1.6em;
+  margin-top: 0;
+}
+
+.tambahResep {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #01bfbf;
+  color: #fff;
+  width: 100%;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+}
+
+.u {
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  margin: 1em 0;
+}
+
+.select {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+mat-card {
+  width: 100%;
+  margin: 1em;
+  text-align: center;
+}
+
+mat-card img {
+  width: 100%;
+  height: 179px;
+}
+
+mat-card-content {
+  margin-top: 1em;
+  text-align: start;
+  color: #01bfbf;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  h3 {
+    font-size: 16px;
+    color: black;
+    margin-bottom: 0;
+  }
+}
+
+.content2 {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em;
+
+  a {
+    text-decoration: none;
+  }
+
+  a:visited {
+    color: #01bfbf;
+  }
+
+  mat-divider {
+    border-color: #01bfbf;
+    border-top-width: 2px;
+  }
+}
+
+mat-card-content .content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bottomNav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+
+button {
+  margin: 2px;
+  color: #4caf50;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.pageSize {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  margin-top: 1em;
+}
+
+.entries {
+  cursor: pointer;
+}
+
+.entries span.active {
+  padding: 0.5em;
+  border-radius: 5px;
+  background-color: #01bfbf;
+  color: white;
+}
+
+.recipeTime,
+.favButton {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+}
+
+/* Tablet view */
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  mat-card {
+    width: calc(25% - 2em);
+  }
+
+  mat-card img {
+    width: 100%;
+    height: 150px;
+  }
+}
+
+/* Desktop view */
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 36px;
+  }
+
+  .mobileFilter {
+    display: none;
+  }
+
+  .dekstopFilter {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1em;
+  }
+
+  .dFilter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2em;
+  }
+
+  .dFilter > :nth-child(1) {
+    flex: 0 0 25%;
+  }
+
+  .dFilter > :nth-child(2) {
+    flex: 0 0 50%;
+  }
+
+  .dFilter > :nth-child(3) {
+    flex: 0 0 25%;
+  }
+
+  .search-container {
+    position: relative;
+    width: 100%;
+    display: block;
+  }
+
+  .filter {
+    display: flex;
+    align-items: center;
+  }
+
+  .filter .button {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    align-items: center;
+    background-color: transparent;
+    color: #b4b4bb;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    width: 200px;
+  }
+
+  button .tambahResep {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #01bfbf;
+    color: #fff;
+  }
+
+  .paginator {
+    margin-top: 25px;
+  }
+
+  .bottomNav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 8%;
+    align-items: center;
+    margin-top: -30px;
+  }
+}

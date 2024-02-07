@@ -1,0 +1,111 @@
+<div class="body">
+    <app-header></app-header>
+  <div class="mobileFilter">
+    <h1>
+     Resep Favorit
+    </h1>
+  
+    <div class="search-container">
+      <form (submit)="filterRecipes($event)">
+        <input class="search-input" type="text" [(ngModel)]="searchText" name="searchText" placeholder="Search recipes...">
+        <i class="material-icons search-icon" (click)="filterRecipes($event)">search</i>
+        <i class="material-icons clear-icon" (click)="clearSearch()">clear</i>
+      </form>
+    </div>
+  
+    <div class="filter">
+      <button mat-button (click)="openFilterDialogMobile()" class="button">
+        Filter
+        <mat-icon>filter_list</mat-icon>
+      </button> 
+      <div class="so">
+        <mat-select [(ngModel)]="selectedSortOption" (selectionChange)="loadBookRecipes()" placeholder="Sort By">
+          <mat-option 
+          *ngFor="let option of sortOptions" [value]="option.value" class="my-option"> 
+            {{option.viewValue}}
+        </mat-option>
+        </mat-select>
+      </div>
+    </div>
+  
+    <div class="button-container">
+      <button class="tambahResep">Tambah Resep</button>
+    </div>
+  </div>
+  
+  <div class="dekstopFilter">
+    <div class="dFilter">
+      
+        <button class="tambahResep">
+          <mat-icon>add</mat-icon>
+          Tambah Resep
+        </button>
+  
+      <div class="search-container">
+        <form (submit)="filterRecipes($event)">
+          <input class="search-input" type="text" [(ngModel)]="searchText" name="searchText" placeholder="Cari Resep">
+          <i class="material-icons search-icon" (click)="filterRecipes($event)">search</i>
+          <i class="material-icons clear-icon" (click)="clearSearch()">clear</i>
+        </form>
+      </div>
+  
+      <div class="filter">
+        <button mat-button (click)="openFilterDialog()" class="button">
+          Filter
+          <mat-icon>filter_list</mat-icon>
+        </button>
+      </div>
+    </div>
+  
+    <h1>
+      Resep Favorit
+    </h1>
+  
+  </div>
+  
+  
+  <section class="container">
+    <mat-card *ngFor="let bookRecipe of filteredRecipes">
+      <img mat-card-image [src]="bookRecipe.imageUrl" alt="Card image">
+      <mat-card-content>
+        <div class="content">
+          <span>{{bookRecipe.categories?.categoryName}}</span>
+          <span>{{bookRecipe.levels?.levelName}}</span>
+        </div>
+        <h3>{{bookRecipe.recipeName}}</h3>
+        <div class="content">
+          <div class="recipeTime">
+            <mat-icon>access_time</mat-icon>
+            <span> {{bookRecipe.time}} Menit </span>
+          </div>
+          <div class="favButton">
+            <mat-icon>{{ starState }}</mat-icon>
+            <span>Favorit</span>
+          </div>
+      </div>
+      </mat-card-content>
+      <div class="content2">
+        <a [routerLink]="['/detail-resep', bookRecipe.recipeId]">Lihat Detail Resep</a>
+      </div>
+    </mat-card>
+  </section>
+  
+  <section class="bottomNav">
+    <div class="pageSize">
+      <span>Entries</span>
+      <div class="entries" *ngFor="let size of pageSizeOptions">
+        <span (click)="changePageSize(size)" [class.active]="size === pageSize">{{size}}</span>
+      </div>
+    </div>
+    <div class="paginator">
+      <ngb-pagination [collectionSize]="totalPages" [(page)]="pageNumber" [maxSize]="5" [rotate]="true" (pageChange)="changePage($event)" size="sm"></ngb-pagination>
+    </div>
+    </section>
+  </div>
+  
+  
+  
+    <!--<ng-container *ngFor="let page of pagesArray; let i = index">
+      <span class="pageButton" *ngIf="(i >= pageNumber - 1 && i < pageNumber + 4) || i === totalPages - 1" mat-button (click)="changePage(i + 1)">{{i + 1}}</span>
+      <span *ngIf="i === pageNumber + 4 && i !== totalPages - 1">...</span>
+    </ng-container>-->

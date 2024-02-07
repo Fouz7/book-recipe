@@ -84,6 +84,10 @@ mat-divider {
     cursor: pointer;
 }
 
+mat-select {
+    background-color: #01BFBF!important;
+}
+
 /* Tablet interface */
 @media (min-width: 601px) and (max-width: 1024px) {
     .title {
@@ -123,7 +127,7 @@ mat-divider {
     .desc {
         display: flex;
         flex-direction: row;
-        width: 463px;
+        width: 550px;
     }
 
     .ingr,

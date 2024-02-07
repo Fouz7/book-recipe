@@ -2,7 +2,7 @@
 <div class="box">
     <section>
         <div class="title">
-            <button mat-icon-button>
+            <button mat-icon-button [routerLink]="['/daftar-resep']">
                 <mat-icon>keyboard_arrow_left</mat-icon>
             </button>
             <span>{{recipeDetail?.data?.recipeName}}</span>
@@ -23,7 +23,7 @@
                 <span  class="descT">Kesulitan</span>
                 <span>{{recipeDetail?.data?.levels?.levelName}}</span>
             </div>
-            <div class="favButton" (click)="toogle()">
+            <div class="favButton" (click)="addFavorite()">
                 <button mat-icon-button >
                     <mat-icon>{{ starState }}</mat-icon>
                 </button>
