@@ -6,10 +6,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class RecipeBookService {
+  private baseUrl = 'https://mt-springboot.cloudias79.com/api';
+
   constructor(private http: HttpClient) { }
 
   getRecipeList(params: { pageNumber?: number, pageSize?: number, time?: number, levelId?: number, categoryId?: number, userId?: number, sortBy?: string }): Observable<any> {
-    const url = 'https://mt-springboot.cloudias79.com/api/book-recipe/book-recipes';
+    const url = `${this.baseUrl}/book-recipe/book-recipes`;
     let query = '';
     for (const key in params) {
       if (params[key as keyof typeof params] !== undefined && params[key as keyof typeof params] !== null) {
@@ -23,12 +25,12 @@ export class RecipeBookService {
   }
 
   getRecipeDetail(recipeId: string): Observable<any> {
-    const url = `https://mt-springboot.cloudias79.com/api/book-recipe/book-recipes/${recipeId}`;
+    const url = `${this.baseUrl}/book-recipe/book-recipes/${recipeId}`;
     return this.http.get(url);
   }
 
   addFavorite(recipeId: string, userId: number): Observable<any> {
-    const url = `https://mt-springboot.cloudias79.com/api/book-recipe/book-recipes/${recipeId}/favorites`;
+    const url = `${this.baseUrl}/book-recipe/book-recipes/${recipeId}/favorites`;
     const body = {
       userId: userId
     };
@@ -36,7 +38,7 @@ export class RecipeBookService {
   }
 
   getFavoriteRecipes(params: { pageNumber?: number, pageSize?: number, time?: number, levelId?: number, categoryId?: number, userId?: number, sortBy?: string }): Observable<any> {
-    const url = 'https://mt-springboot.cloudias79.com/api/book-recipe/my-favorite-recipes';
+    const url = `${this.baseUrl}/book-recipe/my-favorite-recipes`;
     let query = '';
     for (const key in params) {
       if (params[key as keyof typeof params] !== undefined && params[key as keyof typeof params] !== null) {

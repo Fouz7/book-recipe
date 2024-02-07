@@ -16,6 +16,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SidebarModule } from 'primeng/sidebar';
+import { PaginatorModule } from 'primeng/paginator';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -62,7 +63,8 @@ import { AuthInterceptor } from './auth.interceptor';
     NgbPaginationModule,
     ReactiveFormsModule,
     MatDialogModule,
-    SidebarModule
+    SidebarModule,
+    PaginatorModule
   ],
   providers: [
     provideAnimationsAsync(),

@@ -78,7 +78,7 @@
             <mat-icon>access_time</mat-icon>
             <span> {{bookRecipe.time}} Menit </span>
           </div>
-          <div class="favButton">
+          <div class="favButton" (click)="toogle()">
             <mat-icon>{{ starState }}</mat-icon>
             <span>Favorit</span>
           </div>
@@ -102,9 +102,7 @@
     </div>
     </section>
   </div>
-  
-  
-  
+
     <!--<ng-container *ngFor="let page of pagesArray; let i = index">
       <span class="pageButton" *ngIf="(i >= pageNumber - 1 && i < pageNumber + 4) || i === totalPages - 1" mat-button (click)="changePage(i + 1)">{{i + 1}}</span>
       <span *ngIf="i === pageNumber + 4 && i !== totalPages - 1">...</span>

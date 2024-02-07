@@ -50,6 +50,11 @@ export class RecipeListComponent implements OnInit {
     {value: 'timeCook,desc', viewValue: 'Waktu Memasak (Z-A)'}
   ];
 
+  sortTime = [
+    {value: 0, viewValue: 'All'},
+   
+  ];
+
   constructor(
     private recipeBookService: RecipeBookService,
     public dialog: MatDialog

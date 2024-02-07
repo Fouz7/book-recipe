@@ -229,7 +229,7 @@ mat-card-content {
 .content2 {
   display: flex;
   justify-content: center;
-  margin-bottom: 1em;
+  margin: 2em 0;
 
   a {
     text-decoration: none;

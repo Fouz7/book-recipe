@@ -174,6 +174,10 @@ export class ResepFavoritComponent implements OnInit {
   //   });
   // }
 
+  toogle(){
+    this.starState = this.starState === 'star_border' ? 'star' : 'star_border';
+  }
+
   clearSearch() {
     this.searchText = '';
     this.filterRecipes(new Event(''));
