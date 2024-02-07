@@ -1,6 +1,6 @@
 <app-header></app-header>
-<div class="container">
-  <h2>Update Recipe</h2>
+<div class="container mt-4">
+  <h1 class="mt-4">Update Recipe</h1>
 
   <form [formGroup]="editRecipeForm" (ngSubmit)="onSubmit()">
     <!-- Category Dropdown -->
@@ -46,8 +46,8 @@
     <!-- Ingredient Textarea -->
     <div class="form-group">
       <label for="ingredient">Ingredient</label>
-      <textarea formControlName="ingredient" id="ingredient" class="form-control" rows="4"></textarea>
-      <div *ngIf="editRecipeForm.get('ingredient')?.touched && editRecipeForm.get('ingredient')?.invalid" class="alert alert-danger">
+      <textarea formControlName="ingridient" id="ingridient" class="form-control" rows="4"></textarea>
+      <div *ngIf="editRecipeForm.get('ingridient')?.touched && editRecipeForm.get('ingridient')?.invalid" class="alert alert-danger">
         Ingredient is required.
       </div>
     </div>

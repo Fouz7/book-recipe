@@ -9,12 +9,6 @@ export class EditRecipeService {
 
   private apiUrl = 'https://mt-springboot.cloudias79.com/api/book-recipe/book-recipes';
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'multipart/form-data'
-    })
-  }
-
   constructor(private httpClient: HttpClient) { }
 
   find(recipeId: number): Observable<any> {
@@ -23,6 +17,8 @@ export class EditRecipeService {
   }
 
   updateRecipe(formData: FormData): Observable<any> {
-    return this.httpClient.put<any>(this.apiUrl, formData, this.httpOptions);
+    const url = `${this.apiUrl}`;
+    const headers = new HttpHeaders();
+    return this.httpClient.put<any>(url, formData);
   }
 }

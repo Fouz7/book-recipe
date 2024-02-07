@@ -4,6 +4,7 @@ export interface EditRecipe {
     categoryId: number;
     categoryName: string;
   };
+  userId: number;
   levels: {
     levelId: number;
     levelName: string;
@@ -11,6 +12,11 @@ export interface EditRecipe {
   recipeName: string;
   imageFilename: string;
   timeCook: number;
-  ingredient: string;
+  ingridient: string;
   howToCook: string;
+  isDeleted: boolean;
+  createdBy: string;
+  createdTime: Date;
+  modifiedBy: string;
+  modifiedTime: Date;
 }

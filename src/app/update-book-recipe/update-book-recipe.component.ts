@@ -23,7 +23,7 @@ export class UpdateBookRecipeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.recipeId = this.route.snapshot.params['recipeId'];
+    this.recipeId = Number(this.route.snapshot.params['recipeId']);
     this.editRecipeService.find(this.recipeId).subscribe((data: any) => {
       this.editRecipe = data.data;
       this.editRecipeForm = this.formBuilder.group({
@@ -31,11 +31,12 @@ export class UpdateBookRecipeComponent implements OnInit {
         categoryName: [this.editRecipe.categories?.categoryName || '', Validators.required],
         levelId: [this.editRecipe.levels?.levelId || ''],
         levelName: [this.editRecipe.levels?.levelName || '', Validators.required],
+        userId: [this.editRecipe.userId || ''],
         recipeName: [this.editRecipe.recipeName || '', Validators.required],
-        imageFileName: [this.editRecipe.imageFilename || '', Validators.required],
+        imageFileName: [this.editRecipe.imageFilename || ''],
         timeCook: [this.editRecipe.timeCook || '', Validators.required],
-        ingredient: [this.editRecipe.ingridient || '', Validators.required],
-        howToCook: [this.editRecipe.howToCook || '', Validators.required]
+        ingridient: [this.editRecipe.ingridient || '', Validators.required],
+        howToCook: [this.editRecipe.howToCook || '', Validators.required],
       });
     });
   }
@@ -47,10 +48,11 @@ export class UpdateBookRecipeComponent implements OnInit {
       categoryName: this.editRecipe.categories?.categoryName || '',
       levelId: this.editRecipe.levels?.levelId || '',
       levelName: this.editRecipe.levels?.levelName || '',
+      userId: this.editRecipe.userId || '',
       recipeName: this.editRecipe.recipeName || '',
       imageFileName: this.editRecipe.imageFilename || '',
       timeCook: this.editRecipe.timeCook || '',
-      ingredient: this.editRecipe.ingredient || '',
+      ingridient: this.editRecipe.ingridient || '',
       howToCook: this.editRecipe.howToCook || '',
     });
   }
@@ -64,9 +66,7 @@ export class UpdateBookRecipeComponent implements OnInit {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('file', this.selectedFile);
-    formData.append('request', JSON.stringify({
+    const jsonBlob = new Blob([JSON.stringify({
       recipeId: this.recipeId,
       categories: {
         categoryId: this.editRecipeForm.value.categoryId,
@@ -76,14 +76,20 @@ export class UpdateBookRecipeComponent implements OnInit {
         levelId: this.editRecipeForm.value.levelId,
         levelName: this.editRecipeForm.value.levelName
       },
+      userId: 330,
       recipeName: this.editRecipeForm.value.recipeName,
       timeCook: this.editRecipeForm.value.timeCook,
-      ingredient: this.editRecipeForm.value.ingredient,
-      howToCook: this.editRecipeForm.value.howToCook
-    }));
+      ingridient: this.editRecipeForm.value.ingridient,
+      howToCook: this.editRecipeForm.value.howToCook,
+    })], { type: 'application/json' });
+
+    const formData = new FormData();
+    formData.append('file', this.selectedFile);
+    formData.append('request', jsonBlob, 'request.json');
 
     this.editRecipeService.updateRecipe(formData).subscribe((res: any) => {
       console.log('Recipe updated successfully!', res);
+      this.router.navigate(['/book-recipe']);
     });
   }
 }
