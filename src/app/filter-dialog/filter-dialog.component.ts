@@ -7,7 +7,7 @@ export interface DialogData {
   categoryId: string | null;
   category: any[];
   time: string | null;
-  timeCook: any[];
+  sortTime : any[];
 }
 
 @Component({

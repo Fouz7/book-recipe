@@ -1,4 +1,4 @@
-<div class="body">
+  <div class="body">
   <app-header></app-header>
 <div class="mobileFilter">
   <h1>
@@ -6,10 +6,10 @@
   </h1>
 
   <div class="search-container">
-    <form (submit)="filterRecipes($event)">
-      <input class="search-input" type="text" [(ngModel)]="searchText" name="searchText" placeholder="Search recipes...">
-      <i class="material-icons search-icon" (click)="filterRecipes($event)">search</i>
-      <i class="material-icons clear-icon" (click)="clearSearch()">clear</i>
+    <form (submit)="filterRecipes()">
+      <input class="search-input" type="text" [(ngModel)]="searchText" name="searchText" placeholder="cari resep">
+      <i class="material-icons search-icon" (click)="filterRecipes()">search</i>
+      <i class="material-icons clear-icon" *ngIf="searchText" (click)="clearSearch()">clear</i>
     </form>
   </div>
 
@@ -29,25 +29,28 @@
   </div>
 
   <div class="button-container">
-    <button class="tambahResep">Tambah Resep</button>
+    <button class="tambahResep">
+      <mat-icon>add</mat-icon>
+      Tambah Resep
+    </button>
   </div>
 </div>
 
 <div class="dekstopFilter">
   <div class="dFilter">
     
-      <button class="tambahResep">
+      <button class="tambahResep" routerLink="/tambah-resep">
         <mat-icon>add</mat-icon>
         Tambah Resep
       </button>
 
-    <div class="search-container">
-      <form (submit)="filterRecipes($event)">
-        <input class="search-input" type="text" [(ngModel)]="searchText" name="searchText" placeholder="Cari Resep">
-        <i class="material-icons search-icon" (click)="filterRecipes($event)">search</i>
-        <i class="material-icons clear-icon" (click)="clearSearch()">clear</i>
-      </form>
-    </div>
+      <div class="search-container">
+        <form (ngSubmit)="filterRecipes()">
+          <input class="search-input" type="text" [(ngModel)]="searchText" name="searchText" placeholder="Cari Resep">
+          <i class="material-icons search-icon" (click)="filterRecipes()">search</i>
+          <i class="material-icons clear-icon" *ngIf="searchText" (click)="clearSearch()">clear</i>
+        </form>
+      </div>
 
     <div class="filter">
       <button mat-button (click)="openFilterDialog()" class="button">
@@ -78,19 +81,18 @@
           <mat-icon>access_time</mat-icon>
           <span> {{bookRecipe.time}} Menit </span>
         </div>
-        <div class="favButton">
-          <mat-icon>{{ starState }}</mat-icon>
+        <button class="favButton" (click)="addFavorite(bookRecipe.recipeId)">
+          <mat-icon>{{bookRecipe.isFavorite ? 'star' : 'star_border'}}</mat-icon>
           <span>Favorit</span>
-        </div>
+        </button>
     </div>
-    </mat-card-content>
     <div class="content2">
-      <a [routerLink]="['/detail-resep', bookRecipe.recipeId]">Lihat Detail Resep</a>
+      <button [routerLink]="['/detail-resep', bookRecipe.recipeId]">Lihat Detail Resep</button>
     </div>
+    <mat-divider/>
+    </mat-card-content>
   </mat-card>
-</section>
-
-<section class="bottomNav">
+  <section class="bottomNav">
   <div class="pageSize">
     <span>Entries</span>
     <div class="entries" *ngFor="let size of pageSizeOptions">
@@ -101,6 +103,8 @@
     <ngb-pagination [collectionSize]="totalPages" [(page)]="pageNumber" [maxSize]="5" [rotate]="true" (pageChange)="changePage($event)" size="sm"></ngb-pagination>
   </div>
   </section>
+</section>
+
 </div>
 
 

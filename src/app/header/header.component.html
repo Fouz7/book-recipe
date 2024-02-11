@@ -12,12 +12,25 @@
         </button>
     </div>
     <div class="menu">
-        <button mat-button (click)="sidebarVisible2 = true" >
+        <button mat-button (click)="sidebarVisible2 = true" [ngStyle]="{color: 'white'}">
             <mat-icon>menu</mat-icon>
         </button>
 
-        <p-sidebar [(visible)]="sidebarVisible2" [fullScreen]="true">
-            <h3>Right Sidebar</h3>
+        <p-sidebar  [(visible)]="sidebarVisible2" position="right" [style]="{ backgroundColor: '#f49881' }">
+            <div class="mNav">
+                <div class="mNavButton">
+                    <img src="assets/document.png">
+                    <button mat-button routerLinkActive="router-link-active" routerLink="/daftar-resep">Daftar Resep Makanan</button>
+                </div>
+                <div class="mNavButton">
+                    <img src="assets/heart-add.png">
+                    <button mat-button routerLinkActive="router-link-active" routerLink="/resep-saya">Resep Saya</button>
+                </div>
+                <div class="mNavButton">
+                    <img src="assets/star.png">
+                    <button mat-button routerLinkActive="router-link-active" routerLink="/resep-favorit">Resep Favorit</button>
+                </div>    
+            </div>
         </p-sidebar>
     </div>
 </mat-toolbar>

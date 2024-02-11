@@ -22,16 +22,17 @@
         <section>
             <label>Waktu Memasak</label>
             <mat-form-field appearance="outline" style="width: 100%;">
-                <mat-label>Time</mat-label>
                 <mat-select [(value)]="data.time">
-                    <mat-option *ngFor="let time of data.time" [value]="time">{{time}}</mat-option>
+                    <mat-option *ngFor="let time of data.sortTime" [value]="time.value">
+                        {{time.viewValue}}
+                    </mat-option>
                 </mat-select>
             </mat-form-field>
         </section>
         <section>
             <label>Sort By</label>
             <mat-form-field appearance="outline" style="width: 100%;">
-                <mat-select [(value)]="data.selectedSortOption" placeholder="Sort By">
+                <mat-select [(value)]="data.selectedSortOption">
                     <mat-option *ngFor="let option of data.sortOptions" [value]="option.value" class="my-option">
                         {{option.viewValue}}
                     </mat-option>
@@ -39,12 +40,13 @@
             </mat-form-field>
         </section>
     </div>
-</div>
-<div class="filterAction">
-    <button mat-button class="reset-button" (click)="resetFilters()">Bersihkan Filter</button>
-    <div mat-dialog-actions class="button-container">
-        <button mat-button class="cancel-button" (click)="onNoClick()">Cancel</button>
-        <button mat-button class="ok-button" [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+    <div class="filterAction">
+        <button mat-button  class="reset-button" (click)="resetFilters()" matRippleDisabled="true">Bersihkan Filter</button>
+        <div mat-dialog-actions class="button-container">
+            <button mat-button class="cancel-button" (click)="onNoClick()">Batal</button>
+            <button mat-button class="ok-button" [mat-dialog-close]="data" cdkFocusInitial>Terapkan</button>
+        </div>
     </div>
 </div>
+
 

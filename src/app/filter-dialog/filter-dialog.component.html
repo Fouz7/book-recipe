@@ -13,9 +13,8 @@
   </mat-form-field>
   <label>Waktu Memasak</label>
   <mat-form-field appearance="outline" style="width: 100%;">
-    <mat-label>Time</mat-label>
     <mat-select [(value)]="data.time">
-      <mat-option *ngFor="let time of data.time" [value]="time">{{time}}</mat-option>
+      <mat-option *ngFor="let time of data.sortTime" [value]="time.value">{{time.viewValue}}</mat-option>
     </mat-select>
   </mat-form-field>
 </div>

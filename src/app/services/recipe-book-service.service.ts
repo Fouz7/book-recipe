@@ -10,7 +10,7 @@ export class RecipeBookService {
 
   constructor(private http: HttpClient) { }
 
-  getRecipeList(params: { pageNumber?: number, pageSize?: number, time?: number, levelId?: number, categoryId?: number, userId?: number, sortBy?: string }): Observable<any> {
+  getRecipeList(params: { pageNumber?: number, pageSize?: number, recipeName?: string, time?: string, levelId?: number, categoryId?: number, userId?: number, sortBy?: string }): Observable<any> {
     const url = `${this.baseUrl}/book-recipe/book-recipes`;
     let query = '';
     for (const key in params) {
@@ -29,15 +29,17 @@ export class RecipeBookService {
     return this.http.get(url);
   }
 
-  addFavorite(recipeId: string, userId: number): Observable<any> {
+  addFavorite(recipeId: number, userId: number): Observable<any> {
+    console.log('addFavorite in service called with', recipeId, userId);
     const url = `${this.baseUrl}/book-recipe/book-recipes/${recipeId}/favorites`;
+    console.log('url is', url);
     const body = {
       userId: userId
     };
     return this.http.put(url, body);
   }
 
-  getFavoriteRecipes(params: { pageNumber?: number, pageSize?: number, time?: number, levelId?: number, categoryId?: number, userId?: number, sortBy?: string }): Observable<any> {
+  getFavoriteRecipes(params: { pageNumber?: number, pageSize?: number, time?: string, levelId?: number, categoryId?: number, userId?: number, sortBy?: string }): Observable<any> {
     const url = `${this.baseUrl}/book-recipe/my-favorite-recipes`;
     let query = '';
     for (const key in params) {
@@ -50,5 +52,6 @@ export class RecipeBookService {
     }
     return this.http.get(`${url}?${query}`);
   }
+
 
 }

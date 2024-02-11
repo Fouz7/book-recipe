@@ -4,6 +4,7 @@
   font-family: Mulish, sans-serif;
   font-weight: bold;
   color: #fff;
+  padding: 0 8%;
 
   .logo {
     display: flex;
@@ -19,21 +20,22 @@
     align-items: center;
     margin-right: 3rem;
   }
-  
+
   .nav button {
     font-family: Mulish, sans-serif;
     font-weight: bold;
     color: #fff;
+    font-size: 1rem;
   }
-  
+
   .nav button.router-link-active {
-    color: #01BFBF;
+    color: #01bfbf;
   }
-  
+
   .menu {
     display: none;
   }
-  
+
   @media (max-width: 600px) {
     .nav {
       display: none;
@@ -41,7 +43,24 @@
     .menu {
       display: block;
     }
-  
+
+    .mNav {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      gap: 10px;
+    }
+
+    .mNav button {
+      font-family: Mulish, sans-serif;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .mNav button.router-link-active {
+      color: #01bfbf;
+    }
+
     .logo {
       display: flex;
       justify-content: space-between;
@@ -49,21 +68,14 @@
       align-items: center;
       gap: 10px;
       cursor: pointer;
-  
+
       img {
         width: 40px;
       }
-  
+
       h1 {
         font-size: 1rem;
       }
     }
-  
-    p-sidebar {
-      background-color: blue !important;
-    }
   }
-  
-
 }
-
