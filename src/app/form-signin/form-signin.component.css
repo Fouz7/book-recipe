@@ -35,13 +35,6 @@ img {
     height: 100px;
 }
 
-.form {
-    width: 600px;
-    height: 414px;
-    padding: 0px 0px 36px 0px;
-    gap: 36px;
-}
-
 .atas {
     background: #F49881;
     width: 600px;
@@ -77,5 +70,38 @@ mat-card {
 }
 
 .login-button {
-    padding: 0 100px 0 100px;
+    width: 407px;
+    height: Hug 40px;
+    padding: 6px, 18px, 6px, 18px;
+    border-radius: 4px;
+    gap: 18px;
+    margin-top: 10px;
+    background-color: #01BFBF;
+
+}
+
+label {
+    font-family: Mulish;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.018em;
+    text-align: left;
+    color: #787885;
+}
+
+.form-signin {
+    top: 333px;
+    left: 660px;
+    padding: 200px, 200px, 36px, 200px;
+    gap: 36px;
+}
+
+input {
+    width: 400px;
+    height: 40px;
+    padding: 6px, 12px, 6px, 12px;
+    border-radius: 4px;
+    gap: 12px;
+    border-color: #B4B4BB;
 }

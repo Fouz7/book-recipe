@@ -14,18 +14,18 @@ import { HeaderComponent } from './header/header.component';
 import { FormSigninComponent } from './form-signin/form-signin.component';
 
 // Interface AuthResponse
-export interface AuthResponse {
-  data: {
-    id: number;
-    token: string;
-    type: string;
-    username: string;
-    role: string;
-  };
-  message: string;
-  statusCode: number;
-  status: string;
-}
+// export interface AuthResponse {
+//   data: {
+//     id: number;
+//     token: string;
+//     type: string;
+//     username: string;
+//     role: string;
+//   };
+//   message: string;
+//   statusCode: number;
+//   status: string;
+// }
 
 @NgModule({
   declarations: [
