@@ -1,0 +1,52 @@
+<app-header></app-header>
+<div class="box">
+    <section>
+        <div class="title">
+            <button mat-icon-button [routerLink]="['/daftar-resep']">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+            <span>{{recipeDetail?.data?.recipeName}}</span>
+        </div>
+        <div class="pic">
+            <img src="{{recipeDetail?.data?.imageFilename}}" alt="food">
+            <div class="mFavButton" (click)="addFavorite()">
+                <mat-icon>{{ starState }}</mat-icon>
+                <span>Favorit</span>
+            </div>
+        </div>
+        <div class="desc">
+            <div class="descA">
+                <span class="descT">Kategori</span>
+                <span>{{recipeDetail?.data?.categories?.categoryName}}</span>
+            </div>
+            <div class="descA">
+                <span class="descT" >Waktu Masak</span>
+                <span>{{recipeDetail?.data?.timeCook}} Menit</span>
+            </div>
+            <div class="descA">
+                <span  class="descT">Kesulitan</span>
+                <span>{{recipeDetail?.data?.levels?.levelName}}</span>
+            </div>
+            <div class="favButton" (click)="addFavorite()">
+                <button mat-icon-button >
+                    <mat-icon>{{ starState }}</mat-icon>
+                </button>
+                <span>Favorit</span>
+            </div>
+        </div>
+        <div class="ingr">
+            <h2>Bahan - Bahan</h2>
+            <mat-divider></mat-divider>
+            <ul>
+                <li *ngFor="let ingredient of ingredients">
+                    {{ingredient}}
+                </li>
+            </ul>
+        </div>
+        <div class="step">
+            <h2>Cara Memasak</h2>
+            <mat-divider></mat-divider>
+            <span>{{recipeDetail?.data?.howToCook}}</span>
+        </div>
+    </section>
+</div>
