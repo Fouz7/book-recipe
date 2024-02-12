@@ -8,12 +8,10 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { HeaderComponent } from './header/header.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './signup/login.component';
 import { fakeBackendProvider } from './_helpers';
-import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +19,6 @@ import { HomeComponent } from './home/home.component';
     HeaderComponent,
     SignupComponent,
     LoginComponent,
-    HomeComponent
   ],
   imports: [
     BrowserModule,

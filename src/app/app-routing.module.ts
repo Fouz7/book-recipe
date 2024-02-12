@@ -4,11 +4,12 @@ import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './signup';
 
 import { AuthGuard } from './_helpers';
-import { HomeComponent } from './home/home.component';
+// import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
+  //buat nanti di home
+  // { path: '', component: HomeComponent, canActivate: [AuthGuard]},
   { path: 'signup', component: SignupComponent },
-  { path: '', component: HomeComponent, canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent }
 ];
 
