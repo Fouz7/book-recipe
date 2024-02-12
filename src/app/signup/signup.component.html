@@ -1,1 +1,53 @@
-<h1>Sign Up</h1>
+<div class="container col-md-6 offset-md-3 mt-5">
+    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+    <div class="logo" style="text-align: center;">
+        <h2>Buku Resep 79</h2>
+        <img src="assets/pngwing 1.png">
+    </div>
+    <div class="card" style="margin-top: 10px;">
+        <h4 class="card-header">Daftar</h4>
+        <div class="card-body">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                    <label class="form-label">Username *</label>
+                    <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                    <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                        <div *ngIf="f.username.errors.required">Kolom Username tidak boleh kosong</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Nama Lengkap *</label>
+                    <input type="text" formControlName="fullname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.fullname.errors }" />
+                    <div *ngIf="submitted && f.fullname.errors" class="invalid-feedback">
+                        <div *ngIf="f.fullname.errors.required">Kolom nama lengkap tidak boleh kosong</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Kata Sandi *</label>
+                    <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        <div *ngIf="f.password.errors.required">Kolom Kata Sandi tidak boleh kosong</div>
+                        <div *ngIf="f.password.errors.minlength">Kata sandi minimal harus 6 karakter</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Konfirmasi Kata Sandi *</label>
+                    <input type="password" formControlName="retypePassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.retypePassword.errors }" />
+                    <div *ngIf="submitted && f.retypePassword.errors" class="invalid-feedback">
+                        <div *ngIf="f.retypePassword.errors.required">Kolom Konfirmasi Kata Sandi tidak boleh kosong</div>
+                        <div *ngIf="f.retypePassword.errors.minlength">Kata sandi minimal harus 6 karakter</div>
+                    </div>
+                </div>
+                <div>
+                    <button [disabled]="loading" class="btn btn-primary">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                        Daftar
+                    </button>
+                    <div class="link">
+                        <p> <a routerLink="../login" style="color:#F49881">Batal, Kembali ke Halaman Login</a>.</p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
