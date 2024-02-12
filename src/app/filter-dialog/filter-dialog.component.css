@@ -17,19 +17,19 @@ label {
 
 .cancel-button{
     background-color: transparent;
-    border: 1px solid #000;
-    color: #000;
+    border: 1px solid #01bfbf;
+    color: #01bfbf;
 }
 
 .ok-button{
-    background-color: #000;
+    background-color: #01bfbf;
     color: #fff;
 }
 
 .reset-button {
     background-color: transparent;
     border: none;
-    color: #000;
+    color: #ea4335;
     display: block;
     width: 50%;
     text-align: start;

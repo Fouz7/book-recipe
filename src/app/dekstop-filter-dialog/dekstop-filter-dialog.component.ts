@@ -6,10 +6,10 @@ export interface DialogData {
   levels: any[];
   categoryId: string | null;
   category: any[];
-  time: string | null;
-  timeCook: any[];
+  time:  string | null;
   selectedSortOption: string;
   sortOptions: any[];
+  sortTime : any[];
 }
 
 @Component({

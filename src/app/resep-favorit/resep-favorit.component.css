@@ -1,75 +1,3 @@
-.body {
-  display: flex;
-  flex-direction: column;
-}
-
-.header {
-  background-color: #f49881;
-  justify-content: space-between;
-  font-family: Mulish, sans-serif;
-  font-weight: bold;
-  color: #fff;
-
-  .logo {
-    display: flex;
-    justify-content: space-between;
-    margin: 7px 0 7px 3rem;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-  }
-
-  .nav {
-    display: flex;
-    align-items: center;
-    margin-right: 3rem;
-  }
-
-  .nav button {
-    font-family: Mulish, sans-serif;
-    font-weight: bold;
-    color: #fff;
-  }
-
-  .nav button.router-link-active {
-    color: blue;
-  }
-
-  .menu {
-    display: none;
-  }
-
-  @media (max-width: 600px) {
-    .nav {
-      display: none;
-    }
-    .menu {
-      display: block;
-    }
-
-    .logo {
-      display: flex;
-      justify-content: space-between;
-      margin: 0 0 0 0;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-
-      img {
-        width: 40px;
-      }
-
-      h1 {
-        font-size: 1rem;
-      }
-    }
-
-    p-sidebar {
-      background-color: blue !important;
-    }
-  }
-}
-
 /* mobile view */
 .dekstopFilter {
   display: none;
@@ -81,13 +9,12 @@ h1 {
   font-family: "Mulish";
 }
 
-.transparent-backdrop {
+.dialog {
   background-color: rgba(0, 0, 0, 0) !important;
 }
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
   align-items: center;
   padding: 2em;
 }
@@ -174,12 +101,12 @@ h1 {
 .tambahResep {
   display: flex;
   justify-content: center;
+  flex-direction: row;
   align-items: center;
   background-color: #01bfbf;
   color: #fff;
   width: 100%;
   padding: 10px 20px;
-  font-size: 16px;
   border-radius: 4px;
 }
 
@@ -229,7 +156,7 @@ mat-card-content {
 .content2 {
   display: flex;
   justify-content: center;
-  margin: 2em 0;
+  margin-top: 2em;
 
   a {
     text-decoration: none;
@@ -237,11 +164,6 @@ mat-card-content {
 
   a:visited {
     color: #01bfbf;
-  }
-
-  mat-divider {
-    border-color: #01bfbf;
-    border-top-width: 2px;
   }
 }
 
@@ -260,7 +182,7 @@ mat-card-content .content {
 
 button {
   margin: 2px;
-  color: #4caf50;
+  color: #01bfbf;
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -272,7 +194,6 @@ button {
   justify-content: center;
   align-items: center;
   gap: 1em;
-  margin-top: 1em;
 }
 
 .entries {
@@ -293,20 +214,16 @@ button {
   align-items: center;
 }
 
+.mat-divider {
+  border: 1px solid #01bfbf !important;
+  margin: -5% 30% 0 30% !important;
+}
+
 /* Tablet view */
 @media (min-width: 768px) {
   .container {
     flex-direction: row;
     flex-wrap: wrap;
-  }
-
-  mat-card {
-    width: calc(25% - 2em);
-  }
-
-  mat-card img {
-    width: 100%;
-    height: 150px;
   }
 }
 
@@ -324,33 +241,52 @@ button {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     margin-top: 1em;
   }
 
   .dFilter {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     gap: 2em;
+    margin-left: 21%;
   }
 
-  .dFilter > :nth-child(1) {
-    flex: 0 0 25%;
+  mat-card {
+    max-width: calc(25% - 2em);
   }
 
-  .dFilter > :nth-child(2) {
-    flex: 0 0 50%;
+  mat-card img {
+    object-fit: cover;
+    width: 100%;
+    height: 140px;
   }
 
-  .dFilter > :nth-child(3) {
-    flex: 0 0 25%;
+  .bottomNav {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 1%;
+    align-items: center;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 2em;
   }
 
   .search-container {
     position: relative;
-    width: 100%;
+    width: 80%;
     display: block;
+    font-size: 14px;
+  }
+
+  .search-input {
+    height: 40px;
   }
 
   .filter {
@@ -370,25 +306,23 @@ button {
     width: 200px;
   }
 
-  button .tambahResep {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  .tambahResep .button {
     background-color: #01bfbf;
     color: #fff;
   }
 
-  .paginator {
-    margin-top: 25px;
+  .tambahResep {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 400px;
   }
 
-  .bottomNav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 0 8%;
-    align-items: center;
-    margin-top: -30px;
+  .mat-divider {
+    margin: -6% 25% 0 25% !important;
+  }
+
+  .paginator {
+    margin-top: 25px;
   }
 }

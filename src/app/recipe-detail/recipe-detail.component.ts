@@ -11,7 +11,7 @@ export class RecipeDetailComponent {
   starState: string = 'star_border';
   recipeDetail: any;
   ingredients: any;
-  recipeId: string = '';
+  recipeId: number | undefined = undefined;
   userId: number = 290;
 
   constructor(
@@ -20,28 +20,31 @@ export class RecipeDetailComponent {
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id !== null) {
-      this.recipeId = id;
+  const id = this.route.snapshot.paramMap.get('id');
+  if (id !== null) {
+      this.recipeId = Number(id);
       this.recipeBookService.getRecipeDetail(id).subscribe(detail => {
-        this.recipeDetail = detail;
-        this.ingredients = this.recipeDetail?.data?.ingridient.split(', ');
-      });
-    }
-  }
-
-  addFavorite() {
-    this.recipeBookService.addFavorite(this.recipeId, this.userId).subscribe(response => {
-      if (response.status === 'CREATED') {
-        console.log('Favorite added successfully');
-        this.starState = this.starState === 'star_border' ? 'star' : 'star_border';
-      } else {
-        console.log('Failed to add favorite');
-      }
-    }, error => {
-      console.error(error);
-      alert('An error occurred while adding to favorites');
+      this.recipeDetail = detail;
+      this.ingredients = this.recipeDetail?.data?.ingridient.split(', ');
+      this.starState = this.recipeDetail?.data?.isFavorite ? 'star' : 'star_border';
     });
   }
+}
+
+addFavorite() {
+  const recipeId = this.recipeId || 0;
+  this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(response => {
+    if (response.status === 'CREATED') {
+      console.log('Favorite added successfully');
+      this.recipeDetail.data.isFavorite = !this.recipeDetail.data.isFavorite;
+      this.starState = this.recipeDetail.data.isFavorite ? 'star' : 'star_border';
+    } else {
+      console.log('Failed to add favorite');
+    }
+  }, error => {
+    console.error(error);
+    alert('An error occurred while adding to favorites');
+  });
+}
 
 }

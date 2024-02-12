@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { RecipeBookService } from '../services/recipe-book-service.service';
 import { DekstopFilterDialogComponent } from '../dekstop-filter-dialog/dekstop-filter-dialog.component';
-import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-recipe-list',
@@ -20,7 +19,7 @@ export class RecipeListComponent implements OnInit {
   pageNumber = 1;
   userId = 290;
   categoryId : number | undefined = undefined;
-  time : number = 0;
+  time : string = '';
   sortBy : string = 'asc';
   totalItems: number = 1;
   totalPages: number = 1;
@@ -51,7 +50,10 @@ export class RecipeListComponent implements OnInit {
   ];
 
   sortTime = [
-    {value: 0, viewValue: 'All'},
+    {value: '0', viewValue: 'All'},
+    {value: '0-30', viewValue: 'O-30 menit'},
+    {value: '30-60', viewValue: '31-60 menit'},
+    {value: '60', viewValue: '> 60'},
    
   ];
 
@@ -66,15 +68,16 @@ export class RecipeListComponent implements OnInit {
   }
 
   loadBookRecipes(): void {
-    let params: { pageNumber?: number, pageSize?: number, levelId?: number, userId?: number, sortBy?: string, time?: number, categoryId?: number } = {};
+    let params: { pageNumber?: number, pageSize?: number, levelId?: number, userId?: number, sortBy?: string, time?: string, categoryId?: number, recipeName?: string } = {};
   
     if (this.pageNumber) params.pageNumber = this.pageNumber;
     if (this.pageSize) params.pageSize = this.pageSize;
     if (this.selectedLevelId) params.levelId = this.selectedLevelId;
     if (this.userId) params.userId = this.userId;
     if (this.selectedSortOption) params.sortBy = this.selectedSortOption;
-    if (this.time) params.time = this.time;;
+    if (this.time) params.time = this.time;
     if (this.categoryId) params.categoryId = this.categoryId;
+    if (this.searchText) params.recipeName = this.searchText;
   
     this.recipeBookService.getRecipeList(params).subscribe(data => {
       this.bookRecipes = data.data;
@@ -84,34 +87,25 @@ export class RecipeListComponent implements OnInit {
       this.pagesArray = Array.from({length: this.totalPages}, (_, i) => i + 1);
     });
   }
-
-  filterRecipes(event: Event) {
-    event.preventDefault();
-    if (this.searchText) {
-      this.filteredRecipes = this.bookRecipes.filter(recipe =>
-        recipe.recipeName.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        recipe.categories?.categoryName.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        recipe.levels?.levelName.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        recipe.time.toString().includes(this.searchText)
-      );
-    } else {
-      this.filteredRecipes = [...this.bookRecipes];
-    }
+  
+  filterRecipes() {
+    this.loadBookRecipes();
   }
 
   openFilterDialog(): void {
     const dialogRef = this.dialog.open(DekstopFilterDialogComponent, {
-      position: { top: '145px', left: '58%' },
-      width: '420px',
-      backdropClass: 'transparent-backdrop',
+      position: { top: '142px', left: '58%' },
+      width: 'auto',
+      backdropClass: 'dialog',
 
       data: { 
         selectedLevelId: this.selectedLevelId, 
         levels: this.levels,
         categoryId: this.categoryId,
         category: this.category,
-        time: this.time,
         sortOptions: this.sortOptions,
+        time: this.time,
+        sortTime: this.sortTime,
       }
     });
   
@@ -119,8 +113,8 @@ export class RecipeListComponent implements OnInit {
       if (result) {
         this.selectedLevelId = result.selectedLevelId;
         this.categoryId = result.categoryId;
-        this.time = result.time;
         this.selectedSortOption = result.selectedSortOption;
+        this.time = result.time;
         this.loadBookRecipes();
       }
     });
@@ -131,7 +125,8 @@ export class RecipeListComponent implements OnInit {
     const dialogRef = this.dialog.open(FilterDialogComponent, {
       position: { top: '175px', left: '27px' },
       width: '100%',
-      backdropClass: 'transparent-backdrop',
+      backdropClass: 'dialog',
+      
 
       data: { 
         selectedLevelId: this.selectedLevelId, 
@@ -139,6 +134,7 @@ export class RecipeListComponent implements OnInit {
         categoryId: this.categoryId,
         category: this.category,
         time: this.time,
+        sortTime: this.sortTime,
       }
     });
   
@@ -166,23 +162,22 @@ export class RecipeListComponent implements OnInit {
     this.loadBookRecipes();
   }
 
-  // addFavorite() {
-  //   this.recipeBookService.addFavorite(this.recipeId, this.userId).subscribe(response => {
-  //     if (response.status === 'CREATED') {
-  //       console.log('Favorite added successfully');
-  //       this.starState = this.starState === 'star_border' ? 'star' : 'star_border';
-  //     } else {
-  //       console.log('Failed to add favorite');
-  //     }
-  //   }, error => {
-  //     console.error(error);
-  //     alert('An error occurred while adding to favorites');
-  //   });
-  // }
-
+  addFavorite(recipeId: number) {
+    console.log('addFavorite called with', recipeId, this.userId);
+    this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(response => {
+      console.log('addFavorite response', response);
+      const bookRecipe = this.filteredRecipes.find(recipe => recipe.recipeId === recipeId);
+      if (bookRecipe) {
+        bookRecipe.isFavorite = !bookRecipe.isFavorite;
+      }
+    }, error => {
+      console.error('addFavorite error', error);
+    });
+  }
+  
   clearSearch() {
     this.searchText = '';
-    this.filterRecipes(new Event(''));
+    this.loadBookRecipes();
   }
 
   filterByLevel() {
