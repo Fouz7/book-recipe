@@ -1,53 +1,8 @@
-body {
-    background-color: #f0f9f9;
-    min-height: 100vh;
-  }
-  .logo {
-    text-align: center;
-    margin-top: 2%;
-  }
-  
-  h1 {
-    color: white;
-    font-size: medium;
-  }
-  .headerForm {
-    background-color: #f49881;
-    text-align: center;
-  }
-  form {
-    background-color: #fff;
-    width: 50%;
-    margin: 0 auto;
-    margin-top: 20px;
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #f0f9f9;}
+.card{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  .formContainer {
-    padding: 0 20px 0 20px;
-  }
-  label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 10px;
-  }
-  .formContainer a {
-    margin-top: 10px;
-    text-decoration: none;
-    display: block;
-    text-align: center;
-  }
-  input[type="text"],
-  input[type="email"],
-  input[type="password"] {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-bottom: 20px;
-  }
-  
-  button[type="submit"] {
+}
+.card-body .btn.btn-primary {
     background-color: #01bfbf;
     color: #fff;
     border: none;
@@ -55,9 +10,19 @@ body {
     border-radius: 4px;
     cursor: pointer;
     width: 100%;
-  }
-  
-  button[type="submit"]:hover {
+}
+
+.card-body .btn.btn-primary:hover {
     background-color: #45a049;
-  }
-  
+}
+.link {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    margin-top: 10px;
+}
+.card-header {
+    background-color: #f49881;
+    text-align: center;
+    color: white;
+}

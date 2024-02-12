@@ -5,7 +5,11 @@ import { first } from 'rxjs/operators';
 
 import { AccountService } from '@app/_service';
 
-@Component({ templateUrl: 'signup.component.html' })
+@Component({ 
+    selector: 'app-header',
+    templateUrl: 'signup.component.html',
+    styleUrl: './signup.component.css'
+})
 export class SignupComponent implements OnInit {
     form!: FormGroup;
     loading = false;
