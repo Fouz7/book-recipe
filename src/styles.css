@@ -1,7 +1,84 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700&display=swap");
+* {
+  font-family: "Mulish";
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f9f9 !important;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+a: visited .content2 {
+  color: #01bfbf !important;
+}
+
+.pagination {
+  --bs-pagination-padding-x: 0.75rem;
+  --bs-pagination-padding-y: 0.375rem;
+  --bs-pagination-font-size: 1rem;
+  --bs-pagination-color: #01bfbf !important;
+  --bs-pagination-bg: none !important;
+  --bs-pagination-border-width: var(--bs-border-width);
+  --bs-pagination-border-color: none !important;
+  --bs-pagination-border-radius: 50% !important;
+  --bs-pagination-hover-color: #01bfbf !important;
+  --bs-pagination-hover-bg: none !important;
+  --bs-pagination-hover-border-color: none !important;
+  --bs-pagination-focus-color: #01bfbf !important;
+  --bs-pagination-focus-bg: none !important;
+  --bs-pagination-focus-box-shadow: none !important;
+  --bs-pagination-active-color: #fff;
+  --bs-pagination-active-bg: #01bfbf !important;
+  --bs-pagination-active-border-color: none !important;
+  --bs-pagination-active-border-radius: 50% !important;
+  --bs-pagination-disabled-color: #77f5f5 !important;
+  --bs-pagination-disabled-bg: none !important;
+  --bs-pagination-disabled-border-color: none !important;
+  display: flex;
+  gap: 0.2rem;
+  padding-left: 0;
+  list-style: none;
+}
+
+.page-link {
+  align-items: center;
+  padding: 6px 12px !important;
+  border-radius: 30px !important;
+}
+
+@media (min-width: 1024px) {
+
+  /* .mdc-notched-outline {
+    height: 35px !important;
+    width: 75% !important;
+  }
+
+  .mat-mdc-form-field-infix {
+    min-height: 0 !important;
+    padding: 5px 0 0 !important;
+  }
+
+  .mat-mdc-select {
+    width: 70% !important;
+    font-size: 14px !important;
+  }
+
+  .mat-mdc-option {
+    font-size: 14px !important;
+  }
+
+  .dekstopFilter .mat-mdc-button {
+    height: 40px !important;
+    width: 30% !important;
+  }
+
+  .dialog {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  } */
+}

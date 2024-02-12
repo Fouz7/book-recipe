@@ -1,0 +1,65 @@
+label {
+  font-weight: bold;
+}
+
+.filter1 {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+}
+
+.filter2 {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.filterAction {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.filterAction button {
+  font-weight: bold;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.button-container button {
+  flex: 1;
+  box-sizing: border-box;
+  margin: 0 5px;
+}
+
+.cancel-button {
+  background-color: transparent;
+  border: 1px solid #01bfbf;
+  color: #01bfbf;
+}
+
+.ok-button {
+  background-color: #01bfbf;
+  color: #fff;
+}
+
+.reset-button {
+  background-color: transparent;
+  border: none;
+  color: #ea4335;
+  display: block;
+  width: 50%;
+  text-align: start;
+  margin: 0 1.2em;
+}
