@@ -9,6 +9,10 @@
         </div>
         <div class="pic">
             <img src="{{recipeDetail?.data?.imageFilename}}" alt="food">
+            <div class="mFavButton" (click)="addFavorite()">
+                <mat-icon>{{ starState }}</mat-icon>
+                <span>Favorit</span>
+            </div>
         </div>
         <div class="desc">
             <div class="descA">

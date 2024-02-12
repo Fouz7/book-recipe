@@ -182,7 +182,7 @@ mat-card-content .content {
 
 button {
   margin: 2px;
-  color: #4caf50;
+  color: #01bfbf;
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -214,14 +214,17 @@ button {
   align-items: center;
 }
 
+.mat-divider {
+  border: 1px solid #01bfbf !important;
+  margin: -5% 30% 0 30% !important;
+}
+
 /* Tablet view */
 @media (min-width: 768px) {
   .container {
     flex-direction: row;
     flex-wrap: wrap;
   }
-
-  
 }
 
 /* Desktop view */
@@ -313,6 +316,10 @@ button {
     justify-content: space-evenly;
     align-items: center;
     width: 400px;
+  }
+
+  .mat-divider {
+    margin: -6% 25% 0 25% !important;
   }
 
   .paginator {

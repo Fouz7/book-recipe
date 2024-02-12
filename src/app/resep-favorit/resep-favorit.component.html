@@ -1,10 +1,13 @@
+<!-- FILEPATH: /d:/book-recipe-fe-angular/src/app/resep-favorit/resep-favorit.component.html -->
+<!-- This HTML file represents the template for the "Resep Favorit" component. It displays a list of favorite recipes with various filtering and sorting options. The component includes a search bar, filter button, and pagination for easy navigation. Each recipe card includes details such as category, level, cooking time, and the option to mark it as a favorite. Clicking on a recipe card redirects to the detailed recipe page. -->
 <div class="body">
-    <app-header></app-header>
+  <app-header></app-header>
   <div class="mobileFilter">
     <h1>
-     Resep Favorit
+      Resep Favorit
     </h1>
-  
+
+    <!-- Search Bar -->
     <div class="search-container">
       <form (submit)="filterRecipes()">
         <input class="search-input" type="text" [(ngModel)]="searchText" name="searchText" placeholder="cari resep">
@@ -12,22 +15,23 @@
         <i class="material-icons clear-icon" *ngIf="searchText" (click)="clearSearch()">clear</i>
       </form>
     </div>
-  
+
+    <!-- Filter Button and Sort By Dropdown (Mobile) -->
     <div class="filter">
       <button mat-button (click)="openFilterDialogMobile()" class="button">
         Filter
         <mat-icon>filter_list</mat-icon>
-      </button> 
+      </button>
       <div class="so">
         <mat-select [(ngModel)]="selectedSortOption" (selectionChange)="loadBookRecipes()" placeholder="Sort By">
-          <mat-option 
-          *ngFor="let option of sortOptions" [value]="option.value" class="my-option"> 
+          <mat-option *ngFor="let option of sortOptions" [value]="option.value" class="my-option">
             {{option.viewValue}}
-        </mat-option>
+          </mat-option>
         </mat-select>
       </div>
     </div>
-  
+
+    <!-- Add Recipe Button -->
     <div class="button-container">
       <button class="tambahResep">
         <mat-icon>add</mat-icon>
@@ -35,23 +39,27 @@
       </button>
     </div>
   </div>
-  
+
+  <!-- Filter Button and Search Bar (Desktop) -->
   <div class="dekstopFilter">
     <div class="dFilter">
-      
-        <button class="tambahResep">
-          <mat-icon>add</mat-icon>
-          Tambah Resep
-        </button>
-  
-        <div class="search-container">
-          <form (ngSubmit)="filterRecipes()">
-            <input class="search-input" type="text" [(ngModel)]="searchText" name="searchText" placeholder="Cari Resep">
-            <i class="material-icons search-icon" (click)="filterRecipes()">search</i>
-            <i class="material-icons clear-icon" *ngIf="searchText" (click)="clearSearch()">clear</i>
-          </form>
-        </div>
-  
+
+      <!-- Add Recipe Button -->
+      <button class="tambahResep">
+        <mat-icon>add</mat-icon>
+        Tambah Resep
+      </button>
+
+      <!-- Search Bar -->
+      <div class="search-container">
+        <form (ngSubmit)="filterRecipes()">
+          <input class="search-input" type="text" [(ngModel)]="searchText" name="searchText" placeholder="Cari Resep">
+          <i class="material-icons search-icon" (click)="filterRecipes()">search</i>
+          <i class="material-icons clear-icon" *ngIf="searchText" (click)="clearSearch()">clear</i>
+        </form>
+      </div>
+
+      <!-- Filter Button -->
       <div class="filter">
         <button mat-button (click)="openFilterDialog()" class="button">
           Filter
@@ -59,14 +67,15 @@
         </button>
       </div>
     </div>
-  
+
     <h1>
       Resep Favorit
     </h1>
-  
+
   </div>
-  
-  
+
+
+  <!-- Recipe Cards -->
   <section class="container">
     <mat-card *ngFor="let bookRecipe of filteredRecipes">
       <img mat-card-image [src]="bookRecipe.imageUrl" alt="Card image">
@@ -85,12 +94,15 @@
             <mat-icon>{{bookRecipe.isFavorite ? 'star' : 'star_border'}}</mat-icon>
             <span>Favorit</span>
           </button>
-      </div>
+        </div>
+        <div class="content2">
+          <a [routerLink]="['/detail-resep', bookRecipe.recipeId]">Lihat Detail Resep</a>
+        </div>
+        <mat-divider/>
       </mat-card-content>
-      <div class="content2">
-        <a [routerLink]="['/detail-resep', bookRecipe.recipeId]">Lihat Detail Resep</a>
-      </div>
     </mat-card>
+
+    <!-- Pagination -->
     <section class="bottomNav">
       <div class="pageSize">
         <span>Entries</span>
@@ -99,14 +111,9 @@
         </div>
       </div>
       <div class="paginator">
-        <ngb-pagination [collectionSize]="totalPages" [(page)]="pageNumber" [maxSize]="5" [rotate]="true" (pageChange)="changePage($event)" size="sm"></ngb-pagination>
+        <ngb-pagination [collectionSize]="totalPages" [(page)]="pageNumber" [maxSize]="5" [rotate]="true"
+          (pageChange)="changePage($event)" size="sm"></ngb-pagination>
       </div>
     </section>
   </section>
-  </div>
-  
-
-    <!--<ng-container *ngFor="let page of pagesArray; let i = index">
-      <span class="pageButton" *ngIf="(i >= pageNumber - 1 && i < pageNumber + 4) || i === totalPages - 1" mat-button (click)="changePage(i + 1)">{{i + 1}}</span>
-      <span *ngIf="i === pageNumber + 4 && i !== totalPages - 1">...</span>
-    </ng-container>-->
+</div>

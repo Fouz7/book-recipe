@@ -94,7 +94,7 @@ export class RecipeListComponent implements OnInit {
 
   openFilterDialog(): void {
     const dialogRef = this.dialog.open(DekstopFilterDialogComponent, {
-      position: { top: '135px', left: '55%' },
+      position: { top: '142px', left: '58%' },
       width: 'auto',
       backdropClass: 'dialog',
 

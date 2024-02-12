@@ -37,6 +37,10 @@
   }
 
   @media (max-width: 600px) {
+    .header {
+      padding: 0 4%;
+    }
+
     .nav {
       display: none;
     }
