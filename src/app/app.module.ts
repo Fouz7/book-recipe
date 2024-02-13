@@ -12,11 +12,11 @@ import {MatDividerModule} from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSelectModule} from '@angular/material/select';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SidebarModule } from 'primeng/sidebar';
-import { PaginatorModule } from 'primeng/paginator';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -35,6 +35,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DekstopFilterDialogComponent } from './dekstop-filter-dialog/dekstop-filter-dialog.component';
 import { ResepFavoritComponent } from './resep-favorit/resep-favorit.component';
 import { AuthInterceptor } from './auth.interceptor';
+import { FavoriteDialogComponent } from './favorite-dialog/favorite-dialog.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { AuthInterceptor } from './auth.interceptor';
     FilterDialogComponent,
     DekstopFilterDialogComponent,
     ResepFavoritComponent,
+    FavoriteDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,6 +66,7 @@ import { AuthInterceptor } from './auth.interceptor';
     FlexLayoutModule,
     FormsModule,
     MatMenuModule,
+    MatSnackBarModule,
     MatFormFieldModule,
     MatSelectModule,
     NgbModule,
@@ -71,7 +74,6 @@ import { AuthInterceptor } from './auth.interceptor';
     ReactiveFormsModule,
     MatDialogModule,
     SidebarModule,
-    PaginatorModule
   ],
   providers: [
     provideAnimationsAsync(),

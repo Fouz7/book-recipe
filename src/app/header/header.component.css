@@ -4,7 +4,7 @@
   font-family: Mulish, sans-serif;
   font-weight: bold;
   color: #fff;
-  padding: 0 8%;
+  width: 100vw;
 
   .logo {
     display: flex;
@@ -36,6 +36,7 @@
     display: none;
   }
 
+  
   @media (max-width: 600px) {
     .header {
       padding: 0 4%;

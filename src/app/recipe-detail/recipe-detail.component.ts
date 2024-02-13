@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RecipeBookService } from '../services/recipe-book-service.service';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -8,15 +9,19 @@ import { RecipeBookService } from '../services/recipe-book-service.service';
   styleUrl: './recipe-detail.component.css'
 })
 export class RecipeDetailComponent {
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+
   starState: string = 'star_border';
   recipeDetail: any;
   ingredients: any;
   recipeId: number | undefined = undefined;
   userId: number = 290;
-
+  
   constructor(
     private route: ActivatedRoute,
-    private recipeBookService: RecipeBookService
+    private recipeBookService: RecipeBookService,
+    private snackbar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
@@ -32,10 +37,16 @@ export class RecipeDetailComponent {
 }
 
 addFavorite() {
+  let message = this.recipeDetail?.data?.isFavorite ? 'Berhasil menghapus favorit' : 'Berhasil Ditambahkan ke favorit';
   const recipeId = this.recipeId || 0;
   this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(response => {
     if (response.status === 'CREATED') {
-      console.log('Favorite added successfully');
+      this.snackbar.open(message, '', {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+        duration: 2000,
+        panelClass: 'custom-snackbar'
+      });
       this.recipeDetail.data.isFavorite = !this.recipeDetail.data.isFavorite;
       this.starState = this.recipeDetail.data.isFavorite ? 'star' : 'star_border';
     } else {

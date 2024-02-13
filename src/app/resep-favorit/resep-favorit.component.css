@@ -9,6 +9,14 @@ h1 {
   font-family: "Mulish";
 }
 
+a:visited {
+  color: #01bfbf !important;
+}
+
+.mobileFilter {
+  margin-top: 1em;
+}
+
 .dialog {
   background-color: rgba(0, 0, 0, 0) !important;
 }
@@ -32,7 +40,7 @@ h1 {
   box-sizing: border-box;
   border: 2px solid #ddd;
   border-radius: 4px;
-  background-color: transparent;
+  background-color: white;
   font-size: 16px;
   transition: 0.3s;
 }
@@ -72,7 +80,7 @@ h1 {
     flex-direction: row-reverse;
     align-items: center;
     background-color: transparent;
-    color: #3f51b5;
+    color: #b4b4bb;
     border: 1px solid #ddd;
     font-size: 16px;
     width: 50%;
@@ -105,9 +113,14 @@ h1 {
   align-items: center;
   background-color: #01bfbf;
   color: #fff;
-  width: 100%;
+  width: 99%;
   padding: 10px 20px;
   border-radius: 4px;
+}
+
+.button-container button {
+  font-weight: bold;
+  gap: 0.5em;
 }
 
 .u {
@@ -158,11 +171,7 @@ mat-card-content {
   justify-content: center;
   margin-top: 2em;
 
-  a {
-    text-decoration: none;
-  }
-
-  a:visited {
+  button {
     color: #01bfbf;
   }
 }
@@ -182,7 +191,7 @@ mat-card-content .content {
 
 button {
   margin: 2px;
-  color: #01bfbf;
+  color: #4caf50;
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -194,6 +203,7 @@ button {
   justify-content: center;
   align-items: center;
   gap: 1em;
+  color: #787885;
 }
 
 .entries {
@@ -212,9 +222,10 @@ button {
   display: flex;
   gap: 0.5em;
   align-items: center;
+  color: #01bfbf;
 }
 
-.mat-divider {
+mat-divider {
   border: 1px solid #01bfbf !important;
   margin: -5% 30% 0 30% !important;
 }
@@ -242,6 +253,10 @@ button {
     flex-direction: column;
     justify-content: center;
     margin-top: 1em;
+
+    h1 {
+      margin-top: 0.5em;
+    }
   }
 
   .dFilter {
@@ -291,31 +306,38 @@ button {
 
   .filter {
     display: flex;
-    align-items: center;
   }
 
   .filter .button {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row-reverse;
     align-items: center;
-    background-color: transparent;
+    background-color: white;
     color: #b4b4bb;
-    border: 1px solid #ddd;
+    border: 2px solid #ddd;
+    border-radius: 4px;
     font-size: 16px;
-    width: 200px;
-  }
-
-  .tambahResep .button {
-    background-color: #01bfbf;
-    color: #fff;
+    width: 150px;
+    height: 40px;
   }
 
   .tambahResep {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    width: 400px;
+    border: 2px solid #01bfbf;
+    width: 190px;
+    height: 40px;
+  }
+
+  .button-container {
+    padding: 0;
+  }
+
+  .button-container button {
+    font-weight: bold;
+    font-size: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
   }
 
   .mat-divider {

@@ -9,6 +9,11 @@ section {
   gap: 20px;
 }
 
+.mat-snack-bar-container.custom-snackbar {
+  background-color: #01bfbf !important;
+  color: #fff !important;
+}
+
 .title {
   display: flex;
   justify-content: center;
@@ -60,7 +65,7 @@ section {
   justify-content: space-between;
   align-self: center;
   flex-direction: row;
-  width: 310px;
+  width: 90%;
   font-family: "Mulish", sans-serif;
   font-size: 12px;
   color: #01bfbf;
