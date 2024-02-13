@@ -21,12 +21,7 @@ export class FormSigninComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private accountService: AccountService
-  ) {
-    // redirect to home if already logged in
-    if (this.accountService.userValue) {
-      this.router.navigate(['/signup']);
-    }
-  }
+  ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
