@@ -15,6 +15,10 @@ a: visited .content2 {
   color: #01bfbf !important;
 }
 
+.mat-mdc-snack-bar-container {
+  background-color: #01bfbf !important;
+}
+
 .pagination {
   --bs-pagination-padding-x: 0.75rem;
   --bs-pagination-padding-y: 0.375rem;
@@ -50,7 +54,6 @@ a: visited .content2 {
 }
 
 @media (min-width: 1024px) {
-
   /* .mdc-notched-outline {
     height: 35px !important;
     width: 75% !important;

@@ -5,6 +5,7 @@
       Daftar Resep Masakan
     </h1>
 
+    <!-- Search Form -->
     <div class="search-container">
       <form (submit)="filterRecipes()">
         <input class="search-input" type="text" [(ngModel)]="searchText" name="searchText" placeholder="cari resep">
@@ -13,6 +14,7 @@
       </form>
     </div>
 
+    <!-- Filter and Sort Options -->
     <div class="filter">
       <button mat-button (click)="openFilterDialogMobile()" class="button">
         Filter
@@ -28,22 +30,26 @@
       </div>
     </div>
 
+    <!-- Add Recipe Button -->
     <div class="button-container">
-      <button class="tambahResep">
+      <button class="tambahResep" routerLink="/tambah-resep">
         <mat-icon>add</mat-icon>
         Tambah Resep
       </button>
     </div>
   </div>
 
+  <!-- Desktop Filter Options -->
   <div class="dekstopFilter">
     <div class="dFilter">
-      
-        <button class="tambahResep" routerLink="/tambah-resep">
-          <mat-icon>add</mat-icon>
-          Tambah Resep
-        </button>
+        <div class="button-container">
+          <button class="tambahResep" routerLink="/tambah-resep">
+            <mat-icon>add</mat-icon>
+            Tambah Resep
+          </button>
+        </div>
 
+        <!-- Search Form -->
         <div class="search-container">
           <form (ngSubmit)="filterRecipes()">
             <input class="search-input" type="text" [(ngModel)]="searchText" name="searchText" placeholder="Cari Resep">
@@ -52,10 +58,11 @@
           </form>
         </div>
 
+      <!-- Filter Button -->
       <div class="filter">
-        <button mat-button (click)="openFilterDialog()" class="button">
-          Filter
+        <button (click)="openFilterDialog()" class="button">
           <mat-icon>filter_list</mat-icon>
+          Filter
         </button>
       </div>
     </div>
@@ -66,7 +73,7 @@
 
   </div>
 
-
+  <!-- Recipe Cards -->
   <section class="container">
     <mat-card *ngFor="let bookRecipe of filteredRecipes">
       <img mat-card-image [src]="bookRecipe.imageUrl" alt="Card image">
@@ -92,16 +99,18 @@
       <mat-divider/>
       </mat-card-content>
     </mat-card>
+
+    <!-- Pagination -->
     <section class="bottomNav">
-    <div class="pageSize">
-      <span>Entries</span>
-      <div class="entries" *ngFor="let size of pageSizeOptions">
-        <span (click)="changePageSize(size)" [class.active]="size === pageSize">{{size}}</span>
+      <div class="pageSize">
+        <span>Entries</span>
+        <div class="entries" *ngFor="let size of pageSizeOptions">
+          <span (click)="changePageSize(size)" [class.active]="size === pageSize">{{size}}</span>
+        </div>
       </div>
-    </div>
-    <div class="paginator">
-      <ngb-pagination [collectionSize]="totalPages" [(page)]="pageNumber" [maxSize]="5" [rotate]="true" (pageChange)="changePage($event)" size="sm"></ngb-pagination>
-    </div>
+      <div class="paginator">
+        <ngb-pagination [collectionSize]="totalPages" [(page)]="pageNumber" [maxSize]="5" [rotate]="true" (pageChange)="changePage($event)" size="sm"></ngb-pagination>
+      </div>
     </section>
   </section>
 </div>
