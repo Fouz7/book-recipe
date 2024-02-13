@@ -27,6 +27,7 @@ export class RecipeListComponent implements OnInit {
   pagesArray: number[] = [];
   selectedLevelId: number = 0;
   selectedSortOption: string = '';
+  isFiltering = false;
 
   levels = [
     {id: 3, name: 'Easy'},
@@ -93,6 +94,7 @@ export class RecipeListComponent implements OnInit {
   }
 
   openFilterDialog(): void {
+    this.isFiltering = true;
     const dialogRef = this.dialog.open(DekstopFilterDialogComponent, {
       position: { top: '142px', left: '58%' },
       width: 'auto',
@@ -117,6 +119,7 @@ export class RecipeListComponent implements OnInit {
         this.time = result.time;
         this.loadBookRecipes();
       }
+      this.isFiltering = false;
     });
   }
   
@@ -169,6 +172,18 @@ export class RecipeListComponent implements OnInit {
       const bookRecipe = this.filteredRecipes.find(recipe => recipe.recipeId === recipeId);
       if (bookRecipe) {
         bookRecipe.isFavorite = !bookRecipe.isFavorite;
+      }
+    }, error => {
+      console.error('addFavorite error', error);
+    });
+  }
+
+  removeFavorite(recipeId: number) {
+    this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(response => {
+      const bookRecipe = this.filteredRecipes.find(recipe => recipe.recipeId === recipeId);
+      if (bookRecipe) {
+        bookRecipe.isFavorite = !bookRecipe.isFavorite;
+        alert('Resep berhasil dihapus dari favorit');
       }
     }, error => {
       console.error('addFavorite error', error);

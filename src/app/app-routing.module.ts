@@ -14,7 +14,7 @@ const routes: Routes = [
   //buat nanti di home
   // { path: '', component: HomeComponent, canActivate: [AuthGuard]},
   { path: 'signup', component: SignupComponent },
-  { path: 'login', component: LoginComponent },
+  { path: '', component: LoginComponent },
   { path: 'daftar-resep', component: RecipeListComponent},
   { path: 'detail-resep/:id', component: RecipeDetailComponent },
   { path: 'resep-favorit', component: ResepFavoritComponent },

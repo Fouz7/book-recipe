@@ -6,7 +6,7 @@ import { first } from 'rxjs/operators';
 import { AccountService } from '@app/_service';
 
 @Component({ 
-    selector: 'app-header',
+    selector: 'app-signup',
     templateUrl: 'signup.component.html',
     styleUrl: './signup.component.css'
 })

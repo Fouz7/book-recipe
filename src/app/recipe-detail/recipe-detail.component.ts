@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { RecipeBookService } from '../services/recipe-book-service.service';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
@@ -22,6 +23,7 @@ export class RecipeDetailComponent {
     private route: ActivatedRoute,
     private recipeBookService: RecipeBookService,
     private snackbar: MatSnackBar,
+    private location: Location,
   ) {}
 
   ngOnInit(): void {
@@ -34,6 +36,10 @@ export class RecipeDetailComponent {
       this.starState = this.recipeDetail?.data?.isFavorite ? 'star' : 'star_border';
     });
   }
+}
+
+goBack(): void {
+  this.location.back();
 }
 
 addFavorite() {
