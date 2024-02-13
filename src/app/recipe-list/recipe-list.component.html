@@ -60,7 +60,7 @@
 
       <!-- Filter Button -->
       <div class="filter">
-        <button (click)="openFilterDialog()" class="button">
+        <button (click)="openFilterDialog()" class="button filter-button" [class.active]="isFiltering">
           <mat-icon>filter_list</mat-icon>
           Filter
         </button>
@@ -88,7 +88,7 @@
             <mat-icon>access_time</mat-icon>
             <span> {{bookRecipe.time}} Menit </span>
           </div>
-          <button class="favButton" (click)="addFavorite(bookRecipe.recipeId)">
+          <button class="favButton"  (click)="bookRecipe.isFavorite ? removeFavorite(bookRecipe.recipeId) : addFavorite(bookRecipe.recipeId)">
             <mat-icon>{{bookRecipe.isFavorite ? 'star' : 'star_border'}}</mat-icon>
             <span>Favorit</span>
           </button>

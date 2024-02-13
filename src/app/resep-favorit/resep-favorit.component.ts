@@ -28,6 +28,7 @@ export class ResepFavoritComponent implements OnInit {
   pagesArray: number[] = [];
   selectedLevelId: number = 0;
   selectedSortOption: string = '';
+  isFiltering = false;
 
   levels = [
     {id: 3, name: 'Easy'},
@@ -95,6 +96,7 @@ export class ResepFavoritComponent implements OnInit {
   }
 
   openFilterDialog(): void {
+    this.isFiltering = true;
     const dialogRef = this.dialog.open(DekstopFilterDialogComponent, {
       position: { top: '135px', left: '55%' },
       width: 'auto',
@@ -119,6 +121,7 @@ export class ResepFavoritComponent implements OnInit {
         this.selectedSortOption = result.selectedSortOption;
         this.loadBookRecipes();
       }
+      this.isFiltering = false;
     });
   }
   
@@ -170,9 +173,7 @@ export class ResepFavoritComponent implements OnInit {
 
 
   addFavorite(recipeId: number) {
-    console.log('addFavorite called with', recipeId, this.userId);
     this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(response => {
-      console.log('addFavorite response', response);
       const bookRecipe = this.filteredRecipes.find(recipe => recipe.recipeId === recipeId);
       if (bookRecipe) {
         bookRecipe.isFavorite = !bookRecipe.isFavorite;

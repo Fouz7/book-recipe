@@ -10,11 +10,11 @@ import { HeaderComponent } from './header/header.component';
 import { ResepFavoritComponent } from './resep-favorit/resep-favorit.component';
 
 const routes: Routes = [
+  { path: '', component: FormSigninComponent },
   { path: 'head', component: HeaderComponent },
-  { path: 'login', component: FormSigninComponent },
   //buat nanti di home
   // { path: '', component: HomeComponent, canActivate: [AuthGuard]},
-  // { path: 'signup', component: SignupComponent },
+  { path: 'signup', component: SignupComponent },
   { path: 'daftar-resep', component: RecipeListComponent},
   { path: 'detail-resep/:id', component: RecipeDetailComponent },
   { path: 'resep-favorit', component: ResepFavoritComponent },

@@ -87,6 +87,11 @@ a:visited {
     height: 50px;
   }
 
+  .filter-button.active {
+    border: 2px solid #01bfbf;
+    color: #01bfbf;
+  }
+
   .so {
     display: flex;
     align-items: center;
@@ -143,6 +148,7 @@ mat-card {
   width: 100%;
   margin: 1em;
   text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 mat-card img {
