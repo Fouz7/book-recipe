@@ -13,15 +13,10 @@ export class AuthInterceptor implements HttpInterceptor {
       token = user && user.data && user.data.token;
     }
   
-    console.log('User:', user);
-    console.log('Token:', token);
-  
     if (token) {
       const authReq = req.clone({
         headers: req.headers.set('Authorization', `${user.data.type} ${token}`)
       });
-  
-      console.log('Modified request:', authReq);
   
       return next.handle(authReq);
     }

@@ -11,7 +11,7 @@
             <mat-icon>account_circle</mat-icon>
         </button>
         <mat-menu #logo="matMenu">
-            <button mat-menu-item>Sign Out</button>
+            <button mat-menu-item (click)="logout()">Sign Out</button>
         </mat-menu>
     </div>
     <div class="menu">
@@ -35,7 +35,7 @@
                 </div>    
                 <div class="mNavButton">
                     <img src="assets/logout.png">
-                    <button mat-button routerLink="">Logout</button>
+                    <button mat-button (click)="logout()">Logout</button>
                 </div>
             </div>
         </p-sidebar>

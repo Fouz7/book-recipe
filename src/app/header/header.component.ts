@@ -1,4 +1,5 @@
 import { Component} from '@angular/core';
+import { AccountService } from '@app/_service';
 
 @Component({
   selector: 'app-header',
@@ -6,5 +7,15 @@ import { Component} from '@angular/core';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
+  constructor(
+    private accountService: AccountService,
+  ) {}
+
   sidebarVisible2: boolean = false;
+
+  logout() {
+    this.accountService.logout();
+  }
+
+
 }

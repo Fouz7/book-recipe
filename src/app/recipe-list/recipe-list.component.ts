@@ -17,7 +17,7 @@ export class RecipeListComponent implements OnInit {
   pageSizeOptions = [8, 16, 48];
   pageSize = 8;
   pageNumber = 1;
-  userId = 290;
+  userId: number | null = null;
   categoryId : number | undefined = undefined;
   time : string = '';
   sortBy : string = 'asc';
@@ -61,7 +61,15 @@ export class RecipeListComponent implements OnInit {
   constructor(
     private recipeBookService: RecipeBookService,
     public dialog: MatDialog
-    ) {}
+    ) {
+      const userItem = localStorage.getItem('user');
+      let user = null;
+
+      if (userItem) {
+        user = JSON.parse(userItem);
+        this.userId = user && user.data && user.data.id;
+      }
+    }
 
 
   ngOnInit(): void {
@@ -166,9 +174,13 @@ export class RecipeListComponent implements OnInit {
   }
 
   addFavorite(recipeId: number) {
+    if (this.userId === null || this.userId === undefined) {
+      console.error('addFavorite error: userId is', this.userId);
+      return;
+    }
+  
     console.log('addFavorite called with', recipeId, this.userId);
     this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(response => {
-      console.log('addFavorite response', response);
       const bookRecipe = this.filteredRecipes.find(recipe => recipe.recipeId === recipeId);
       if (bookRecipe) {
         bookRecipe.isFavorite = !bookRecipe.isFavorite;
@@ -179,11 +191,17 @@ export class RecipeListComponent implements OnInit {
   }
 
   removeFavorite(recipeId: number) {
+    if (this.userId === null || this.userId === undefined) {
+      console.error('addFavorite error: userId is', this.userId);
+      return;
+    }
+  
+    console.log('addFavorite called with', recipeId, this.userId);
     this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(response => {
       const bookRecipe = this.filteredRecipes.find(recipe => recipe.recipeId === recipeId);
       if (bookRecipe) {
         bookRecipe.isFavorite = !bookRecipe.isFavorite;
-        alert('Resep berhasil dihapus dari favorit');
+        alert('Berhasil menghapus favorit');
       }
     }, error => {
       console.error('addFavorite error', error);

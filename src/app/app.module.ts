@@ -34,7 +34,7 @@ import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DekstopFilterDialogComponent } from './dekstop-filter-dialog/dekstop-filter-dialog.component';
 import { ResepFavoritComponent } from './resep-favorit/resep-favorit.component';
-import { AuthInterceptor } from './auth.interceptor';
+import { AuthInterceptor } from './utils/auth.interceptor';
 import { FormSigninComponent } from './form-signin/form-signin.component';
 import { FavoriteDialogComponent } from './favorite-dialog/favorite-dialog.component';
 
