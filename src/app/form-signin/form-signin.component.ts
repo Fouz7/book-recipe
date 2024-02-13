@@ -58,7 +58,6 @@ export class FormSigninComponent implements OnInit {
     .pipe(first())
     .subscribe({
       next: () => {
-        console.log('Login successful'); // add this line
         this.router.navigateByUrl('/daftar-resep');
       },
       error: error => {

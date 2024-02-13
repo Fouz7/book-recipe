@@ -21,14 +21,6 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationError) {
-        console.log('Navigation error:', event.error);
-      }
-    });
-  }
-
-  logout() {
-    this.accountService.logout();
+    this.router.events.subscribe(event => {});
   }
 }
