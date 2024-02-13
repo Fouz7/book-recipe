@@ -12,12 +12,11 @@ h1 {
 }
 
 .displaybox1 {
-  width: 70%;
+  width: 400px;
   margin-left: 150px;
 }
 
 .displaybox2 {
-  width: 80%;
   margin-right: 100px;
 }
 
@@ -85,4 +84,17 @@ h1 {
 .quillbox2 {
   width: 100%;
   height: 350px;
+}
+
+.label-form {
+  padding-top: 5px;
+}
+
+.title-dropzone {
+  font-size: 12px;
+}
+
+.title2-dropzone {
+  font-size: 12px;
+  margin-top: -15px;
 }

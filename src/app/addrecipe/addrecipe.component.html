@@ -5,7 +5,7 @@
 </div>
 
 <div class="container">
-  <form action="#">
+  <form #recipeForm="ngForm" (ngSubmit)="addRecipe(recipeForm)">
     <div class="container-recipe">
       <div>
         <div class="displaybox1">
@@ -15,43 +15,65 @@
               type="text"
               class="form-control"
               placeholder="Nama Resep Masakan"
+              [(ngModel)]="AddRecipeForm.recipeName"
+              name="recipeName"
             />
           </div>
         </div>
         <div class="displaybox1">
           <label class="form-label">Gambar Makanan *</label>
-          <ngx-dropzone (change)="onSelect($event)">
-            <ngx-dropzone-label
-              >Click to upload or drag and drop PNG, JPG, JPEG (MAX
-              2MB)</ngx-dropzone-label
-            >
-            <ngx-dropzone-preview
+          <div ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+            <ngx-dropzone-label>
+              <div>
+                <p class="title-dropzone">
+                  <strong>Click to upload</strong> or drag and drop
+                </p>
+                <p class="title2-dropzone">PNG, JPG, JPEG (MAX 2 MB)</p>
+              </div>
+            </ngx-dropzone-label>
+            <ngx-dropzone-image-preview
+              ngProjectAs="ngx-dropzone-preview"
               *ngFor="let f of files"
+              [file]="f"
               [removable]="true"
               (removed)="onRemove(f)"
             >
-              <ngx-dropzone-label>
-                {{ f.name }} {{ f.type }}
-              </ngx-dropzone-label>
-            </ngx-dropzone-preview>
-          </ngx-dropzone>
+              <ngx-dropzone-label
+                >{{ f.name }} ({{ f.type }})</ngx-dropzone-label
+              >
+            </ngx-dropzone-image-preview>
+          </div>
         </div>
         <div class="displaybox1">
-          <label class="form-label">Bahan - Bahan *</label>
-          <quill-editor class="quillbox1"></quill-editor>
+          <label class="label-form">Bahan - Bahan *</label>
+          <quill-editor
+            class="quillbox1"
+            [(ngModel)]="AddRecipeForm.ingridient"
+            name="ingridient"
+          ></quill-editor>
         </div>
       </div>
       <div>
         <div class="displaybox2">
           <p>Kategori Masakan *</p>
           <div class="displaybox5">
-            <select class="form-select" aria-label="Default select example">
-              <option *ngFor="let category of this.categoryFood">
+            <select
+              class="form-select"
+              (change)="changeCategory($event)"
+              aria-label="Default select example"
+              [(ngModel)]="AddRecipeForm.categories.categoryId"
+              name="categordId"
+            >
+              <option
+                [value]="category.categoryId"
+                *ngFor="let category of this.categoryFood"
+              >
                 {{ category.categoryName }}
               </option>
             </select>
           </div>
         </div>
+        <!-- hasil {{ selectedCategory }} -->
         <div class="displaybox2">
           <div class="displaybox7">
             <div class="displaybox3">
@@ -61,13 +83,24 @@
                   type="number"
                   class="form-control"
                   placeholder="Waktu Memasak"
+                  [(ngModel)]="AddRecipeForm.timeCook"
+                  name="timeCook"
                 />
               </div>
             </div>
             <div class="displaybox4">
               <p>Tingkat Kesulitan *</p>
-              <select class="form-select" aria-label="Default select example">
-                <option *ngFor="let level of this.levelFood">
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                [(ngModel)]="AddRecipeForm.levels.levelId"
+                name="levelId"
+                (change)="changeLevel($event)"
+              >
+                <option
+                  [value]="level.levelId"
+                  *ngFor="let level of this.levelFood"
+                >
                   {{ level.levelName }}
                 </option>
               </select>
@@ -75,14 +108,19 @@
           </div>
           <div class="displaybox6">
             <label class="form-label">Cara Masak *</label>
-            <quill-editor class="quillbox2"></quill-editor>
+            <quill-editor
+              class="quillbox2"
+              [(ngModel)]="AddRecipeForm.howToCook"
+              name="howToCook"
+            ></quill-editor>
           </div>
+
           <div class="button-details">
             <div>
               <button class="button-cancel">Batal</button>
             </div>
             <div>
-              <button class="button-addSubmit">Submit</button>
+              <button type="submit" class="button-addSubmit">Submit</button>
             </div>
           </div>
         </div>

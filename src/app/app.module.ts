@@ -17,6 +17,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { QuillConfigModule, QuillModule } from 'ngx-quill';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, AddrecipeComponent],
@@ -33,6 +35,9 @@ import { HttpClientModule } from '@angular/common/http';
     MatDividerModule,
     QuillModule.forRoot(),
     NgxDropzoneModule,
+    FormsModule,
+    MatGridListModule,
+    ReactiveFormsModule,
     QuillConfigModule.forRoot({
       modules: {
         syntax: false,
