@@ -1,0 +1,25 @@
+<div mat-dialog-content>
+  <label> Tingkat Kesulitan</label>
+  <mat-form-field appearance="outline" style="width: 100%;">
+    <mat-select [(value)]="data.selectedLevelId">
+      <mat-option *ngFor="let level of data.levels" [value]="level.id">{{level.name}}</mat-option>
+    </mat-select>
+  </mat-form-field >
+  <label> Kategori</label>
+  <mat-form-field appearance="outline" style="width: 100%;">
+    <mat-select [(value)]="data.categoryId">
+      <mat-option *ngFor="let category of data.category" [value]="category.id">{{category.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <label>Waktu Memasak</label>
+  <mat-form-field appearance="outline" style="width: 100%;">
+    <mat-select [(value)]="data.time">
+      <mat-option *ngFor="let time of data.sortTime" [value]="time.value">{{time.viewValue}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<button mat-button  class="reset-button" (click)="resetFilters()">Bersihkan Filter</button>
+<div mat-dialog-actions class="button-container">
+  <button mat-button class="cancel-button" (click)="onNoClick()">Cancel</button>
+  <button mat-button class="ok-button" [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>
