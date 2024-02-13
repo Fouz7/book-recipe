@@ -21,8 +21,8 @@ import { PaginatorModule } from 'primeng/paginator';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { HeaderComponent } from './header/header.component';
-import { FormSigninComponent } from './form-signin/form-signin.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './signup/login.component';
 import { fakeBackendProvider } from './_helpers';
@@ -35,13 +35,15 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DekstopFilterDialogComponent } from './dekstop-filter-dialog/dekstop-filter-dialog.component';
 import { ResepFavoritComponent } from './resep-favorit/resep-favorit.component';
 import { AuthInterceptor } from './auth.interceptor';
+import { FormSigninComponent } from './form-signin/form-signin.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    FormSigninComponent
+    FormSigninComponent,
     SignupComponent,
     LoginComponent,
     RecipeDetailComponent,
@@ -59,10 +61,6 @@ import { AuthInterceptor } from './auth.interceptor';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
     MatSidenavModule,
     MatDividerModule,
     MatCardModule,
@@ -82,7 +80,6 @@ import { AuthInterceptor } from './auth.interceptor';
     provideAnimationsAsync(),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

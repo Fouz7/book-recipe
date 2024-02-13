@@ -1,35 +1,42 @@
-<html lang="en">
-
-<head>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:wght@700&display=swap">
-
-</head>
-
-<body>
-
-  <h1>Buku Resep 79</h1>
-
-  <div class="image-custom">
-    <img src="assets/pngwing 1.svg" alt="Logo">
-  </div>
-
-  <div class="card-login">
-    <mat-card class="atas">
-      <p class="login-text">Login</p>
-    </mat-card>
-
-    <mat-card class="bawah">
-      <form method="post" class="form-signin">
-        <label for="username">Username *</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Kata Sandi *</label><br>
-        <input type="password" id="password" name="password"><br>
-        <button class="login-button" type="submit" mat-flat-button>Login</button>
-      </form>
-      <p>Belum punya Akun? <a href="Daftar Disini">Daftar Disini</a></p>
-      <h2>About</h2>
-    </mat-card>
-  </div>
-</body>
-
-</html>
+<div class="container col-md-6 offset-md-3 mt-5">
+    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+    <div *ngIf="success" class="alert alert-success">{{success}}</div>
+    <div class="logo" style="text-align: center;">
+        <h1>Buku Resep 79</h1>
+        <img src="assets/pngwing 1.svg">
+    </div>
+    <div class="card" style="margin-top: 10px;">
+        <h4 class="card-header">Login</h4>
+        <div class="card-body">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                    <label class="form-label">Username *</label>
+                    <input type="text" formControlName="username" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                    <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                        <div *ngIf="f.username.errors.required">Kolom Username tidak boleh kosong</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Kata Sandi *</label>
+                    <input type="password" formControlName="password" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        <div *ngIf="f.password.errors.required">Kolom Kata Sandi tidak boleh kosong</div>
+                        <div *ngIf="f.password.errors.minlength">Kata sandi minimal harus 6 karakter</div>
+                    </div>
+                </div>
+                <div>
+                    <button [disabled]="loading" class="btn btn-primary">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                        Login
+                    </button>
+                    <div class="text-link">
+                        <p>Belum punya Akun?<a routerLink="/" style="color:#F49881">Daftar Disini</a></p>
+                        <p class="text-link2"><a routerLink="/" style="color:#F49881">About</a> <a routerLink="/" style="color:#F49881">Contact</a></p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

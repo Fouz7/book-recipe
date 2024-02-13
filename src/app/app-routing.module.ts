@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SignupComponent } from './signup/signup.component';
-import { LoginComponent } from './signup';
+import { FormSigninComponent } from './form-signin/form-signin.component';
 import { AuthGuard } from './_helpers';
 // import { HomeComponent } from './home/home.component';
 import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
@@ -11,10 +11,10 @@ import { ResepFavoritComponent } from './resep-favorit/resep-favorit.component';
 
 const routes: Routes = [
   { path: 'head', component: HeaderComponent },
+  { path: 'login', component: FormSigninComponent },
   //buat nanti di home
   // { path: '', component: HomeComponent, canActivate: [AuthGuard]},
-  { path: 'signup', component: SignupComponent },
-  { path: 'login', component: LoginComponent },
+  // { path: 'signup', component: SignupComponent },
   { path: 'daftar-resep', component: RecipeListComponent},
   { path: 'detail-resep/:id', component: RecipeDetailComponent },
   { path: 'resep-favorit', component: ResepFavoritComponent },
