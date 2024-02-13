@@ -1,0 +1,28 @@
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #f0f9f9;}
+.card{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.card-body .btn.btn-primary {
+    background-color: #01bfbf;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.card-body .btn.btn-primary:hover {
+    background-color: #45a049;
+}
+.link {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    margin-top: 10px;
+}
+.card-header {
+    background-color: #f49881;
+    text-align: center;
+    color: white;
+}
