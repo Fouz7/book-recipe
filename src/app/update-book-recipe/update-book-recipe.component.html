@@ -1,65 +1,106 @@
 <app-header></app-header>
-<div class="container mt-4">
-  <h1 class="mt-4">Update Recipe</h1>
+<div class="container">
+  <p>
+    <!-- <div class="mt-4"> -->
+      <h1 class="text-center fw-medium mt-5">Edit Resep Makanan</h1>
+    <!-- </div> -->
 
   <form [formGroup]="editRecipeForm" (ngSubmit)="onSubmit()">
     <!-- Category Dropdown -->
-    <!-- Category Dropdown -->
-    <div class="form-group">
-      <label for="categoryId">Category</label>
-      <select formControlName="categoryId" class="form-control" id="categoryId">
-        <option *ngIf="editRecipe?.categories" [value]="editRecipe.categories.categoryId">{{ editRecipe.categories.categoryName }}</option>
-      </select>
-    </div>
-    <!-- Level Dropdown -->
-    <div class="form-group">
-      <label for="levelId">Level</label>
-      <select formControlName="levelId" class="form-control" id="levelId">
-        <option *ngIf="editRecipe?.levels" [value]="editRecipe.levels.levelId">{{ editRecipe.levels.levelName }}</option>
-      </select>
-    </div>
-    <!-- Recipe Name Input -->
-    <div class="form-group">
-      <label for="recipeName">Recipe Name</label>
-      <input formControlName="recipeName" id="recipeName" type="text" class="form-control">
-      <div *ngIf="editRecipeForm.get('recipeName')?.touched && editRecipeForm.get('recipeName')?.invalid" class="alert alert-danger">
-        Recipe Name is required.
+    <div class="row justify-content-center mt-5">
+      <div class="col-4">
+
+        <!-- Recipe Name Input -->
+        <div class="form-group">
+          <label for="recipeName" class="form-label label-color">Nama Resep Makanan</label>
+          <input formControlName="recipeName" id="recipeName" type="text" class="form-control" [value]="editRecipe.recipeName">
+          <div *ngIf="editRecipeForm.get('recipeName')?.touched && editRecipeForm.get('recipeName')?.invalid" class="alert alert-danger mt-1">
+            Nama resep makanan harus diisi.
+          </div>
+        </div>
+
+        <!-- Image File Input -->
+        <div class="form-group">
+          <label for="imageFilename" class="form-label label-color mt-4">Gambar Makanan <span class="asterisk">*</span></label>
+          <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+            <!-- <ngx-dropzone> -->
+              <ngx-dropzone-label>Click to upload or drag and drop PNG, JPG, JPEG (MAX 2MB)</ngx-dropzone-label>
+              <ngx-dropzone-image-preview
+                *ngFor="let f of files"
+                [file]="f"
+                [removable]="true"
+                (removed)="onRemove(f)"
+              >
+                <!-- <ngx-dropzone-label>
+                  {{ f.name }} ({{ f.type }})
+                </ngx-dropzone-label> -->
+              </ngx-dropzone-image-preview>
+            <!-- </ngx-dropzone> -->
+            <div *ngIf="editRecipeForm.get('imageFilename')?.touched && editRecipeForm.get('imageFilename')?.invalid" class="alert alert-danger">
+              Image Filename is required.
+            </div>
+          </div>
+        </div>
+
+        <!-- Ingredient Textarea -->
+        <div class="displaybox-1">
+          <label for="ingredient" class="form-label label-color mt-4">Bahan-bahan <span class="asterisk">*</span></label>
+          <!-- <textarea formControlName="ingridient" id="ingridient" class="form-control" rows="4"></textarea> -->
+          <quill-editor class="quillbox1 bg-white" formControlName="ingridient" id="ingridient"></quill-editor>
+          <div *ngIf="editRecipeForm.get('ingridient')?.touched && editRecipeForm.get('ingridient')?.invalid" class="alert alert-danger">
+            Ingredient is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="col-1">
+      </div>
+
+      <div class="col-4">
+        <!-- Category -->
+        <div class="form-group">
+          <label class="form-label label-color">Category <span class="asterisk">*</span></label>
+          <select formControlName="categoryId" class="form-select dropdownn-toggle" id="categoryId">
+            <option value="" disabled>Pilih Kategori</option>
+            <option *ngFor="let category of this.categoryFood" [value]="category.categoryId">{{ category.categoryName }}</option>
+          </select>
+        </div>
+        <div class="row mt-4">
+          <div class="col">
+            <!-- Time Cook Input -->
+            <div class="form-group">
+              <label for="timeCook" class="form-label label-color">Time Cook <span class="asterisk">*</span></label>
+              <input formControlName="timeCook" id="timeCook" type="number" class="form-control">
+              <div *ngIf="editRecipeForm.get('timeCook')?.touched && editRecipeForm.get('timeCook')?.invalid" class="alert alert-danger">
+                Time Cook is required.
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <!-- Level Dropdown -->
+            <div class="form-group">
+              <label for="levelId" class="form-label label-color">Level <span class="asterisk">*</span></label>
+              <select formControlName="levelId" class="form-select" id="levelId">
+                <option *ngFor="let level of this.levelFood" [value]="level.levelId">{{ level.levelName }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- How to Cook Textarea -->
+        <div class="form-group">
+          <label for="howToCook" class="form-label label-color mt-4">How to Cook <span class="asterisk">*</span></label>
+          <quill-editor class="quillbox1 bg-white" formControlName="howToCook" id="howToCook" ></quill-editor>
+          <div *ngIf="editRecipeForm.get('howToCook')?.touched && editRecipeForm.get('howToCook')?.invalid" class="alert alert-danger">
+            How to Cook is required.
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="button-addSubmit float-end mt-4">Submit</button>
+        <!-- Submit Button -->
+        <button type="button" routerLink="/resep-saya" class="button-cancel float-end mt-4">Cancel</button>
       </div>
     </div>
-    <!-- Image File Input -->
-    <!-- Image File Input -->
-    <div class="form-group">
-      <label for="imageFileName">Image Filename</label>
-      <input type="file" (change)="onFileSelected($event)" accept="image/*" class="form-control-file" name="image">
-      <div *ngIf="editRecipeForm.get('imageFileName')?.touched && editRecipeForm.get('imageFileName')?.invalid" class="alert alert-danger">
-        Image Filename is required.
-      </div>
-    </div>
-    <!-- Time Cook Input -->
-    <div class="form-group">
-      <label for="timeCook">Time Cook</label>
-      <input formControlName="timeCook" id="timeCook" type="number" class="form-control">
-      <div *ngIf="editRecipeForm.get('timeCook')?.touched && editRecipeForm.get('timeCook')?.invalid" class="alert alert-danger">
-        Time Cook is required.
-      </div>
-    </div>
-    <!-- Ingredient Textarea -->
-    <div class="form-group">
-      <label for="ingredient">Ingredient</label>
-      <textarea formControlName="ingridient" id="ingridient" class="form-control" rows="4"></textarea>
-      <div *ngIf="editRecipeForm.get('ingridient')?.touched && editRecipeForm.get('ingridient')?.invalid" class="alert alert-danger">
-        Ingredient is required.
-      </div>
-    </div>
-    <!-- How to Cook Textarea -->
-    <div class="form-group">
-      <label for="howToCook">How to Cook</label>
-      <textarea formControlName="howToCook" id="howToCook" class="form-control" rows="4"></textarea>
-      <div *ngIf="editRecipeForm.get('howToCook')?.touched && editRecipeForm.get('howToCook')?.invalid" class="alert alert-danger">
-        How to Cook is required.
-      </div>
-    </div>
-    <!-- Submit Button -->
-    <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>

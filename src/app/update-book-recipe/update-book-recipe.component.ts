@@ -1,18 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Category } from '../models/category';
+import { Level } from '../models/level';
 import { EditRecipeService } from '../services/edit-recipe.service';
 
 @Component({
   selector: 'app-update-book-recipe',
   templateUrl: './update-book-recipe.component.html',
-  styleUrls: ['./update-book-recipe.component.css']
+  styleUrls: ['./update-book-recipe.component.css'],
 })
 export class UpdateBookRecipeComponent implements OnInit {
 
   recipeId!: number;
   editRecipeForm!: FormGroup;
   editRecipe: any;
+  categoryFood!: Category[];
+  levelFood!: Level[];
+  files: File[] = [];
   selectedFile: File | undefined;
 
   constructor(
@@ -32,37 +37,52 @@ export class UpdateBookRecipeComponent implements OnInit {
         levelId: [this.editRecipe.levels?.levelId || ''],
         levelName: [this.editRecipe.levels?.levelName || '', Validators.required],
         userId: [this.editRecipe.userId || ''],
-        recipeName: [this.editRecipe.recipeName || '', Validators.required],
-        imageFileName: [this.editRecipe.imageFilename || ''],
+        recipeName: [this.editRecipe.recipeName || '', [Validators.required]],
+        imageFilename: [this.editRecipe.imageFilename || ''],
         timeCook: [this.editRecipe.timeCook || '', Validators.required],
         ingridient: [this.editRecipe.ingridient || '', Validators.required],
         howToCook: [this.editRecipe.howToCook || '', Validators.required],
       });
+
+      if (this.editRecipe.imageFilename) {
+        const currentFile = new File([this.editRecipe.imageFilename], this.editRecipe.imageFilename);
+        this.files.push(currentFile);
+      }
+    });
+    this.getCategoryFoodList();
+    this.getLevelFoodList();
+  }
+
+  onSelect(event: any) {
+    console.log(event);
+    this.files.push(...event.addedFiles);
+  }
+
+  onRemove(event: any) {
+    console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
+  }
+
+  getCategoryFoodList() {
+    this.editRecipeService.getCategories().subscribe((res: any) => {
+      this.categoryFood = res.data;
     });
   }
 
-
-  initializeForm() {
-    this.editRecipeForm.patchValue({
-      categoryId: this.editRecipe.categories?.categoryId || '',
-      categoryName: this.editRecipe.categories?.categoryName || '',
-      levelId: this.editRecipe.levels?.levelId || '',
-      levelName: this.editRecipe.levels?.levelName || '',
-      userId: this.editRecipe.userId || '',
-      recipeName: this.editRecipe.recipeName || '',
-      imageFileName: this.editRecipe.imageFilename || '',
-      timeCook: this.editRecipe.timeCook || '',
-      ingridient: this.editRecipe.ingridient || '',
-      howToCook: this.editRecipe.howToCook || '',
+  getLevelFoodList() {
+    this.editRecipeService.getLevels().subscribe((res: any) => {
+      this.levelFood = res.data;
     });
   }
 
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
-  }
+  editorConfig = {
+    base_url: '/tinymce',
+    suffix: '.min',
+    plugins: 'lists link image table wordcount'
+  };
 
   onSubmit() {
-    if (this.editRecipeForm.invalid || !this.selectedFile) {
+    if (this.editRecipeForm.invalid || !this.files.length) {
       return;
     }
 
@@ -84,12 +104,11 @@ export class UpdateBookRecipeComponent implements OnInit {
     })], { type: 'application/json' });
 
     const formData = new FormData();
-    formData.append('file', this.selectedFile);
     formData.append('request', jsonBlob, 'request.json');
 
     this.editRecipeService.updateRecipe(formData).subscribe((res: any) => {
       console.log('Recipe updated successfully!', res);
-      this.router.navigate(['/book-recipe']);
+      this.router.navigate(['/resep-saya']);
     });
   }
 }

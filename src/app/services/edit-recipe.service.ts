@@ -21,4 +21,16 @@ export class EditRecipeService {
     const headers = new HttpHeaders();
     return this.httpClient.put<any>(url, formData);
   }
+
+  getCategories(){
+    return this.httpClient.get(
+      `https://mt-springboot.cloudias79.com/api/book-recipe-masters/category-option-lists`
+    );
+  }
+
+  getLevels(){
+    return this.httpClient.get(
+      `https://mt-springboot.cloudias79.com/api/book-recipe-masters/level-option-lists`
+    );
+  } 
 }

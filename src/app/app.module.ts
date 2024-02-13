@@ -7,12 +7,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { UpdateBookRecipeComponent } from './update-book-recipe/update-book-recipe.component';
+import { QuillConfigModule, QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [
@@ -29,10 +31,21 @@ import { UpdateBookRecipeComponent } from './update-book-recipe/update-book-reci
     MatButtonModule,
     MatSidenavModule,
     MatDividerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    QuillModule.forRoot(),
+    NgxDropzoneModule,
+    QuillConfigModule.forRoot({
+      modules: {
+        syntax: false,
+        toolbar: [
+          ['bold', 'italic', 'underline', 'link', 'blockquote', 'code-block', { list: 'bullet' }, ],
+        ],
+      },
+      theme: 'snow'
+    })
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
   ],
   bootstrap: [AppComponent]
 })
