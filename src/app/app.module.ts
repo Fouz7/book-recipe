@@ -35,13 +35,19 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DekstopFilterDialogComponent } from './dekstop-filter-dialog/dekstop-filter-dialog.component';
 import { ResepFavoritComponent } from './resep-favorit/resep-favorit.component';
 import { AuthInterceptor } from './auth.interceptor';
+<<<<<<< HEAD
 import { FavoriteDialogComponent } from './favorite-dialog/favorite-dialog.component';
+=======
+import { FormSigninComponent } from './form-signin/form-signin.component';
+
+>>>>>>> iqbal-dev
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    FormSigninComponent,
     SignupComponent,
     LoginComponent,
     RecipeDetailComponent,
