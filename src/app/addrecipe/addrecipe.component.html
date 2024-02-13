@@ -5,7 +5,7 @@
 </div>
 
 <div class="container">
-  <form #recipeForm="ngForm" (ngSubmit)="addRecipe(recipeForm)">
+  <form [formGroup]="addRecipeForm" (ngSubmit)="addRecipe()">
     <div class="container-recipe">
       <div>
         <div class="displaybox1">
@@ -15,9 +15,18 @@
               type="text"
               class="form-control"
               placeholder="Nama Resep Masakan"
-              [(ngModel)]="AddRecipeForm.recipeName"
+              formControlName="recipeName"
               name="recipeName"
             />
+            <div
+              *ngIf="
+                addRecipeForm.get('recipeName')?.invalid &&
+                addRecipeForm.get('recipeName')?.touched
+              "
+              class="text-danger"
+            >
+              Nama Resep Masakan harus diisi.
+            </div>
           </div>
         </div>
         <div class="displaybox1">
@@ -48,20 +57,29 @@
           <label class="label-form">Bahan - Bahan *</label>
           <quill-editor
             class="quillbox1"
-            [(ngModel)]="AddRecipeForm.ingridient"
+            formControlName="ingridient"
             name="ingridient"
           ></quill-editor>
+          <div
+            *ngIf="
+              addRecipeForm.get('ingridient')?.invalid &&
+              addRecipeForm.get('ingridient')?.touched
+            "
+            class="text-danger"
+          >
+            Bahan Bahan harus diisi.
+          </div>
         </div>
       </div>
       <div>
         <div class="displaybox2">
           <p>Kategori Masakan *</p>
-          <div class="displaybox5">
+          <div class="displaybox5" formGroupName="categories">
             <select
               class="form-select"
               (change)="changeCategory($event)"
               aria-label="Default select example"
-              [(ngModel)]="AddRecipeForm.categories.categoryId"
+              formControlName="categoryId"
               name="categordId"
             >
               <option
@@ -83,18 +101,27 @@
                   type="number"
                   class="form-control"
                   placeholder="Waktu Memasak"
-                  [(ngModel)]="AddRecipeForm.timeCook"
+                  formControlName="timeCook"
                   name="timeCook"
                 />
+                <div
+                  *ngIf="
+                    addRecipeForm.get('timeCook')?.invalid &&
+                    addRecipeForm.get('timeCook')?.touched
+                  "
+                  class="text-danger"
+                >
+                  Waktu Memasak harus diisi.
+                </div>
               </div>
             </div>
-            <div class="displaybox4">
+            <div class="displaybox4" formGroupName="levels">
               <p>Tingkat Kesulitan *</p>
               <select
                 class="form-select"
                 aria-label="Default select example"
-                [(ngModel)]="AddRecipeForm.levels.levelId"
                 name="levelId"
+                formControlName="levelId"
                 (change)="changeLevel($event)"
               >
                 <option
@@ -110,9 +137,18 @@
             <label class="form-label">Cara Masak *</label>
             <quill-editor
               class="quillbox2"
-              [(ngModel)]="AddRecipeForm.howToCook"
+              formControlName="howToCook"
               name="howToCook"
             ></quill-editor>
+            <div
+              *ngIf="
+                addRecipeForm.get('howToCook')?.invalid &&
+                addRecipeForm.get('howToCook')?.touched
+              "
+              class="text-danger"
+            >
+              Cara Masak harus diisi.
+            </div>
           </div>
 
           <div class="button-details">

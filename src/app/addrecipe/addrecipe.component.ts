@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 import { AddrecipeService } from '../services/addrecipe.service';
-import { FormArray, FormControl, FormGroup, NgForm } from '@angular/forms';
+import {
+  FormArray,
+  FormControl,
+  FormGroup,
+  NgForm,
+  Validators,
+} from '@angular/forms';
 import { FileHandle } from '../model/file-handle.model';
 import { AddRecipe } from '../model/addrecipe.model';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -28,19 +34,39 @@ export class AddrecipeComponent {
   onSelect(event: any) {
     console.log(event);
     this.files.push(...event.addedFiles);
-    // this.AddRecipeForm.imageUrl.push(...event.addedFiles);
     const selectedFiles: File[] = event.addedFiles;
+    const imageUrls = this.addRecipeForm.get('imageUrl') as FormControl;
+
+    const currentImages = imageUrls.value || []; // Get the current value of imageUrl
+
     for (const file of selectedFiles) {
       const fileHandle: FileHandle = {
         file: file,
       };
-      this.AddRecipeForm.imageUrl.push(fileHandle);
+      currentImages.push(fileHandle); // Push the new file handle to the array
     }
+
+    imageUrls.setValue(currentImages);
   }
 
   onRemove(event: any) {
     console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
+
+    // Menghapus file dari nilai imageUrl di dalam formulir
+    const imageUrls = this.addRecipeForm.get('imageUrl') as FormControl;
+    const currentImages = imageUrls.value || [];
+
+    // Mencari file yang akan dihapus dari imageUrl
+    const index = currentImages.findIndex(
+      (fileHandle: FileHandle) => fileHandle.file === event
+    );
+
+    // Jika file ditemukan, hapus dari imageUrl
+    if (index !== -1) {
+      currentImages.splice(index, 1);
+      imageUrls.setValue(currentImages);
+    }
   }
 
   getCategoryFoodList() {
@@ -55,24 +81,25 @@ export class AddrecipeComponent {
     });
   }
 
-  AddRecipeForm: AddRecipe = {
-    recipeName: '',
-    categories: {
-      categoryId: '',
-      categoryName: '',
-    },
-    levels: {
-      levelId: '',
-      levelName: '',
-    },
-    userId: '372',
-    timeCook: '',
-    ingridient: '',
-    howToCook: '',
-    imageUrl: [],
-  };
+  addRecipeForm: FormGroup = new FormGroup({
+    recipeName: new FormControl('', Validators.required),
+    categories: new FormGroup({
+      categoryId: new FormControl(''),
+      categoryName: new FormControl(''),
+    }),
+    levels: new FormGroup({
+      levelId: new FormControl(''),
+      levelName: new FormControl(''),
+    }),
+    userId: new FormControl('372'),
+    timeCook: new FormControl('', Validators.required),
+    ingridient: new FormControl('', Validators.required),
+    howToCook: new FormControl('', Validators.required),
+    imageUrl: new FormControl([]),
+  });
 
   changeCategory(e: any) {
+    console.log(e.target.value);
     const categoryId = e.target.value;
     let categoryName = '';
 
@@ -99,10 +126,10 @@ export class AddrecipeComponent {
         categoryName = '';
     }
 
-    this.AddRecipeForm.categories = {
+    this.addRecipeForm.get('categories')?.setValue({
       categoryId: categoryId,
       categoryName: categoryName,
-    };
+    });
   }
 
   changeLevel(e: any) {
@@ -129,33 +156,20 @@ export class AddrecipeComponent {
         levelName = '';
     }
 
-    this.AddRecipeForm.levels = {
+    this.addRecipeForm.get('levels')?.setValue({
       levelId: levelId,
       levelName: levelName,
-    };
+    });
   }
 
-  onFileSelected(event: any) {
-    console.log(event.target.files[0]);
-    if (event.target.files) {
-      const file = event.target.files[0];
+  addRecipe() {
+    console.log(this.addRecipeForm);
 
-      const fileHandle: FileHandle = {
-        file: file,
-      };
+    const formRecipes = this.prepareFormData(this.addRecipeForm.value);
 
-      this.AddRecipeForm.imageUrl.push(fileHandle);
-    }
-  }
-
-  addRecipe(recipeForm: NgForm) {
-    console.log(this.AddRecipeForm);
-
-    const formRecipes = this.prepareFormData(this.AddRecipeForm);
-
-    this.addrecipeService.add2(formRecipes).subscribe(
+    this.addrecipeService.add(formRecipes).subscribe(
       (res: any) => {
-        recipeForm.reset();
+        this.addRecipeForm.reset();
       },
       (error: HttpErrorResponse) => {
         console.log(error);
@@ -163,19 +177,21 @@ export class AddrecipeComponent {
     );
   }
 
-  prepareFormData(AddRecipeForm: AddRecipe): FormData {
+  prepareFormData(addRecipeForm2Value: any): FormData {
     const formData = new FormData();
 
     formData.append(
       'request',
-      new Blob([JSON.stringify(AddRecipeForm)], { type: 'application/json' })
+      new Blob([JSON.stringify(addRecipeForm2Value)], {
+        type: 'application/json',
+      })
     );
 
-    for (var i = 0; i < AddRecipeForm.imageUrl.length; i++) {
+    for (let i = 0; i < addRecipeForm2Value.imageUrl.length; i++) {
       formData.append(
         'file',
-        AddRecipeForm.imageUrl[i].file,
-        AddRecipeForm.imageUrl[i].file.name
+        addRecipeForm2Value.imageUrl[i].file,
+        addRecipeForm2Value.imageUrl[i].file.name
       );
     }
     return formData;
