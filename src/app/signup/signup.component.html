@@ -10,21 +10,35 @@
             <form [formGroup]="form" (ngSubmit)="onSubmit()">
                 <div class="mb-3">
                     <label class="form-label">Username *</label>
-                    <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                    <input type="text" formControlName="username" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
                     <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                         <div *ngIf="f.username.errors.required">Kolom Username tidak boleh kosong</div>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Nama Lengkap *</label>
-                    <input type="text" formControlName="fullname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.fullname.errors }" />
+                    <input type="text" formControlName="fullname" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.fullname.errors }" />
                     <div *ngIf="submitted && f.fullname.errors" class="invalid-feedback">
                         <div *ngIf="f.fullname.errors.required">Kolom nama lengkap tidak boleh kosong</div>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Kata Sandi *</label>
-                    <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                    <div class="input-group">
+                        <input type="{{ passwordInputType }}" formControlName="password" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                        <button class="btn btn-outline-secondary btn-hidden" type="button"
+                            (click)="togglePasswordVisibility()">
+                            <ng-container *ngIf="showPassword; else hideIcon">
+                                <i class='bx bxs-hide bx-sm'></i>
+                            </ng-container>
+                            <ng-template #hideIcon>
+                                <i class='bx bxs-show bx-sm'></i>
+                            </ng-template>
+                        </button>
+                    </div>
                     <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                         <div *ngIf="f.password.errors.required">Kolom Kata Sandi tidak boleh kosong</div>
                         <div *ngIf="f.password.errors.minlength">Kata sandi minimal harus 6 karakter</div>
@@ -32,9 +46,22 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Konfirmasi Kata Sandi *</label>
-                    <input type="password" formControlName="retypePassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.retypePassword.errors }" />
+                    <div class="input-group">
+                        <input type="{{ passwordInputType }}" formControlName="retypePassword" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.retypePassword.errors }" />
+                        <button class="btn btn-outline-secondary btn-hidden" type="button"
+                            (click)="togglePasswordVisibility()">
+                            <ng-container *ngIf="showPassword; else hideIcon">
+                                <i class='bx bxs-hide bx-sm'></i>
+                            </ng-container>
+                            <ng-template #hideIcon>
+                                <i class='bx bxs-show bx-sm'></i>
+                            </ng-template>
+                        </button>
+                    </div>
                     <div *ngIf="submitted && f.retypePassword.errors" class="invalid-feedback">
-                        <div *ngIf="f.retypePassword.errors.required">Kolom Konfirmasi Kata Sandi tidak boleh kosong</div>
+                        <div *ngIf="f.retypePassword.errors.required">Kolom Konfirmasi Kata Sandi tidak boleh kosong
+                        </div>
                         <div *ngIf="f.retypePassword.errors.minlength">Kata sandi minimal harus 6 karakter</div>
                     </div>
                 </div>
