@@ -27,9 +27,9 @@
                 <span  class="descT">Kesulitan</span>
                 <span>{{recipeDetail?.data?.levels?.levelName}}</span>
             </div>
-            <div class="favButton" (click)="addFavorite()">
+            <div class="favButton" (click)="recipeDetail?.data?.isFavorite ? removeFavorite() : addFavorite()">
                 <button mat-button >
-                    <mat-icon>{{ starState }}</mat-icon>
+                    <mat-icon>{{ recipeDetail?.data?.isFavorite ? 'star' : 'star_border' }}</mat-icon>
                     Favorit
                 </button>
             </div>
@@ -37,11 +37,7 @@
         <div class="ingr">
             <h2>Bahan - Bahan</h2>
             <mat-divider></mat-divider>
-            <ul>
-                <li *ngFor="let ingredient of ingredients">
-                    {{ingredient}}
-                </li>
-            </ul>
+            {{recipeDetail?.data?.ingridient}}
         </div>
         <div class="step">
             <h2>Cara Memasak</h2>
@@ -50,3 +46,22 @@
         </div>
     </section>
 </div>
+
+
+<p-confirmDialog #cd>
+    <ng-template pTemplate="headless" let-message>
+        <div class="confirmDialog">
+          <button class="close-button" (click)="cd.reject()">
+            <mat-icon>close</mat-icon>
+          </button>
+            <div>
+                <img src="assets/error_outline_24px.png">
+            </div>
+            <p>`Apakah Anda yakin ingin menghapus resep ini dari favorit?`</p>
+            <div class="confirmButton">
+              <button class="rejectButton" (click)="cd.reject()">Tidak</button>
+              <button class="acceptButton" (click)="cd.accept()">Ya</button>
+            </div>
+        </div>
+    </ng-template>
+  </p-confirmDialog>

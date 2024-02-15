@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { ConfirmationService, ConfirmEventType } from 'primeng/api';
 import { RecipeBookService } from '../services/recipe-book-service.service';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { FavoriteDialogComponent } from '@app/favorite-dialog/favorite-dialog.component';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -17,14 +20,24 @@ export class RecipeDetailComponent {
   recipeDetail: any;
   ingredients: any;
   recipeId: number | undefined = undefined;
-  userId: number = 290;
+  userId: number | null = null;
   
   constructor(
     private route: ActivatedRoute,
     private recipeBookService: RecipeBookService,
+    private confirmationService: ConfirmationService,
     private snackbar: MatSnackBar,
     private location: Location,
-  ) {}
+    public dialog: MatDialog
+  ) {
+    const userItem = localStorage.getItem('user');
+    let user = null;
+
+    if (userItem) {
+      user = JSON.parse(userItem);
+      this.userId = user && user.data && user.data.id;
+    }
+  }
 
   ngOnInit(): void {
   const id = this.route.snapshot.paramMap.get('id');
@@ -43,25 +56,47 @@ goBack(): void {
 }
 
 addFavorite() {
-  let message = this.recipeDetail?.data?.isFavorite ? 'Berhasil menghapus favorit' : 'Berhasil Ditambahkan ke favorit';
-  const recipeId = this.recipeId || 0;
-  this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(response => {
-    if (response.status === 'CREATED') {
-      this.snackbar.open(message, '', {
-        horizontalPosition: this.horizontalPosition,
-        verticalPosition: this.verticalPosition,
-        duration: 2000,
-        panelClass: 'custom-snackbar'
-      });
-      this.recipeDetail.data.isFavorite = !this.recipeDetail.data.isFavorite;
-      this.starState = this.recipeDetail.data.isFavorite ? 'star' : 'star_border';
-    } else {
-      console.log('Failed to add favorite');
-    }
-  }, error => {
-    console.error(error);
-    alert('An error occurred while adding to favorites');
-  });
+  let message = 'Berhasil Ditambahkan ke favorit';
+  if (this.userId !== null && this.recipeId !== undefined) {
+    const userId = this.userId;
+    this.recipeBookService.addFavorite(this.recipeId, userId).subscribe(response => {
+      if (response.status === 'CREATED') {
+        this.snackbar.open(message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration: 2000,
+          panelClass: 'custom-snackbar'
+        });
+
+        if (this.recipeDetail && this.recipeDetail.data) {
+          this.recipeDetail.data.isFavorite = true;
+        }
+      } else {
+        console.log('Failed to add favorite');
+      }
+    }, error => {
+      console.error(error)
+      alert('An error occurred while adding to favorites');
+    });
+  } else {
+    console.error('userId is null');
+  }
 }
 
+removeFavorite() {
+  this.confirmationService.confirm({
+    message: 'Are you sure that you want to remove this recipe from favorites?',
+    accept: () => {
+      if (this.userId === null || this.recipeId === undefined) return;
+      this.recipeBookService.addFavorite(this.recipeId, this.userId).subscribe(response => {
+        if (this.recipeDetail && this.recipeDetail.data) {
+          this.recipeDetail.data.isFavorite = false;
+        }
+    });
+    },
+    reject: () => {
+      // Logic for rejection goes here
+    }
+  });
+  }
 }

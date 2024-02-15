@@ -16,7 +16,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSelectModule} from '@angular/material/select';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SidebarModule } from 'primeng/sidebar';
+import { ConfirmationService } from 'primeng/api';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -77,10 +79,12 @@ import { FavoriteDialogComponent } from './favorite-dialog/favorite-dialog.compo
     ReactiveFormsModule,
     MatDialogModule,
     SidebarModule,
+    ConfirmDialogModule,
   ],
   providers: [
     provideAnimationsAsync(),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    [ConfirmationService],
   ],
   bootstrap: [AppComponent]
 })
