@@ -16,7 +16,16 @@
 
 .quillbox1 {
   width: 100%;
-  height: 300px;
+}
+
+.is-invalid {
+  border: 2px solid red;
+}
+
+.required-color {
+  color: #ff0000;
+  font-style: initial;
+  font-size: 12px;
 }
 
 .displaybox1 {
@@ -51,4 +60,12 @@
   height: 35px;
   font-weight: 400;
   font-size: 12px;
+}
+
+.form-control.ng-invalid.ng-touched {
+  border-color: red;
+}
+
+.form-control.ng-invalid.ng-touched + .form-label {
+  color: red;
 }

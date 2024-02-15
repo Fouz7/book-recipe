@@ -38,11 +38,15 @@ export class UpdateBookRecipeComponent implements OnInit {
         levelName: [this.editRecipe.levels?.levelName || '', Validators.required],
         userId: [this.editRecipe.userId || ''],
         recipeName: [this.editRecipe.recipeName || '', [Validators.required]],
-        imageFilename: [this.editRecipe.imageFilename || ''],
-        timeCook: [this.editRecipe.timeCook || '', Validators.required],
-        ingridient: [this.editRecipe.ingridient || '', Validators.required],
-        howToCook: [this.editRecipe.howToCook || '', Validators.required],
+        imageFilename: [this.editRecipe.imageFilename || '', [Validators.required]],
+        timeCook: [this.editRecipe.timeCook || '', [Validators.required, Validators.min(1), Validators.pattern(/^[1-9]\d*$/)]],
+        ingridient: [this.editRecipe.ingridient || '', [Validators.required, Validators.maxLength(255)]],
+        howToCook: [this.editRecipe.howToCook || '', [Validators.required, Validators.maxLength(255)]],
       });
+
+      if (this.editRecipeForm.get('imageFilename')) {
+        this.editRecipeForm.get('imageFilename')!.setErrors({ 'required': true });
+      }
 
       if (this.editRecipe.imageFilename) {
         const currentFile = new File([this.editRecipe.imageFilename], this.editRecipe.imageFilename);
@@ -75,15 +79,32 @@ export class UpdateBookRecipeComponent implements OnInit {
     });
   }
 
-  editorConfig = {
-    base_url: '/tinymce',
-    suffix: '.min',
-    plugins: 'lists link image table wordcount'
-  };
-
   onSubmit() {
-    if (this.editRecipeForm.invalid || !this.files.length) {
+    if (this.editRecipeForm.invalid) {
       return;
+    }
+
+    if (!this.files.length) {
+      alert('Harap pilih gambar untuk diunggah.');
+      return;
+    }
+
+    const allowedFileTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+    const maxFileSize = 1024 * 1024;
+    const minFileSize = 0;
+
+    // Memeriksa setiap file yang dipilih
+    for (const file of this.files) {
+      // Memeriksa jenis file
+      if (!allowedFileTypes.includes(file.type)) {
+        alert('Hanya file JPG, JPEG dan PNG yang diizinkan.');
+        return;
+      }
+      // Memeriksa ukuran file
+      if (file.size > maxFileSize) {
+        alert('Ukuran file terlalu besar. Maksimum 1MB.');
+        return;
+      }43
     }
 
     const jsonBlob = new Blob([JSON.stringify({
