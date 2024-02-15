@@ -44,7 +44,6 @@ export class RecipeBookService {
   }
 
   addFavorite(recipeId: number, userId: number): Observable<any> {
-    console.log('addFavorite in service called with', recipeId, userId);
     const url = `${this.baseUrl}/book-recipe/book-recipes/${recipeId}/favorites`;
     console.log('url is', url);
     const body = {

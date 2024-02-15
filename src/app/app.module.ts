@@ -3,22 +3,24 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import {MatDividerModule} from '@angular/material/divider';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSelectModule } from '@angular/material/select';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SidebarModule } from 'primeng/sidebar';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 
+import { ConfirmationService } from 'primeng/api';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AppRoutingModule } from './app-routing.module';
@@ -43,6 +45,8 @@ import { FavoriteDialogComponent } from './favorite-dialog/favorite-dialog.compo
 import { MyRecipeComponent } from './my-recipe/my-recipe.component';
 
 
+import { AddrecipeComponent } from './addrecipe/addrecipe.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -59,6 +63,7 @@ import { MyRecipeComponent } from './my-recipe/my-recipe.component';
     ResepFavoritComponent,
     FavoriteDialogComponent,
     MyRecipeComponent,
+    AddrecipeComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,20 +91,32 @@ import { MyRecipeComponent } from './my-recipe/my-recipe.component';
     ReactiveFormsModule,
     QuillModule.forRoot(),
     NgxDropzoneModule,
+    ConfirmDialogModule,
+    QuillModule.forRoot(),
+    NgxDropzoneModule,
+    MatGridListModule,
     QuillConfigModule.forRoot({
       modules: {
         syntax: false,
         toolbar: [
-          ['bold', 'italic', 'underline', 'link', 'blockquote', 'code-block', { list: 'bullet' }, ],
+          [
+            'bold',
+            'italic',
+            'underline',
+            'link',
+            'blockquote',
+            'code-block',
+            { list: 'bullet' },
+          ],
         ],
       },
-      theme: 'snow'
-    })
+    }),
   ],
   providers: [
     provideAnimationsAsync(),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    [ConfirmationService],
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
