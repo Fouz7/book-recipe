@@ -12,6 +12,7 @@ import { AddRecipe } from '../model/addrecipe.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CategoryFoodResponse } from '../model/categoryfoodresponse.model';
 import { LevelFoodResponse } from '../model/levelfoodresponse.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-addrecipe',
@@ -19,7 +20,10 @@ import { LevelFoodResponse } from '../model/levelfoodresponse.model';
   styleUrl: './addrecipe.component.css',
 })
 export class AddrecipeComponent {
-  constructor(private addrecipeService: AddrecipeService) {}
+  constructor(
+    private addrecipeService: AddrecipeService,
+    private router: Router
+  ) {}
 
   categoryFood!: CategoryFoodResponse[];
   levelFood!: LevelFoodResponse[];
@@ -169,7 +173,8 @@ export class AddrecipeComponent {
 
     this.addrecipeService.add(formRecipes).subscribe(
       (res: any) => {
-        this.addRecipeForm.reset();
+        this.router.navigate(['/daftar-resep']);
+        // this.addRecipeForm.reset();
       },
       (error: HttpErrorResponse) => {
         console.log(error);
