@@ -31,7 +31,11 @@ const routes: Routes = [
     component: ResepFavoritComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'tambah-resep', component: AddrecipeComponent },
+  {
+    path: 'tambah-resep',
+    component: AddrecipeComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
