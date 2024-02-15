@@ -16,7 +16,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SidebarModule } from 'primeng/sidebar';
+import { ConfirmationService } from 'primeng/api';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -79,10 +81,10 @@ import { MatGridListModule } from '@angular/material/grid-list';
     ReactiveFormsModule,
     MatDialogModule,
     SidebarModule,
+    ConfirmDialogModule,
     QuillModule.forRoot(),
     NgxDropzoneModule,
     MatGridListModule,
-    ReactiveFormsModule,
     QuillConfigModule.forRoot({
       modules: {
         syntax: false,
@@ -103,6 +105,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
   providers: [
     provideAnimationsAsync(),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    [ConfirmationService],
   ],
   bootstrap: [AppComponent],
 })

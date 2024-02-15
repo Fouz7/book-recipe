@@ -3,6 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { RecipeBookService } from '../services/recipe-book-service.service';
 import { DekstopFilterDialogComponent } from '../dekstop-filter-dialog/dekstop-filter-dialog.component';
+import { ConfirmationService, ConfirmEventType } from 'primeng/api';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { FavoriteDialogComponent } from '@app/favorite-dialog/favorite-dialog.component';
 
 @Component({
   selector: 'app-recipe-list',
@@ -58,8 +61,13 @@ export class RecipeListComponent implements OnInit {
    
   ];
 
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+
   constructor(
     private recipeBookService: RecipeBookService,
+    private confirmationService: ConfirmationService,
+    private snackbar: MatSnackBar,
     public dialog: MatDialog
     ) {
       const userItem = localStorage.getItem('user');
@@ -174,6 +182,7 @@ export class RecipeListComponent implements OnInit {
   }
 
   addFavorite(recipeId: number) {
+    let message = 'Berhasil Ditambahkan ke favorit';
     if (this.userId === null || this.userId === undefined) {
       console.error('addFavorite error: userId is', this.userId);
       return;
@@ -184,6 +193,12 @@ export class RecipeListComponent implements OnInit {
       const bookRecipe = this.filteredRecipes.find(recipe => recipe.recipeId === recipeId);
       if (bookRecipe) {
         bookRecipe.isFavorite = !bookRecipe.isFavorite;
+        this.snackbar.open(message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration: 2000,
+          panelClass: 'custom-snackbar'
+        });
       }
     }, error => {
       console.error('addFavorite error', error);
@@ -191,20 +206,29 @@ export class RecipeListComponent implements OnInit {
   }
 
   removeFavorite(recipeId: number) {
-    if (this.userId === null || this.userId === undefined) {
-      console.error('addFavorite error: userId is', this.userId);
-      return;
-    }
-  
-    console.log('addFavorite called with', recipeId, this.userId);
-    this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(response => {
-      const bookRecipe = this.filteredRecipes.find(recipe => recipe.recipeId === recipeId);
-      if (bookRecipe) {
-        bookRecipe.isFavorite = !bookRecipe.isFavorite;
-        alert('Berhasil menghapus favorit');
+    this.confirmationService.confirm({
+      message: `Apakah Anda yakin ingin menghapus resep ini dari favorit?`,
+      header: 'Konfirmasi',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        if (this.userId === null || this.userId === undefined) return;
+        this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(response => {
+          const bookRecipe = this.filteredRecipes.find(recipe => recipe.recipeId === recipeId);
+          if (bookRecipe) {
+            bookRecipe.isFavorite = !bookRecipe.isFavorite;
+            const dialogRef = this.dialog.open(FavoriteDialogComponent, {
+              panelClass: 'custom-fav-dialog',
+            })
+          }
+        }, error => {
+          //i dont know what to do
+        });
+      },
+      reject: (type: ConfirmEventType) => {
+        if (type === ConfirmEventType.REJECT) {
+          //do nothing
+        }
       }
-    }, error => {
-      console.error('addFavorite error', error);
     });
   }
   
