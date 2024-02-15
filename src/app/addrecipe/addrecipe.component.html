@@ -1,0 +1,166 @@
+<app-header></app-header>
+
+<div>
+  <h1>Buat Resep Masakan Baru</h1>
+</div>
+
+<div class="container">
+  <form [formGroup]="addRecipeForm" (ngSubmit)="addRecipe()">
+    <div class="container-recipe">
+      <div>
+        <div class="displaybox1">
+          <div class="mb-3">
+            <label class="form-label">Nama Resep Masakan *</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Nama Resep Masakan"
+              formControlName="recipeName"
+              name="recipeName"
+            />
+            <div
+              *ngIf="
+                addRecipeForm.get('recipeName')?.invalid &&
+                addRecipeForm.get('recipeName')?.touched
+              "
+              class="text-danger"
+            >
+              Nama Resep Masakan harus diisi.
+            </div>
+          </div>
+        </div>
+        <div class="displaybox1">
+          <label class="form-label">Gambar Makanan *</label>
+          <div ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+            <ngx-dropzone-label>
+              <div>
+                <p class="title-dropzone">
+                  <strong>Click to upload</strong> or drag and drop
+                </p>
+                <p class="title2-dropzone">PNG, JPG, JPEG (MAX 2 MB)</p>
+              </div>
+            </ngx-dropzone-label>
+            <ngx-dropzone-image-preview
+              ngProjectAs="ngx-dropzone-preview"
+              *ngFor="let f of files"
+              [file]="f"
+              [removable]="true"
+              (removed)="onRemove(f)"
+            >
+              <ngx-dropzone-label
+                >{{ f.name }} ({{ f.type }})</ngx-dropzone-label
+              >
+            </ngx-dropzone-image-preview>
+          </div>
+        </div>
+        <div class="displaybox1">
+          <label class="label-form">Bahan - Bahan *</label>
+          <quill-editor
+            class="quillbox1"
+            formControlName="ingridient"
+            name="ingridient"
+          ></quill-editor>
+          <div
+            *ngIf="
+              addRecipeForm.get('ingridient')?.invalid &&
+              addRecipeForm.get('ingridient')?.touched
+            "
+            class="text-danger"
+          >
+            Bahan Bahan harus diisi.
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="displaybox2">
+          <p>Kategori Masakan *</p>
+          <div class="displaybox5" formGroupName="categories">
+            <select
+              class="form-select"
+              (change)="changeCategory($event)"
+              aria-label="Default select example"
+              formControlName="categoryId"
+              name="categordId"
+            >
+              <option
+                [value]="category.categoryId"
+                *ngFor="let category of this.categoryFood"
+              >
+                {{ category.categoryName }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <!-- hasil {{ selectedCategory }} -->
+        <div class="displaybox2">
+          <div class="displaybox7">
+            <div class="displaybox3">
+              <div class="mb-3">
+                <label class="form-label">Waktu Memasak(Menit) *</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="Waktu Memasak"
+                  formControlName="timeCook"
+                  name="timeCook"
+                />
+                <div
+                  *ngIf="
+                    addRecipeForm.get('timeCook')?.invalid &&
+                    addRecipeForm.get('timeCook')?.touched
+                  "
+                  class="text-danger"
+                >
+                  Waktu Memasak harus diisi.
+                </div>
+              </div>
+            </div>
+            <div class="displaybox4" formGroupName="levels">
+              <p>Tingkat Kesulitan *</p>
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                name="levelId"
+                formControlName="levelId"
+                (change)="changeLevel($event)"
+              >
+                <option
+                  [value]="level.levelId"
+                  *ngFor="let level of this.levelFood"
+                >
+                  {{ level.levelName }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="displaybox6">
+            <label class="form-label">Cara Masak *</label>
+            <quill-editor
+              class="quillbox2"
+              formControlName="howToCook"
+              name="howToCook"
+            ></quill-editor>
+            <div
+              *ngIf="
+                addRecipeForm.get('howToCook')?.invalid &&
+                addRecipeForm.get('howToCook')?.touched
+              "
+              class="text-danger"
+            >
+              Cara Masak harus diisi.
+            </div>
+          </div>
+
+          <div class="button-details">
+            <div>
+              <button class="button-cancel">Batal</button>
+            </div>
+            <div>
+              <button type="submit" class="button-addSubmit">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
