@@ -1,27 +1,63 @@
-# BookRecipeFeAngular
+# About The Project
+## Book Recipe Fe Angular 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.5.
+### Technologies and Libraries
 
-## Development server
+- **Programming Language and Framework:**
+   - TypeScript
+   - Angular
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Target Framework:**
+   - 17.0.5
 
-## Code scaffolding
+- **Dependencies:**
+   - @angular/animations: ^17.0.0
+   - @angular/cdk: ^17.1.2
+   - @angular/common: ^17.0.0
+   - @angular/compiler: ^17.0.0
+   - @angular/core: ^17.0.0
+   - @angular/forms: ^17.0.0
+   - @angular/material: ^17.1.2
+   - @angular/platform-browser: ^17.0.0
+   - @angular/platform-browser-dynamic: ^17.0.0
+   - @angular/router: ^17.0.0
+   - rxjs: ~7.8.0
+   - tslib: ^2.3.0
+   - zone.js: ~0.14.2
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Dev Dependencies:**
+   - @angular-devkit/build-angular: ^17.0.5
+   - @angular/cli: ^17.0.5
+   - @angular/compiler-cli: ^17.0.0
+   - @types/jasmine: ~5.1.0
+   - jasmine-core: ~5.1.0
+   - karma: ~6.4.0
+   - karma-chrome-launcher: ~3.2.0
+   - karma-coverage: ~2.2.0
+   - karma-jasmine: ~5.1.0
+   - karma-jasmine-html-reporter: ~2.1.0
+   - typescript: ~5.2.2
 
-## Build
+## Getting Started
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Follow these steps to get the project up and running.
 
-## Running unit tests
+**Clone the Repository:**
+   ```
+   git clone https://gitlab.cloudias79.com/internal-apps/multi-tech-case-study/book-recipe/book-recipe-fe-angular.git
+   ```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+**Restore the Dependencies:**
+    ```
+    npm i
+    ```
 
-## Running end-to-end tests
+**Build the Project:**
+    ```
+    ng build
+    ```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+**Run the Application:**
+    ```
+    ng serve
+    ```
