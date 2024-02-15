@@ -40,6 +40,7 @@ import { ResepFavoritComponent } from './resep-favorit/resep-favorit.component';
 import { AuthInterceptor } from './utils/auth.interceptor';
 import { FormSigninComponent } from './form-signin/form-signin.component';
 import { FavoriteDialogComponent } from './favorite-dialog/favorite-dialog.component';
+import { MyRecipeComponent } from './my-recipe/my-recipe.component';
 
 
 
@@ -57,6 +58,7 @@ import { FavoriteDialogComponent } from './favorite-dialog/favorite-dialog.compo
     DekstopFilterDialogComponent,
     ResepFavoritComponent,
     FavoriteDialogComponent,
+    MyRecipeComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +71,18 @@ import { FavoriteDialogComponent } from './favorite-dialog/favorite-dialog.compo
     MatButtonModule,
     MatSidenavModule,
     MatDividerModule,
+    MatCardModule,
+    FlexLayoutModule,
+    FormsModule,
+    MatMenuModule,
+    MatSnackBarModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    NgbModule,
+    NgbPaginationModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    SidebarModule,
     ReactiveFormsModule,
     QuillModule.forRoot(),
     NgxDropzoneModule,
@@ -84,18 +98,6 @@ import { FavoriteDialogComponent } from './favorite-dialog/favorite-dialog.compo
   ],
   providers: [
     provideAnimationsAsync(),
-    MatCardModule,
-    FlexLayoutModule,
-    FormsModule,
-    MatMenuModule,
-    MatSnackBarModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    NgbModule,
-    NgbPaginationModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    SidebarModule,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
