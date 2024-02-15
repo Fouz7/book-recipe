@@ -1,3 +1,5 @@
+/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/quill/dist/quill.snow.css";
 @import url("https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700&display=swap");
 * {
   font-family: "Mulish";
@@ -6,17 +8,12 @@
 html,
 body {
   height: 100%;
+}
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f0f9f9 !important;
-}
-
-a:visited .content2 {
-  color: #01bfbf !important;
-}
-
-.mat-mdc-snack-bar-container {
-  background-color: #01bfbf !important;
 }
 
 .pagination {
@@ -53,7 +50,190 @@ a:visited .content2 {
   border-radius: 30px !important;
 }
 
+.confirmDialog {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  padding: 25px;
+  border-radius: 4px;
+  gap: 1em;
+  text-align: center;
+  width: 80%;
+  align-self: center;
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__label {
+  color: #01bfbf !important;
+  font-size: 16px !important;
+  font-family: "Mulish" !important;
+  font-weight: 600 !important;
+  background-color: white !important;
+  border-radius: 4px 0 0 4px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+  background-color: white !important;
+  border-radius: 4px !important;
+}
+
+/* .mat-mdc-snack-bar-handset {
+  background-color: white !important;
+} */
+
+.confirmDialog .close-button {
+  align-self: flex-end;
+  color: darkgray;
+}
+
+.confirmDialog .rejectButton {
+  border: 3px solid #01bfbf;
+  border-radius: 4px;
+  padding: 0.5em 1em;
+  color: #01bfbf;
+  margin-right: 2em;
+  font-weight: bold;
+}
+
+.confirmDialog .acceptButton {
+  background-color: #01bfbf;
+  color: white;
+  padding: 0.7em 2em;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.custom-fav-dialog .dialog {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2em;
+  gap: 1em;
+}
+
+.custom-fav-dialog .dialog .img {
+  display: flex;
+  justify-content: center;
+}
+
+.custom-fav-dialog .dialog .img .img1 {
+  position: relative;
+}
+.custom-fav-dialog .dialog .img .img2 {
+  position: absolute;
+  top: 25%;
+}
+
+.custom-fav-dialog .dialog .closeButton {
+  align-self: flex-end;
+  color: darkgray;
+}
+
+.custom-fav-dialog .dialog h1 {
+  align-self: center;
+  font-family: "Mulish";
+  font-weight: 600;
+  color: #00e696;
+  font-size: 32px;
+}
+
+.custom-fav-dialog .dialog p {
+  text-align: center;
+  font-weight: 400;
+  font-size: 18px;
+}
+
+.custom-fav-dialog .dialog .continueButton {
+  border: none;
+  border-radius: 4px;
+  padding: 0.7em 2em;
+  background-color: #01bfbf;
+  color: white;
+  align-self: center;
+  width: 50%;
+}
+
 @media (min-width: 1024px) {
+  .confirmDialog {
+    width: 500px;
+    gap: 2em;
+  }
+
+  .confirmDialog .rejectButton {
+    border: 3px solid #01bfbf;
+    border-radius: 4px;
+    padding: 0.3em 3em;
+    color: #01bfbf;
+    margin-right: 3em;
+    font-weight: bold;
+  }
+
+  .confirmDialog .acceptButton {
+    background-color: #01bfbf;
+    color: white;
+    padding: 0.5em 4em;
+    margin-left: 3em;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+
+  .custom-dialog-container .dialog {
+    padding: 2em;
+  }
+
+  .custom-fav-dialog .dialog {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2em;
+    gap: 1em;
+  }
+
+  .custom-fav-dialog .dialog .img {
+    display: flex;
+    justify-content: center;
+  }
+
+  .custom-fav-dialog .dialog .img .img1 {
+    position: relative;
+  }
+  .custom-fav-dialog .dialog .img .img2 {
+    position: absolute;
+    top: 27%;
+  }
+
+  .custom-fav-dialog .dialog .closeButton {
+    align-self: flex-end;
+    color: darkgray;
+  }
+
+  .custom-fav-dialog .dialog h1 {
+    align-self: center;
+    font-family: "Mulish";
+    font-weight: 600;
+    color: #00e696;
+    font-size: 32px;
+  }
+
+  .custom-fav-dialog .dialog p {
+    font-weight: 400;
+    font-size: 18px;
+  }
+
+  .custom-fav-dialog .dialog .continueButton {
+    border: none;
+    border-radius: 4px;
+    padding: 0.7em 2em;
+    background-color: #01bfbf;
+    color: white;
+    align-self: center;
+    width: 50%;
+  }
+
   /* .mdc-notched-outline {
     height: 35px !important;
     width: 75% !important;

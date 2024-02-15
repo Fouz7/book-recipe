@@ -60,7 +60,7 @@
 
       <!-- Filter Button -->
       <div class="filter">
-        <button (click)="openFilterDialog()" class="button">
+        <button (click)="openFilterDialog()" class="button filter-button" [class.active]="isFiltering">
           <mat-icon>filter_list</mat-icon>
           Filter
         </button>
@@ -88,10 +88,11 @@
             <mat-icon>access_time</mat-icon>
             <span> {{bookRecipe.time}} Menit </span>
           </div>
-          <button class="favButton" (click)="addFavorite(bookRecipe.recipeId)">
+          <button class="favButton"  (click)="bookRecipe.isFavorite ? removeFavorite(bookRecipe.recipeId) : addFavorite(bookRecipe.recipeId)">
             <mat-icon>{{bookRecipe.isFavorite ? 'star' : 'star_border'}}</mat-icon>
             <span>Favorit</span>
           </button>
+
       </div>
       <div class="content2">
         <button [routerLink]="['/detail-resep', bookRecipe.recipeId]">Lihat Detail Resep</button>
@@ -114,3 +115,21 @@
     </section>
   </section>
 </div>
+
+<p-confirmDialog #cd>
+  <ng-template pTemplate="headless" let-message>
+      <div class="confirmDialog">
+        <button class="close-button" (click)="cd.reject()">
+          <mat-icon>close</mat-icon>
+        </button>
+          <div>
+              <img src="assets/error_outline_24px.png">
+          </div>
+          <p>`Apakah Anda yakin ingin menghapus resep ini dari favorit?`</p>
+          <div class="confirmButton">
+            <button class="rejectButton" (click)="cd.reject()">Tidak</button>
+            <button class="acceptButton" (click)="cd.accept()">Ya</button>
+          </div>
+      </div>
+  </ng-template>
+</p-confirmDialog>

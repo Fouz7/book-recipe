@@ -3,6 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { RecipeBookService } from '../services/recipe-book-service.service';
 import { DekstopFilterDialogComponent } from '../dekstop-filter-dialog/dekstop-filter-dialog.component';
+import { ConfirmationService, ConfirmEventType } from 'primeng/api';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { FavoriteDialogComponent } from '@app/favorite-dialog/favorite-dialog.component';
 
 @Component({
   selector: 'app-recipe-list',
@@ -17,7 +20,7 @@ export class RecipeListComponent implements OnInit {
   pageSizeOptions = [8, 16, 48];
   pageSize = 8;
   pageNumber = 1;
-  userId = 290;
+  userId: number | null = null;
   categoryId : number | undefined = undefined;
   time : string = '';
   sortBy : string = 'asc';
@@ -27,6 +30,7 @@ export class RecipeListComponent implements OnInit {
   pagesArray: number[] = [];
   selectedLevelId: number = 0;
   selectedSortOption: string = '';
+  isFiltering = false;
 
   levels = [
     {id: 3, name: 'Easy'},
@@ -57,10 +61,23 @@ export class RecipeListComponent implements OnInit {
    
   ];
 
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+
   constructor(
     private recipeBookService: RecipeBookService,
+    private confirmationService: ConfirmationService,
+    private snackbar: MatSnackBar,
     public dialog: MatDialog
-    ) {}
+    ) {
+      const userItem = localStorage.getItem('user');
+      let user = null;
+
+      if (userItem) {
+        user = JSON.parse(userItem);
+        this.userId = user && user.data && user.data.id;
+      }
+    }
 
 
   ngOnInit(): void {
@@ -93,6 +110,7 @@ export class RecipeListComponent implements OnInit {
   }
 
   openFilterDialog(): void {
+    this.isFiltering = true;
     const dialogRef = this.dialog.open(DekstopFilterDialogComponent, {
       position: { top: '142px', left: '58%' },
       width: 'auto',
@@ -117,6 +135,7 @@ export class RecipeListComponent implements OnInit {
         this.time = result.time;
         this.loadBookRecipes();
       }
+      this.isFiltering = false;
     });
   }
   
@@ -163,15 +182,53 @@ export class RecipeListComponent implements OnInit {
   }
 
   addFavorite(recipeId: number) {
+    let message = 'Berhasil Ditambahkan ke favorit';
+    if (this.userId === null || this.userId === undefined) {
+      console.error('addFavorite error: userId is', this.userId);
+      return;
+    }
+  
     console.log('addFavorite called with', recipeId, this.userId);
     this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(response => {
-      console.log('addFavorite response', response);
       const bookRecipe = this.filteredRecipes.find(recipe => recipe.recipeId === recipeId);
       if (bookRecipe) {
         bookRecipe.isFavorite = !bookRecipe.isFavorite;
+        this.snackbar.open(message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration: 2000,
+          panelClass: 'custom-snackbar'
+        });
       }
     }, error => {
       console.error('addFavorite error', error);
+    });
+  }
+
+  removeFavorite(recipeId: number) {
+    this.confirmationService.confirm({
+      message: `Apakah Anda yakin ingin menghapus resep ini dari favorit?`,
+      header: 'Konfirmasi',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        if (this.userId === null || this.userId === undefined) return;
+        this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(response => {
+          const bookRecipe = this.filteredRecipes.find(recipe => recipe.recipeId === recipeId);
+          if (bookRecipe) {
+            bookRecipe.isFavorite = !bookRecipe.isFavorite;
+            const dialogRef = this.dialog.open(FavoriteDialogComponent, {
+              panelClass: 'custom-fav-dialog',
+            })
+          }
+        }, error => {
+          //i dont know what to do
+        });
+      },
+      reject: (type: ConfirmEventType) => {
+        if (type === ConfirmEventType.REJECT) {
+          //do nothing
+        }
+      }
     });
   }
   

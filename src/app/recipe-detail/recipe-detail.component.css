@@ -153,7 +153,13 @@ mat-select {
 
   .favButton {
     display: flex;
+    flex-direction: row;
     align-items: center;
+    cursor: pointer;
+  }
+
+  .favButton button {
+    color: #01bfbf;
   }
 
   .pic img {
