@@ -9,7 +9,6 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { FavoriteDialogComponent } from '@app/favorite-dialog/favorite-dialog.component';
 
 @Component({
   selector: 'app-recipe-detail',

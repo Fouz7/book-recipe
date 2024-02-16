@@ -29,7 +29,6 @@ export class FormSigninComponent implements OnInit {
       password: ['', Validators.required]
     });
 
-    // show success message after registration
     if (this.route.snapshot.queryParams.registered) {
       this.success = 'login successful';
     }
@@ -40,11 +39,9 @@ export class FormSigninComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    // reset alerts on submit
     this.error = '';
     this.success = '';
 
-    // stop here if form is invalid
     if (this.form.invalid) {
       return;
     }

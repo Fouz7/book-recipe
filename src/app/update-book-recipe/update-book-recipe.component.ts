@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../models/category';
 import { Level } from '../models/level';
@@ -15,6 +16,7 @@ export class UpdateBookRecipeComponent implements OnInit {
   recipeId!: number;
   editRecipeForm!: FormGroup;
   editRecipe: any;
+  userId: number | null = null;
   categoryFood!: Category[];
   levelFood!: Level[];
   files: File[] = [];
@@ -24,8 +26,17 @@ export class UpdateBookRecipeComponent implements OnInit {
     private editRecipeService: EditRecipeService,
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder
-  ) {}
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar
+  ) {
+    const userItem = localStorage.getItem('user');
+    let user = null;
+
+    if (userItem) {
+      user = JSON.parse(userItem);
+      this.userId = user && user.data && user.data.id;
+    }
+  }
 
   ngOnInit() {
     this.recipeId = Number(this.route.snapshot.params['recipeId']);
@@ -36,7 +47,7 @@ export class UpdateBookRecipeComponent implements OnInit {
         categoryName: [this.editRecipe.categories?.categoryName || '', Validators.required],
         levelId: [this.editRecipe.levels?.levelId || ''],
         levelName: [this.editRecipe.levels?.levelName || '', Validators.required],
-        userId: [this.editRecipe.userId || ''],
+        userId: [this.userId || '', Validators.required],
         recipeName: [this.editRecipe.recipeName || '', [Validators.required]],
         imageFilename: [this.editRecipe.imageFilename || '', [Validators.required]],
         timeCook: [this.editRecipe.timeCook || '', [Validators.required, Validators.min(1), Validators.pattern(/^[1-9]\d*$/)]],
@@ -85,7 +96,12 @@ export class UpdateBookRecipeComponent implements OnInit {
     }
 
     if (!this.files.length) {
-      alert('Harap pilih gambar untuk diunggah.');
+      this.snackBar.open("Harap pilih gambar untuk diunggah.", '', {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 2000,
+        panelClass: 'warning-snackbar'
+      });
       return;
     }
 
@@ -93,18 +109,25 @@ export class UpdateBookRecipeComponent implements OnInit {
     const maxFileSize = 1024 * 1024;
     const minFileSize = 0;
 
-    // Memeriksa setiap file yang dipilih
     for (const file of this.files) {
-      // Memeriksa jenis file
       if (!allowedFileTypes.includes(file.type)) {
-        alert('Hanya file JPG, JPEG dan PNG yang diizinkan.');
+        this.snackBar.open("Hanya file JPG, JPEG dan PNG yang diizinkan.", '', {
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          duration: 2000,
+          panelClass: 'warning-snackbar'
+        });
         return;
       }
-      // Memeriksa ukuran file
       if (file.size > maxFileSize) {
-        alert('Ukuran file terlalu besar. Maksimum 1MB.');
+        this.snackBar.open("Ukuran file terlalu besar. Maksimum 1MB.", '', {
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          duration: 2000,
+          panelClass: 'warning-snackbar'
+        });
         return;
-      }43
+      }
     }
 
     const jsonBlob = new Blob([JSON.stringify({
@@ -117,7 +140,7 @@ export class UpdateBookRecipeComponent implements OnInit {
         levelId: this.editRecipeForm.value.levelId,
         levelName: this.editRecipeForm.value.levelName
       },
-      userId: 330,
+      userId: this.userId,
       recipeName: this.editRecipeForm.value.recipeName,
       timeCook: this.editRecipeForm.value.timeCook,
       ingridient: this.editRecipeForm.value.ingridient,
@@ -128,8 +151,15 @@ export class UpdateBookRecipeComponent implements OnInit {
     formData.append('request', jsonBlob, 'request.json');
 
     this.editRecipeService.updateRecipe(formData).subscribe((res: any) => {
-      console.log('Recipe updated successfully!', res);
+      let message = "Resep Berhasil Diubah";
       this.router.navigate(['/resep-saya']);
+
+      this.snackBar.open(message, '', {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 2000,
+        panelClass: 'warning-snackbar'
+      });
     });
   }
 }
