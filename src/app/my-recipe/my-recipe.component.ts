@@ -1,25 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
-import { RecipeBookService } from '../services/recipe-book-service.service';
-import { DekstopFilterDialogComponent } from '../dekstop-filter-dialog/dekstop-filter-dialog.component';
-import { ConfirmationService, ConfirmEventType } from 'primeng/api';
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
-import { FavoriteDialogComponent } from '@app/favorite-dialog/favorite-dialog.component';
+import { DekstopFilterDialogComponent } from '@app/dekstop-filter-dialog/dekstop-filter-dialog.component';
+import { FilterDialogComponent } from '@app/filter-dialog/filter-dialog.component';
+import { RecipeBookService } from '@app/services/recipe-book-service.service';
 
 @Component({
-  selector: 'app-recipe-list',
-  templateUrl: './recipe-list.component.html',
-  styleUrl: './recipe-list.component.css',
+  selector: 'app-my-recipe',
+  templateUrl: './my-recipe.component.html',
+  styleUrl: './my-recipe.component.css',
 })
-export class RecipeListComponent implements OnInit {
-  sidebarVisible2: boolean = false;
-  bookRecipes: any[] = [];
-  filteredRecipes = [...this.bookRecipes];
+export class MyRecipeComponent implements OnInit {
+  sideBarVisible2: boolean = false;
+  myRecipes: any[] = [];
+  filteredRecipes = [...this.myRecipes];
   searchText: string = '';
   pageSizeOptions = [8, 16, 48];
   pageSize = 8;
@@ -64,13 +57,8 @@ export class RecipeListComponent implements OnInit {
     { value: '60', viewValue: '> 60' },
   ];
 
-  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
-  verticalPosition: MatSnackBarVerticalPosition = 'top';
-
   constructor(
     private recipeBookService: RecipeBookService,
-    private confirmationService: ConfirmationService,
-    private snackbar: MatSnackBar,
     public dialog: MatDialog
   ) {
     const userItem = localStorage.getItem('user');
@@ -102,14 +90,14 @@ export class RecipeListComponent implements OnInit {
     if (this.pageSize) params.pageSize = this.pageSize;
     if (this.selectedLevelId) params.levelId = this.selectedLevelId;
     if (this.userId) params.userId = this.userId;
-    if (this.selectedSortOption) params.sortBy = this.selectedSortOption;
+    if (this.sortBy) params.sortBy = this.sortBy;
     if (this.time) params.time = this.time;
     if (this.categoryId) params.categoryId = this.categoryId;
     if (this.searchText) params.recipeName = this.searchText;
 
-    this.recipeBookService.getRecipeList(params).subscribe((data) => {
-      this.bookRecipes = data.data;
-      this.filteredRecipes = [...this.bookRecipes];
+    this.recipeBookService.getMyRecipes(params).subscribe((data) => {
+      this.myRecipes = data.data;
+      this.filteredRecipes = [...this.myRecipes];
       this.totalItems = data.total;
       this.totalPages = Math.ceil(this.totalItems / this.pageSize);
       this.pagesArray = Array.from(
@@ -193,7 +181,6 @@ export class RecipeListComponent implements OnInit {
   }
 
   addFavorite(recipeId: number) {
-    let message = 'Berhasil Ditambahkan ke favorit';
     if (this.userId === null || this.userId === undefined) {
       console.error('addFavorite error: userId is', this.userId);
       return;
@@ -207,12 +194,6 @@ export class RecipeListComponent implements OnInit {
         );
         if (bookRecipe) {
           bookRecipe.isFavorite = !bookRecipe.isFavorite;
-          this.snackbar.open(message, '', {
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-            duration: 2000,
-            panelClass: 'custom-snackbar',
-          });
         }
       },
       (error) => {
@@ -222,35 +203,26 @@ export class RecipeListComponent implements OnInit {
   }
 
   removeFavorite(recipeId: number) {
-    this.confirmationService.confirm({
-      message: `Apakah Anda yakin ingin menghapus resep ini dari favorit?`,
-      header: 'Konfirmasi',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        if (this.userId === null || this.userId === undefined) return;
-        this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(
-          (response) => {
-            const bookRecipe = this.filteredRecipes.find(
-              (recipe) => recipe.recipeId === recipeId
-            );
-            if (bookRecipe) {
-              bookRecipe.isFavorite = !bookRecipe.isFavorite;
-              const dialogRef = this.dialog.open(FavoriteDialogComponent, {
-                panelClass: 'custom-fav-dialog',
-              });
-            }
-          },
-          (error) => {
-            //i dont know what to do
-          }
+    if (this.userId === null || this.userId === undefined) {
+      console.error('addFavorite error: userId is', this.userId);
+      return;
+    }
+
+    console.log('addFavorite called with', recipeId, this.userId);
+    this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(
+      (response) => {
+        const bookRecipe = this.filteredRecipes.find(
+          (recipe) => recipe.recipeId === recipeId
         );
-      },
-      reject: (type: ConfirmEventType) => {
-        if (type === ConfirmEventType.REJECT) {
-          //do nothing
+        if (bookRecipe) {
+          bookRecipe.isFavorite = !bookRecipe.isFavorite;
+          alert('Berhasil menghapus favorit');
         }
       },
-    });
+      (error) => {
+        console.error('addFavorite error', error);
+      }
+    );
   }
 
   clearSearch() {
@@ -260,11 +232,11 @@ export class RecipeListComponent implements OnInit {
 
   filterByLevel() {
     if (this.selectedLevelId) {
-      this.filteredRecipes = this.bookRecipes.filter(
+      this.filteredRecipes = this.myRecipes.filter(
         (recipe) => recipe.levels?.id === this.selectedLevelId
       );
     } else {
-      this.filteredRecipes = [...this.bookRecipes];
+      this.filteredRecipes = [...this.myRecipes];
     }
   }
 }

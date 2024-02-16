@@ -19,11 +19,11 @@
       <button mat-button (click)="openFilterDialogMobile()" class="button">
         Filter
         <mat-icon>filter_list</mat-icon>
-      </button> 
+      </button>
       <div class="so">
         <mat-select [(ngModel)]="selectedSortOption" (selectionChange)="loadBookRecipes()" placeholder="Sort By">
-          <mat-option 
-          *ngFor="let option of sortOptions" [value]="option.value" class="my-option"> 
+          <mat-option
+          *ngFor="let option of sortOptions" [value]="option.value" class="my-option">
             {{option.viewValue}}
         </mat-option>
         </mat-select>
