@@ -8,11 +8,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { FileHandle } from '../model/file-handle.model';
-import { AddRecipe } from '../model/addrecipe.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CategoryFoodResponse } from '../model/categoryfoodresponse.model';
 import { LevelFoodResponse } from '../model/levelfoodresponse.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-addrecipe',
@@ -41,13 +40,13 @@ export class AddrecipeComponent {
     const selectedFiles: File[] = event.addedFiles;
     const imageUrls = this.addRecipeForm.get('imageUrl') as FormControl;
 
-    const currentImages = imageUrls.value || []; // Get the current value of imageUrl
+    const currentImages = imageUrls.value || [];
 
     for (const file of selectedFiles) {
       const fileHandle: FileHandle = {
         file: file,
       };
-      currentImages.push(fileHandle); // Push the new file handle to the array
+      currentImages.push(fileHandle);
     }
 
     imageUrls.setValue(currentImages);
@@ -57,16 +56,13 @@ export class AddrecipeComponent {
     console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
 
-    // Menghapus file dari nilai imageUrl di dalam formulir
     const imageUrls = this.addRecipeForm.get('imageUrl') as FormControl;
     const currentImages = imageUrls.value || [];
 
-    // Mencari file yang akan dihapus dari imageUrl
     const index = currentImages.findIndex(
       (fileHandle: FileHandle) => fileHandle.file === event
     );
 
-    // Jika file ditemukan, hapus dari imageUrl
     if (index !== -1) {
       currentImages.splice(index, 1);
       imageUrls.setValue(currentImages);

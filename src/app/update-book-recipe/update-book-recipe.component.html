@@ -82,6 +82,9 @@
             <div class="form-group">
               <label for="timeCook" class="form-label label-color">Waktu Memasak (Menit) <span class="asterisk">*</span></label>
               <input formControlName="timeCook" id="timeCook" type="number" class="form-control" required>
+              <p *ngIf="editRecipeForm.get('timeCook')?.touched && editRecipeForm.get('timeCook')?.invalid" class="required-color">
+                Waktu tidak boleh dibawah 1 menit.
+              </p>
             </div>
           </div>
           <div class="col">
