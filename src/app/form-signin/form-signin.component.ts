@@ -35,7 +35,6 @@ export class FormSigninComponent implements OnInit {
     }
   }
 
-  // convenience getter for easy access to form fields
   get f() { return this.form.controls; }
 
   onSubmit() {
@@ -51,9 +50,6 @@ export class FormSigninComponent implements OnInit {
     }
 
     this.loading = true;
-    // console.log(this.f.username.value);
-    // console.log(this.f.password.value);
-
     this.accountService.login(this.f.username.value, this.f.password.value)
     .pipe(first())
     .subscribe({
