@@ -47,7 +47,6 @@ export class FormSigninComponent implements OnInit {
     }
 
     this.loading = true;
-
     this.accountService.login(this.f.username.value, this.f.password.value)
     .pipe(first())
     .subscribe({

@@ -7,20 +7,20 @@ import { RecipeBookService } from '@app/services/recipe-book-service.service';
 @Component({
   selector: 'app-my-recipe',
   templateUrl: './my-recipe.component.html',
-  styleUrl: './my-recipe.component.css'
+  styleUrl: './my-recipe.component.css',
 })
 export class MyRecipeComponent implements OnInit {
   sideBarVisible2: boolean = false;
   myRecipes: any[] = [];
   filteredRecipes = [...this.myRecipes];
-  searchText : string = '';
+  searchText: string = '';
   pageSizeOptions = [8, 16, 48];
   pageSize = 8;
   pageNumber = 1;
-  userId : number | null = null;
-  categoryId : number | undefined = undefined;
-  time : string = '';
-  sortBy : string = 'asc';
+  userId: number | null = null;
+  categoryId: number | undefined = undefined;
+  time: string = '';
+  sortBy: string = 'asc';
   totalItems: number = 1;
   totalPages: number = 1;
   starState: string = 'star_border';
@@ -30,31 +30,31 @@ export class MyRecipeComponent implements OnInit {
   isFiltering = false;
 
   levels = [
-    {id: 3, name: 'Easy'},
-    {id: 2, name: 'Medium'},
-    {id: 1, name: 'Hard'},
-    {id: 4, name: 'Master Chef'}
+    { id: 3, name: 'Easy' },
+    { id: 2, name: 'Medium' },
+    { id: 1, name: 'Hard' },
+    { id: 4, name: 'Master Chef' },
   ];
 
   category = [
-    {id: 0, name: 'Lunch'},
-    {id: 1, name: 'Breakfast'},
-    {id: 2, name: 'Dinner'},
-    {id: 3, name: 'Snack'},
+    { id: 0, name: 'Lunch' },
+    { id: 1, name: 'Breakfast' },
+    { id: 2, name: 'Dinner' },
+    { id: 3, name: 'Snack' },
   ];
 
   sortOptions = [
-    {value: 'recipeName,asc', viewValue: 'Nama Resep (A-Z)'},
-    {value: 'recipeName,desc', viewValue: 'Nama Resep (Z-A)'},
-    {value: 'timeCook,asc', viewValue: 'Waktu Memasak (A-Z)'},
-    {value: 'timeCook,desc', viewValue: 'Waktu Memasak (Z-A)'}
+    { value: 'recipeName,asc', viewValue: 'Nama Resep (A-Z)' },
+    { value: 'recipeName,desc', viewValue: 'Nama Resep (Z-A)' },
+    { value: 'timeCook,asc', viewValue: 'Waktu Memasak (A-Z)' },
+    { value: 'timeCook,desc', viewValue: 'Waktu Memasak (Z-A)' },
   ];
 
   sortTime = [
-    {value: '0', viewValue: 'All'},
-    {value: '0-30', viewValue: 'O-30 menit'},
-    {value: '30-60', viewValue: '31-60 menit'},
-    {value: '60', viewValue: '> 60'},
+    { value: '0', viewValue: 'All' },
+    { value: '0-30', viewValue: 'O-30 menit' },
+    { value: '30-60', viewValue: '31-60 menit' },
+    { value: '60', viewValue: '> 60' },
   ];
 
   constructor(
@@ -75,23 +75,35 @@ export class MyRecipeComponent implements OnInit {
   }
 
   loadBookRecipes(): void {
-    let params: { pageNumber?: number, pageSize?: number, levelId?: number, userId?: number, sortBy?: string, time?: string, categoryId?: number, recipeName?: string } = {};
+    let params: {
+      pageNumber?: number;
+      pageSize?: number;
+      levelId?: number;
+      userId?: number;
+      sortBy?: string;
+      time?: string;
+      categoryId?: number;
+      recipeName?: string;
+    } = {};
 
-    if ( this.pageNumber) params.pageNumber = this.pageNumber;
-    if ( this.pageSize) params.pageSize = this.pageSize;
-    if ( this.selectedLevelId) params.levelId = this.selectedLevelId;
-    if ( this.userId) params.userId = this.userId;
-    if ( this.sortBy) params.sortBy = this.sortBy;
-    if ( this.time) params.time = this.time;
-    if ( this.categoryId) params.categoryId = this.categoryId;
-    if ( this.searchText) params.recipeName = this.searchText;
+    if (this.pageNumber) params.pageNumber = this.pageNumber;
+    if (this.pageSize) params.pageSize = this.pageSize;
+    if (this.selectedLevelId) params.levelId = this.selectedLevelId;
+    if (this.userId) params.userId = this.userId;
+    if (this.sortBy) params.sortBy = this.sortBy;
+    if (this.time) params.time = this.time;
+    if (this.categoryId) params.categoryId = this.categoryId;
+    if (this.searchText) params.recipeName = this.searchText;
 
-    this.recipeBookService.getMyRecipes(params).subscribe(data => {
+    this.recipeBookService.getMyRecipes(params).subscribe((data) => {
       this.myRecipes = data.data;
       this.filteredRecipes = [...this.myRecipes];
       this.totalItems = data.total;
       this.totalPages = Math.ceil(this.totalItems / this.pageSize);
-      this.pagesArray = Array.from({ length: this.totalPages}, (_, i) => i + 1);
+      this.pagesArray = Array.from(
+        { length: this.totalPages },
+        (_, i) => i + 1
+      );
     });
   }
 
@@ -114,10 +126,10 @@ export class MyRecipeComponent implements OnInit {
         sortOptions: this.sortOptions,
         time: this.time,
         sortTime: this.sortTime,
-      }
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.selectedLevelId = result.selectedLevelId;
         this.categoryId = result.categoryId;
@@ -135,7 +147,6 @@ export class MyRecipeComponent implements OnInit {
       width: '100%',
       backdropClass: 'dialog',
 
-
       data: {
         selectedLevelId: this.selectedLevelId,
         levels: this.levels,
@@ -143,10 +154,10 @@ export class MyRecipeComponent implements OnInit {
         category: this.category,
         time: this.time,
         sortTime: this.sortTime,
-      }
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.selectedLevelId = result.selectedLevelId;
         this.categoryId = result.categoryId;
@@ -176,14 +187,19 @@ export class MyRecipeComponent implements OnInit {
     }
 
     console.log('addFavorite called with', recipeId, this.userId);
-    this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(response => {
-      const bookRecipe = this.filteredRecipes.find(recipe => recipe.recipeId === recipeId);
-      if (bookRecipe) {
-        bookRecipe.isFavorite = !bookRecipe.isFavorite;
+    this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(
+      (response) => {
+        const bookRecipe = this.filteredRecipes.find(
+          (recipe) => recipe.recipeId === recipeId
+        );
+        if (bookRecipe) {
+          bookRecipe.isFavorite = !bookRecipe.isFavorite;
+        }
+      },
+      (error) => {
+        console.error('addFavorite error', error);
       }
-    }, error => {
-      console.error('addFavorite error', error);
-    });
+    );
   }
 
   removeFavorite(recipeId: number) {
@@ -193,15 +209,20 @@ export class MyRecipeComponent implements OnInit {
     }
 
     console.log('addFavorite called with', recipeId, this.userId);
-    this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(response => {
-      const bookRecipe = this.filteredRecipes.find(recipe => recipe.recipeId === recipeId);
-      if (bookRecipe) {
-        bookRecipe.isFavorite = !bookRecipe.isFavorite;
-        alert('Berhasil menghapus favorit');
+    this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(
+      (response) => {
+        const bookRecipe = this.filteredRecipes.find(
+          (recipe) => recipe.recipeId === recipeId
+        );
+        if (bookRecipe) {
+          bookRecipe.isFavorite = !bookRecipe.isFavorite;
+          alert('Berhasil menghapus favorit');
+        }
+      },
+      (error) => {
+        console.error('addFavorite error', error);
       }
-    }, error => {
-      console.error('addFavorite error', error);
-    });
+    );
   }
 
   clearSearch() {
@@ -211,7 +232,9 @@ export class MyRecipeComponent implements OnInit {
 
   filterByLevel() {
     if (this.selectedLevelId) {
-      this.filteredRecipes = this.myRecipes.filter(recipe => recipe.levels?.id === this.selectedLevelId);
+      this.filteredRecipes = this.myRecipes.filter(
+        (recipe) => recipe.levels?.id === this.selectedLevelId
+      );
     } else {
       this.filteredRecipes = [...this.myRecipes];
     }
