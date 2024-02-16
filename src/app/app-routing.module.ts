@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AddrecipeComponent } from './addrecipe/addrecipe.component';
+import { AddrecipeComponent } from './feature/addrecipe/addrecipe.component';
 
-import { SignupComponent } from './signup/signup.component';
-import { FormSigninComponent } from './form-signin/form-signin.component';
-import { AuthGuard } from './utils/auth-guard.guard';
-import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
-import { RecipeListComponent } from './recipe-list/recipe-list.component';
-import { HeaderComponent } from './header/header.component';
-import { ResepFavoritComponent } from './resep-favorit/resep-favorit.component';
+import { SignupComponent } from './feature/signup/signup.component';
+import { FormSigninComponent } from './feature/form-signin/form-signin.component';
+import { AuthGuard } from './core/utils/auth-guard.guard';
+import { RecipeDetailComponent } from './feature/recipe-detail/recipe-detail.component';
+import { RecipeListComponent } from './feature/recipe-list/recipe-list.component';
+import { ResepFavoritComponent } from './feature/resep-favorit/resep-favorit.component';
 
 const routes: Routes = [
   { path: '', component: FormSigninComponent },

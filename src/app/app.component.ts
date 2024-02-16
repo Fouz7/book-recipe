@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router, NavigationError } from '@angular/router';
 
-import { AccountService } from './_service';
-import { User } from './_models';
+import { AccountService } from './core/services';
+import { User } from './core/models';
 
 @Component({
   selector: 'app-root',
