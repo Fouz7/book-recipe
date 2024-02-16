@@ -5,7 +5,6 @@ import { ConfirmationService, ConfirmEventType } from 'primeng/api';
 import { RecipeBookService } from '../services/recipe-book-service.service';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { FavoriteDialogComponent } from '@app/favorite-dialog/favorite-dialog.component';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -21,7 +20,7 @@ export class RecipeDetailComponent {
   ingredients: any;
   recipeId: number | undefined = undefined;
   userId: number | null = null;
-  
+
   constructor(
     private route: ActivatedRoute,
     private recipeBookService: RecipeBookService,

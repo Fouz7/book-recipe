@@ -29,8 +29,6 @@ import { HeaderComponent } from './header/header.component';
 import { UpdateBookRecipeComponent } from './update-book-recipe/update-book-recipe.component';
 import { QuillConfigModule, QuillModule } from 'ngx-quill';
 import { SignupComponent } from './signup/signup.component';
-import { LoginComponent } from './signup/login.component';
-import { fakeBackendProvider } from './_helpers';
 import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 import { RecipeListComponent } from './recipe-list/recipe-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -55,7 +53,6 @@ import { MatGridListModule } from '@angular/material/grid-list';
     UpdateBookRecipeComponent,
     FormSigninComponent,
     SignupComponent,
-    LoginComponent,
     RecipeDetailComponent,
     RecipeListComponent,
     FilterDialogComponent,
