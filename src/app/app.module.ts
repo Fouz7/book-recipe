@@ -26,7 +26,6 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { HeaderComponent } from './header/header.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './signup/login.component';
-import { fakeBackendProvider } from './_helpers';
 import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 import { RecipeListComponent } from './recipe-list/recipe-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
