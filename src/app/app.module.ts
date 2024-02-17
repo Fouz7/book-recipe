@@ -1,6 +1,6 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,14 +18,17 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SidebarModule } from 'primeng/sidebar';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+
 import { ConfirmationService } from 'primeng/api';
 
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { HeaderComponent } from './core/components/header/header.component';
-import { SignupComponent } from './feature/signup/signup.component';
-import { LoginComponent } from './feature/signup/login.component';
+import { UpdateBookRecipeComponent } from './feature/update-book-recipe/update-book-recipe.component';
+import { QuillConfigModule, QuillModule } from 'ngx-quill';
+import { SignupComponent } from './feature/signup';
 import { RecipeDetailComponent } from './feature/recipe-detail/recipe-detail.component';
 import { RecipeListComponent } from './feature/recipe-list/recipe-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -37,24 +40,24 @@ import { ResepFavoritComponent } from './feature/resep-favorit/resep-favorit.com
 import { AuthInterceptor } from './core/utils/auth.interceptor';
 import { FormSigninComponent } from './feature/form-signin/form-signin.component';
 import { FavoriteDialogComponent } from './core/components/favorite-dialog/favorite-dialog.component';
+import { MyRecipeComponent } from './feature/my-recipe/my-recipe.component';
 import { AddrecipeComponent } from './feature/addrecipe/addrecipe.component';
-import { QuillConfigModule, QuillModule } from 'ngx-quill';
-import { NgxDropzoneModule } from 'ngx-dropzone';
 import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    UpdateBookRecipeComponent,
     FormSigninComponent,
     SignupComponent,
-    LoginComponent,
     RecipeDetailComponent,
     RecipeListComponent,
     FilterDialogComponent,
     DekstopFilterDialogComponent,
     ResepFavoritComponent,
     FavoriteDialogComponent,
+    MyRecipeComponent,
     AddrecipeComponent,
   ],
   imports: [
@@ -80,6 +83,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
     ReactiveFormsModule,
     MatDialogModule,
     SidebarModule,
+    ReactiveFormsModule,
+    QuillModule.forRoot(),
+    NgxDropzoneModule,
     ConfirmDialogModule,
     QuillModule.forRoot(),
     NgxDropzoneModule,

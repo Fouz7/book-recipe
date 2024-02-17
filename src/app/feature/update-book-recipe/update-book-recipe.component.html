@@ -1,0 +1,131 @@
+<app-header></app-header>
+<div class="container">
+  <p>
+    <!-- <div class="mt-4"> -->
+      <h1 class="text-center fw-medium mt-5">Edit Resep Makanan</h1>
+    <!-- </div> -->
+
+  <form [formGroup]="editRecipeForm" (ngSubmit)="onSubmit()">
+    <!-- Category Dropdown -->
+    <div class="row justify-content-center mt-5">
+      <div class="col-4">
+
+        <!-- Recipe Name Input -->
+        <div class="form-group">
+          <label for="recipeName" class="form-label label-color">Nama Resep Makanan <span class="asterisk">*</span></label>
+          <input formControlName="recipeName" id="recipeName validationDefault01" type="text" class="form-control" [value]="editRecipe.recipeName" required>
+          <p *ngIf="editRecipeForm.get('recipeName')?.touched && editRecipeForm.get('recipeName')?.invalid" class="required-color">
+            Nama resep makanan harus diisi.
+          </p>
+        </div>
+
+        <!-- Image File Input -->
+        <div class="form-group">
+          <label for="imageFilename" class="form-label label-color mt-4">Gambar Masakan <span class="asterisk">*</span></label>
+          <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+            <!-- <ngx-dropzone> -->
+              <ngx-dropzone-label>Click to upload or drag and drop PNG, JPG, JPEG (MAX 1MB)</ngx-dropzone-label>
+              <ngx-dropzone-image-preview
+                *ngFor="let f of files"
+                [file]="f"
+                [removable]="true"
+                (removed)="onRemove(f)"
+              >
+              </ngx-dropzone-image-preview>
+            <!-- </ngx-dropzone> -->
+            <div *ngIf="editRecipeForm.get('imageFilename')?.touched && editRecipeForm.get('imageFilename')?.invalid" class="alert alert-danger">
+              Image Filename is required.
+            </div>
+          </div>
+        </div>
+
+        <!-- Ingredient Textarea -->
+        <div class="form-group">
+          <label for="ingredient" class="form-label label-color mt-4">Bahan-Bahan <span class="asterisk">*</span></label>
+          <quill-editor
+            class="quillbox1 bg-white"
+            formControlName="ingridient"
+            id="ingridient"
+            [required]="true"
+            [minlength]="1"
+            [maxLength]="255"
+            [ngClass]="{
+              'is-invalid': editRecipeForm.get('ingridient')?.invalid && editRecipeForm.get('ingridient')?.touched,
+              'ng-touched': editRecipeForm.get('ingridient')?.touched
+            }"
+          ></quill-editor>
+          <p *ngIf="editRecipeForm.get('ingridient')?.errors?.['maxlength']" class="required-color">
+            Bahan makanan tidak boleh melebihi 255 karakter!
+          </p>
+          <p *ngIf="editRecipeForm.get('ingridient')?.touched && editRecipeForm.get('ingridient')?.invalid && !editRecipeForm.get('ingridient')?.errors?.['maxlength']" class="required-color">
+            Bahan makanan harus diisi!
+          </p>
+        </div>
+
+      </div>
+
+      <div class="col-1">
+      </div>
+
+      <div class="col-4">
+        <!-- Category -->
+        <div class="form-group">
+          <label class="form-label label-color">Kategori Masakan <span class="asterisk">*</span></label>
+          <select formControlName="categoryId" class="form-select dropdownn-toggle" id="categoryId">
+            <option value="" disabled>Pilih Kategori</option>
+            <option *ngFor="let category of this.categoryFood" [value]="category.categoryId">{{ category.categoryName }}</option>
+          </select>
+        </div>
+        <div class="row mt-4">
+          <div class="col">
+            <!-- Time Cook Input -->
+            <div class="form-group">
+              <label for="timeCook" class="form-label label-color">Waktu Memasak (Menit) <span class="asterisk">*</span></label>
+              <input formControlName="timeCook" id="timeCook" type="number" class="form-control" required>
+              <p *ngIf="editRecipeForm.get('timeCook')?.touched && editRecipeForm.get('timeCook')?.invalid" class="required-color">
+                Waktu tidak boleh dibawah 1 menit.
+              </p>
+            </div>
+          </div>
+          <div class="col">
+            <!-- Level Dropdown -->
+            <div class="form-group">
+              <label for="levelId" class="form-label label-color">Tingkat Kesulitan <span class="asterisk">*</span></label>
+              <select formControlName="levelId" class="form-select" id="levelId">
+                <option *ngFor="let level of this.levelFood" [value]="level.levelId">{{ level.levelName }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+       <!-- How to Cook Textarea -->
+      <div class="form-group">
+        <label for="howToCook" class="form-label label-color mt-4">Cara masak <span class="asterisk">*</span></label>
+        <quill-editor
+          class="quillbox1 bg-white"
+          formControlName="howToCook"
+          id="howToCook"
+          [required]="true"
+          [minlength]="1"
+          [maxLength]="255"
+          [ngClass]="{
+            'is-invalid': editRecipeForm.get('howToCook')?.invalid && editRecipeForm.get('howToCook')?.touched,
+            'ng-touched': editRecipeForm.get('howToCook')?.touched
+          }"
+        ></quill-editor>
+        <p *ngIf="editRecipeForm.get('howToCook')?.errors?.['maxlength']" class="required-color">
+          Cara memasak tidak boleh melebihi 255 karakter!
+        </p>
+        <p *ngIf="editRecipeForm.get('howToCook')?.touched && editRecipeForm.get('howToCook')?.invalid && !editRecipeForm.get('howToCook')?.errors?.['maxlength']" class="required-color">
+          Cara memasak harus diisi!
+        </p>
+      </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="button-addSubmit float-end mt-4">Submit</button>
+        <!-- Submit Button -->
+        <button type="button" routerLink="/resep-saya" class="button-cancel float-end mt-4">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>

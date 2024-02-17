@@ -24,6 +24,20 @@ export class RecipeBookService {
     return this.http.get(`${url}?${query}`);
   }
 
+  getMyRecipes(params: { pageNumber?: number, pageSize?: number, recipeName?: string, time?: string, levelId?: number, categoryId?: number, userId?: number, sortBy?: string}): Observable<any> {
+    const url = `${environment.apiUrl}/book-recipe/my-recipes`;
+    let query = '';
+    for (const key in params) {
+      if (params[key as keyof typeof params]!== undefined && params[key as keyof typeof params]!== null) {
+        if (query!== '') {
+          query += '&';
+        }
+        query += `${key}=${params[key as keyof typeof params]}`;
+      }
+    }
+    return this.http.get(`${url}?${query}`);
+  }
+
   getRecipeDetail(recipeId: string): Observable<any> {
     const url = `${environment.apiUrl}/book-recipe/book-recipes/${recipeId}`;
     return this.http.get(url);

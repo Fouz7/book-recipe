@@ -1,16 +1,20 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { ConfirmationService, ConfirmEventType } from 'primeng/api';
+import { ConfirmationService} from 'primeng/api';
 import { RecipeBookService } from '../../core/services/recipe-book-service.service';
-import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { 
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition
+} from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { FavoriteDialogComponent } from '@app/core/components/favorite-dialog/favorite-dialog.component';
 
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
-  styleUrl: './recipe-detail.component.css'
+  styleUrl: './recipe-detail.component.css',
 })
 export class RecipeDetailComponent {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
