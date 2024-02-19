@@ -101,7 +101,7 @@ export class RecipeBookService {
   }
 
   deleteMyRecipe(recipeId: number, userId: number): Observable<any> {
-    const url = `https://mt-springboot.cloudias79.com/api/book-recipe/book-recipes/${recipeId}?userId=${userId}`;
+    const url = `${environment.apiUrl}/book-recipe/book-recipes/${recipeId}?userId=${userId}`;
     const body = {
       userId: userId,
     };
