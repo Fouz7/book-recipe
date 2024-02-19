@@ -18,7 +18,6 @@ export class EditRecipeService {
 
   updateRecipe(formData: FormData): Observable<any> {
     const url = `${this.apiUrl}`;
-    const headers = new HttpHeaders();
     return this.httpClient.put<any>(url, formData);
   }
 
@@ -32,5 +31,5 @@ export class EditRecipeService {
     return this.httpClient.get(
       `https://mt-springboot.cloudias79.com/api/book-recipe-masters/level-option-lists`
     );
-  } 
+  }
 }

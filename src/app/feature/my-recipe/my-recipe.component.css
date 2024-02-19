@@ -232,7 +232,7 @@ button {
 }
 
 .mat-card {
-  position: relative; /* Membuat posisi relatif untuk kontainer mat-card */
+  position: relative;
 }
 
 .mat-menu-trigger {
@@ -240,7 +240,7 @@ button {
   top: -5px;
   color: white;
   right: -5px;
-  z-index: 1; /* Pastikan tombol dropdown berada di atas gambar */
+  z-index: 1;
 }
 
 .mat-item-edit{
