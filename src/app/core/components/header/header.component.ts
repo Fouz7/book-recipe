@@ -16,6 +16,4 @@ export class HeaderComponent {
   logout() {
     this.accountService.logout();
   }
-
-
 }

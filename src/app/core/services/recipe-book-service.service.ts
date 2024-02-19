@@ -7,14 +7,25 @@ import { environment } from '@environments/environments';
   providedIn: 'root',
 })
 export class RecipeBookService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  getRecipeList(params: { pageNumber?: number, pageSize?: number, recipeName?: string, time?: string, levelId?: number, categoryId?: number, userId?: number, sortBy?: string }): Observable<any> {
+  getRecipeList(params: {
+    pageNumber?: number;
+    pageSize?: number;
+    recipeName?: string;
+    time?: string;
+    levelId?: number;
+    categoryId?: number;
+    userId?: number;
+    sortBy?: string;
+  }): Observable<any> {
     const url = `${environment.apiUrl}/book-recipe/book-recipes`;
     let query = '';
     for (const key in params) {
-      if (params[key as keyof typeof params] !== undefined && params[key as keyof typeof params] !== null) {
+      if (
+        params[key as keyof typeof params] !== undefined &&
+        params[key as keyof typeof params] !== null
+      ) {
         if (query !== '') {
           query += '&';
         }
@@ -24,12 +35,24 @@ export class RecipeBookService {
     return this.http.get(`${url}?${query}`);
   }
 
-  getMyRecipes(params: { pageNumber?: number, pageSize?: number, recipeName?: string, time?: string, levelId?: number, categoryId?: number, userId?: number, sortBy?: string}): Observable<any> {
+  getMyRecipes(params: {
+    pageNumber?: number;
+    pageSize?: number;
+    recipeName?: string;
+    time?: string;
+    levelId?: number;
+    categoryId?: number;
+    userId?: number;
+    sortBy?: string;
+  }): Observable<any> {
     const url = `${environment.apiUrl}/book-recipe/my-recipes`;
     let query = '';
     for (const key in params) {
-      if (params[key as keyof typeof params]!== undefined && params[key as keyof typeof params]!== null) {
-        if (query!== '') {
+      if (
+        params[key as keyof typeof params] !== undefined &&
+        params[key as keyof typeof params] !== null
+      ) {
+        if (query !== '') {
           query += '&';
         }
         query += `${key}=${params[key as keyof typeof params]}`;
@@ -47,16 +70,27 @@ export class RecipeBookService {
     const url = `${environment.apiUrl}/book-recipe/book-recipes/${recipeId}/favorites`;
     console.log('url is', url);
     const body = {
-      userId: userId
+      userId: userId,
     };
     return this.http.put(url, body);
   }
 
-  getFavoriteRecipes(params: { pageNumber?: number, pageSize?: number, time?: string, levelId?: number, categoryId?: number, userId?: number, sortBy?: string }): Observable<any> {
+  getFavoriteRecipes(params: {
+    pageNumber?: number;
+    pageSize?: number;
+    time?: string;
+    levelId?: number;
+    categoryId?: number;
+    userId?: number;
+    sortBy?: string;
+  }): Observable<any> {
     const url = `${environment.apiUrl}/book-recipe/my-favorite-recipes`;
     let query = '';
     for (const key in params) {
-      if (params[key as keyof typeof params] !== undefined && params[key as keyof typeof params] !== null) {
+      if (
+        params[key as keyof typeof params] !== undefined &&
+        params[key as keyof typeof params] !== null
+      ) {
         if (query !== '') {
           query += '&';
         }
@@ -66,6 +100,11 @@ export class RecipeBookService {
     return this.http.get(`${url}?${query}`);
   }
 
-
+  deleteMyRecipe(recipeId: number, userId: number): Observable<any> {
+    const url = `${environment.apiUrl}/book-recipe/book-recipes/${recipeId}?userId=${userId}`;
+    const body = {
+      userId: userId,
+    };
+    return this.http.put(url, body);
+  }
 }
-

@@ -43,6 +43,8 @@ import { FavoriteDialogComponent } from './core/components/favorite-dialog/favor
 import { MyRecipeComponent } from './feature/my-recipe/my-recipe.component';
 import { AddrecipeComponent } from './feature/addrecipe/addrecipe.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { ConfirmationDialogComponent } from './core/components/delete-dialog/confirmationdialog.component';
+import { DeleteDialogSuccessComponent } from './core/components/delete-dialog-success/delete-dialog-success.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
     FavoriteDialogComponent,
     MyRecipeComponent,
     AddrecipeComponent,
+    ConfirmationDialogComponent,
+    DeleteDialogSuccessComponent,
   ],
   imports: [
     BrowserModule,

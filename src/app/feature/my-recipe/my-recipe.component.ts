@@ -1,8 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 import { DekstopFilterDialogComponent } from '@app/core/components/dekstop-filter-dialog/dekstop-filter-dialog.component';
+import { FavoriteDialogComponent } from '@app/core/components/favorite-dialog/favorite-dialog.component';
 import { FilterDialogComponent } from '@app/core/components/filter-dialog/filter-dialog.component';
 import { RecipeBookService } from '@app/core/services/recipe-book-service.service';
+import { ConfirmationService } from 'primeng/api';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ConfirmationDialogComponent } from '../../core/components/delete-dialog/confirmationdialog.component';
+import { DeleteDialogSuccessComponent } from '@app/core/components/delete-dialog-success/delete-dialog-success.component';
 
 @Component({
   selector: 'app-my-recipe',
@@ -28,6 +38,7 @@ export class MyRecipeComponent implements OnInit {
   selectedLevelId: number = 0;
   selectedSortOption: string = '';
   isFiltering = false;
+  recipeName: string = '';
 
   levels = [
     { id: 3, name: 'Easy' },
@@ -57,8 +68,13 @@ export class MyRecipeComponent implements OnInit {
     { value: '60', viewValue: '> 60' },
   ];
 
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+
   constructor(
     private recipeBookService: RecipeBookService,
+    private confirmationService: ConfirmationService,
+    private snackbar: MatSnackBar,
     public dialog: MatDialog
   ) {
     const userItem = localStorage.getItem('user');
@@ -72,6 +88,7 @@ export class MyRecipeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadBookRecipes();
+    console.log(this.userId);
   }
 
   loadBookRecipes(): void {
@@ -181,6 +198,7 @@ export class MyRecipeComponent implements OnInit {
   }
 
   addFavorite(recipeId: number) {
+    let message = 'Berhasil Ditambahkan ke favorit';
     if (this.userId === null || this.userId === undefined) {
       console.error('addFavorite error: userId is', this.userId);
       return;
@@ -194,6 +212,12 @@ export class MyRecipeComponent implements OnInit {
         );
         if (bookRecipe) {
           bookRecipe.isFavorite = !bookRecipe.isFavorite;
+          this.snackbar.open(message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            duration: 2000,
+            panelClass: 'custom-snackbar',
+          });
         }
       },
       (error) => {
@@ -203,26 +227,27 @@ export class MyRecipeComponent implements OnInit {
   }
 
   removeFavorite(recipeId: number) {
-    if (this.userId === null || this.userId === undefined) {
-      console.error('addFavorite error: userId is', this.userId);
-      return;
-    }
-
-    console.log('addFavorite called with', recipeId, this.userId);
-    this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(
-      (response) => {
-        const bookRecipe = this.filteredRecipes.find(
-          (recipe) => recipe.recipeId === recipeId
-        );
-        if (bookRecipe) {
-          bookRecipe.isFavorite = !bookRecipe.isFavorite;
-          alert('Berhasil menghapus favorit');
-        }
+    this.confirmationService.confirm({
+      message: `Apakah Anda yakin ingin menghapus resep ini dari favorit?`,
+      header: 'Konfirmasi',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        if (this.userId === null || this.userId === undefined) return;
+        this.recipeBookService
+          .addFavorite(recipeId, this.userId)
+          .subscribe((response) => {
+            const bookRecipe = this.filteredRecipes.find(
+              (recipe) => recipe.recipeId === recipeId
+            );
+            if (bookRecipe) {
+              bookRecipe.isFavorite = !bookRecipe.isFavorite;
+              const dialogRef = this.dialog.open(FavoriteDialogComponent, {
+                panelClass: 'custom-fav-dialog',
+              });
+            }
+          });
       },
-      (error) => {
-        console.error('addFavorite error', error);
-      }
-    );
+    });
   }
 
   clearSearch() {
@@ -238,5 +263,49 @@ export class MyRecipeComponent implements OnInit {
     } else {
       this.filteredRecipes = [...this.myRecipes];
     }
+  }
+
+  getRecipeName(recipeId: number): string {
+    const recipe = this.myRecipes.find(
+      (recipe) => recipe.recipeId === recipeId
+    );
+    return recipe ? recipe.recipeName : 'Resep';
+  }
+
+  deleteRecipe(recipeId: number) {
+    this.recipeName = this.getRecipeName(recipeId);
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { recipeName: this.recipeName },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.confirmDeleteRecipe(recipeId);
+      }
+    });
+  }
+
+  confirmDeleteRecipe(recipeId: number) {
+    if (this.userId === null || this.userId === undefined) {
+      console.error('deleteRecipe error: userId is', this.userId);
+      return;
+    }
+    this.recipeName = this.getRecipeName(recipeId);
+    const dialogRef = this.dialog.open(DeleteDialogSuccessComponent, {
+      data: { recipeName: this.recipeName },
+      panelClass: 'custom-fav-dialog',
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.loadBookRecipes();
+    });
+
+    this.recipeBookService.deleteMyRecipe(recipeId, this.userId).subscribe(
+      (res: any) => {},
+      (error: HttpErrorResponse) => {
+        console.log(error);
+        alert('Failed to delete recipe!');
+      }
+    );
   }
 }

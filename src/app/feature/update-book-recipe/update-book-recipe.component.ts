@@ -107,7 +107,6 @@ export class UpdateBookRecipeComponent implements OnInit {
 
     const allowedFileTypes = ['image/jpeg', 'image/jpg', 'image/png'];
     const maxFileSize = 1024 * 1024;
-    const minFileSize = 0;
 
     for (const file of this.files) {
       if (!allowedFileTypes.includes(file.type)) {
