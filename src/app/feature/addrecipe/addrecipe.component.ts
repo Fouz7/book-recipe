@@ -1,10 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FileHandle } from '@app/core/models/file-handle.model';
 import { CategoryFoodResponse } from '@app/core/models/categoryfoodresponse.model';
 import { LevelFoodResponse } from '@app/core/models/levelfoodresponse.model';
@@ -17,10 +13,24 @@ import { AddrecipeService } from '@app/core/services/addrecipe.service';
   styleUrl: './addrecipe.component.css',
 })
 export class AddrecipeComponent {
+  userId: number | null = null;
+
   constructor(
     private addrecipeService: AddrecipeService,
     private router: Router
-  ) {}
+  ) {
+    const userItem = localStorage.getItem('user');
+    let user = null;
+
+    if (userItem) {
+      user = JSON.parse(userItem);
+      this.userId = user && user.data && user.data.id;
+      console.log(this.userId);
+
+      // Set nilai userId kembali setelah mendapatkan dari local storage
+      this.addRecipeForm.controls['userId'].setValue(this.userId);
+    }
+  }
 
   categoryFood!: CategoryFoodResponse[];
   levelFood!: LevelFoodResponse[];
@@ -89,7 +99,7 @@ export class AddrecipeComponent {
       levelId: new FormControl(''),
       levelName: new FormControl(''),
     }),
-    userId: new FormControl('330'),
+    userId: new FormControl(this.userId),
     timeCook: new FormControl('', Validators.required),
     ingridient: new FormControl('', Validators.required),
     howToCook: new FormControl('', Validators.required),
