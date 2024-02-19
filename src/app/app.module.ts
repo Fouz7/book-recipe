@@ -25,25 +25,23 @@ import { ConfirmationService } from 'primeng/api';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { UpdateBookRecipeComponent } from './update-book-recipe/update-book-recipe.component';
+import { HeaderComponent } from './core/components/header/header.component';
+import { UpdateBookRecipeComponent } from './feature/update-book-recipe/update-book-recipe.component';
 import { QuillConfigModule, QuillModule } from 'ngx-quill';
-import { SignupComponent } from './signup/signup.component';
-import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
-import { RecipeListComponent } from './recipe-list/recipe-list.component';
+import { SignupComponent } from './feature/signup';
+import { RecipeDetailComponent } from './feature/recipe-detail/recipe-detail.component';
+import { RecipeListComponent } from './feature/recipe-list/recipe-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
+import { FilterDialogComponent } from './core/components/filter-dialog/filter-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { DekstopFilterDialogComponent } from './dekstop-filter-dialog/dekstop-filter-dialog.component';
-import { ResepFavoritComponent } from './resep-favorit/resep-favorit.component';
-import { AuthInterceptor } from './utils/auth.interceptor';
-import { FormSigninComponent } from './form-signin/form-signin.component';
-import { FavoriteDialogComponent } from './favorite-dialog/favorite-dialog.component';
-import { MyRecipeComponent } from './my-recipe/my-recipe.component';
-
-
-import { AddrecipeComponent } from './addrecipe/addrecipe.component';
+import { DekstopFilterDialogComponent } from './core/components/dekstop-filter-dialog/dekstop-filter-dialog.component';
+import { ResepFavoritComponent } from './feature/resep-favorit/resep-favorit.component';
+import { AuthInterceptor } from './core/utils/auth.interceptor';
+import { FormSigninComponent } from './feature/form-signin/form-signin.component';
+import { FavoriteDialogComponent } from './core/components/favorite-dialog/favorite-dialog.component';
+import { MyRecipeComponent } from './feature/my-recipe/my-recipe.component';
+import { AddrecipeComponent } from './feature/addrecipe/addrecipe.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
