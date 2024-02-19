@@ -81,10 +81,6 @@ body {
   border-radius: 4px !important;
 }
 
-/* .mat-mdc-snack-bar-handset {
-  background-color: white !important;
-} */
-
 .confirmDialog .close-button {
   align-self: flex-end;
   color: darkgray;
@@ -94,14 +90,14 @@ body {
   border: 3px solid #01bfbf;
   border-radius: 4px;
   padding: 0.5em 1em;
-  color: #01bfbf;
+  color: #01bfbf !important;
   margin-right: 2em;
   font-weight: bold;
 }
 
 .confirmDialog .acceptButton {
-  background-color: #01bfbf;
-  color: white;
+  background-color: #01bfbf !important;
+  color: white !important;
   padding: 0.7em 2em;
   border-radius: 4px;
   font-weight: bold;
@@ -203,7 +199,7 @@ body {
   }
   .custom-fav-dialog .dialog .img .img2 {
     position: absolute;
-    top: 27%;
+    top: 26%;
   }
 
   .custom-fav-dialog .dialog .closeButton {
