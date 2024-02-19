@@ -231,6 +231,34 @@ button {
   color: #01bfbf;
 }
 
+.mat-card {
+  position: relative; /* Membuat posisi relatif untuk kontainer mat-card */
+}
+
+.mat-menu-trigger {
+  position: absolute;
+  top: -5px;
+  color: white;
+  right: -5px;
+  z-index: 1; /* Pastikan tombol dropdown berada di atas gambar */
+}
+
+.mat-item-edit{
+  color:#01bfbf;
+}
+
+.mat-item-edit .item-edit{
+  color:#01bfbf;
+}
+
+.mat-item-delete{
+  color:#bf0101;
+}
+
+.mat-item-delete .item-delete{
+  color:#bf0101;
+}
+
 mat-divider {
   border: 1px solid #01bfbf !important;
   margin: -5% 30% 0 30% !important;
