@@ -107,9 +107,25 @@
 
   <!-- Recipe Cards -->
   <section class="container">
-    <mat-card *ngFor="let bookRecipe of filteredRecipes">
+    <mat-card *ngFor="let bookRecipe of filteredRecipes" class="mat-card">
+      <button mat-icon-button [matMenuTriggerFor]="menu" class="mat-menu-trigger" aria-label="Example icon-button with a menu">
+        <mat-icon>more_horiz</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" xPosition="before">
+        <button mat-menu-item class="mat-item-edit" [routerLink]="['/update-recipe', bookRecipe.recipeId]">
+          <mat-icon class="item-edit">edit_square</mat-icon>
+          <span>Edit</span>
+        </button>
+        <button mat-menu-item class="mat-item-delete">
+          <mat-icon class="item-delete">delete_sweep</mat-icon>
+          <span>Delete</span>
+        </button>
+      </mat-menu>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a href="">Edit</a>
+        <a href="">Hapus</a>
+      </div>
       <img mat-card-image [src]="bookRecipe.imageUrl" alt="Card image" />
-      <button>hihi</button>
       <mat-card-content>
         <div class="content">
           <span>{{ bookRecipe.categories?.categoryName }}</span>
