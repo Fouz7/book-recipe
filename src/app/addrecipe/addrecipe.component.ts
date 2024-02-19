@@ -19,10 +19,24 @@ import { Router } from '@angular/router';
   styleUrl: './addrecipe.component.css',
 })
 export class AddrecipeComponent {
+  userId: number | null = null;
+
   constructor(
     private addrecipeService: AddrecipeService,
     private router: Router
-  ) {}
+  ) {
+    const userItem = localStorage.getItem('user');
+    let user = null;
+
+    if (userItem) {
+      user = JSON.parse(userItem);
+      this.userId = user && user.data && user.data.id;
+      console.log(this.userId);
+
+      // Set nilai userId kembali setelah mendapatkan dari local storage
+      this.addRecipeForm.controls['userId'].setValue(this.userId);
+    }
+  }
 
   categoryFood!: CategoryFoodResponse[];
   levelFood!: LevelFoodResponse[];
@@ -91,7 +105,7 @@ export class AddrecipeComponent {
       levelId: new FormControl(''),
       levelName: new FormControl(''),
     }),
-    userId: new FormControl('372'),
+    userId: new FormControl(this.userId),
     timeCook: new FormControl('', Validators.required),
     ingridient: new FormControl('', Validators.required),
     howToCook: new FormControl('', Validators.required),
