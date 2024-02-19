@@ -16,8 +16,17 @@ import { MyRecipeComponent } from './my-recipe/my-recipe.component';
 const routes: Routes = [
   { path: '', component: FormSigninComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'resep-saya', component: MyRecipeComponent, canActivate: [AuthGuard]},
-  { path: 'update-recipe/:recipeId', component: UpdateBookRecipeComponent },
+
+  {
+    path: 'resep-saya',
+    component: MyRecipeComponent,
+    canActivate: [AuthGuard]
+  },
+
+  {
+    path: 'update-recipe/:recipeId',
+    component: UpdateBookRecipeComponent
+  },
 
   {
     path: 'daftar-resep',

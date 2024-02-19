@@ -1,8 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition
+} from '@angular/material/snack-bar';
 import { DekstopFilterDialogComponent } from '@app/dekstop-filter-dialog/dekstop-filter-dialog.component';
+import { FavoriteDialogComponent } from '@app/favorite-dialog/favorite-dialog.component';
 import { FilterDialogComponent } from '@app/filter-dialog/filter-dialog.component';
 import { RecipeBookService } from '@app/services/recipe-book-service.service';
+import { ConfirmEventType, ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-my-recipe',
@@ -57,8 +64,14 @@ export class MyRecipeComponent implements OnInit {
     { value: '60', viewValue: '> 60' },
   ];
 
+
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+
   constructor(
     private recipeBookService: RecipeBookService,
+    private confirmationService: ConfirmationService,
+    private snackbar: MatSnackBar,
     public dialog: MatDialog
   ) {
     const userItem = localStorage.getItem('user');
@@ -181,6 +194,7 @@ export class MyRecipeComponent implements OnInit {
   }
 
   addFavorite(recipeId: number) {
+    let message = 'Berhasil Ditambahkan ke favorit';
     if (this.userId === null || this.userId === undefined) {
       console.error('addFavorite error: userId is', this.userId);
       return;
@@ -194,6 +208,12 @@ export class MyRecipeComponent implements OnInit {
         );
         if (bookRecipe) {
           bookRecipe.isFavorite = !bookRecipe.isFavorite;
+          this.snackbar.open(message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            duration: 2000,
+            panelClass: 'custom-snackbar',
+          });
         }
       },
       (error) => {
@@ -203,26 +223,27 @@ export class MyRecipeComponent implements OnInit {
   }
 
   removeFavorite(recipeId: number) {
-    if (this.userId === null || this.userId === undefined) {
-      console.error('addFavorite error: userId is', this.userId);
-      return;
-    }
-
-    console.log('addFavorite called with', recipeId, this.userId);
-    this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(
-      (response) => {
-        const bookRecipe = this.filteredRecipes.find(
-          (recipe) => recipe.recipeId === recipeId
+    this.confirmationService.confirm({
+      message: `Apakah Anda yakin ingin menghapus resep ini dari favorit?`,
+      header: 'Konfirmasi',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        if (this.userId === null || this.userId === undefined) return;
+        this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(
+          (response) => {
+            const bookRecipe = this.filteredRecipes.find(
+              (recipe) => recipe.recipeId === recipeId
+            );
+            if (bookRecipe) {
+              bookRecipe.isFavorite = !bookRecipe.isFavorite;
+              const dialogRef = this.dialog.open(FavoriteDialogComponent, {
+                panelClass: 'custom-fav-dialog',
+              });
+            }
+          },
         );
-        if (bookRecipe) {
-          bookRecipe.isFavorite = !bookRecipe.isFavorite;
-          alert('Berhasil menghapus favorit');
-        }
       },
-      (error) => {
-        console.error('addFavorite error', error);
-      }
-    );
+    });
   }
 
   clearSearch() {

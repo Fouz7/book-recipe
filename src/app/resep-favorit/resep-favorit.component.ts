@@ -64,7 +64,7 @@ export class ResepFavoritComponent implements OnInit {
     {value: '0-30', viewValue: 'O-30 menit'},
     {value: '30-60', viewValue: '31-60 menit'},
     {value: '60', viewValue: '> 60'},
-   
+
   ];
 
   constructor(
@@ -89,7 +89,7 @@ export class ResepFavoritComponent implements OnInit {
 
   loadBookRecipes(): void {
     let params: { pageNumber?: number, pageSize?: number, levelId?: number, userId?: number, sortBy?: string, time?: string, categoryId?: number, recipeName?: string } = {};
-  
+
     if (this.pageNumber) params.pageNumber = this.pageNumber;
     if (this.pageSize) params.pageSize = this.pageSize;
     if (this.selectedLevelId) params.levelId = this.selectedLevelId;
@@ -98,7 +98,7 @@ export class ResepFavoritComponent implements OnInit {
     if (this.time) params.time = this.time;;
     if (this.categoryId) params.categoryId = this.categoryId;
     if (this.searchText) params.recipeName = this.searchText;
-  
+
     this.recipeBookService.getFavoriteRecipes(params).subscribe(data => {
       this.bookRecipes = data.data;
       this.filteredRecipes = [...this.bookRecipes];
@@ -120,8 +120,8 @@ export class ResepFavoritComponent implements OnInit {
       width: 'auto',
       backdropClass: 'dialog',
 
-      data: { 
-        selectedLevelId: this.selectedLevelId, 
+      data: {
+        selectedLevelId: this.selectedLevelId,
         levels: this.levels,
         categoryId: this.categoryId,
         category: this.category,
@@ -130,7 +130,7 @@ export class ResepFavoritComponent implements OnInit {
         sortTime: this.sortTime,
       }
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.selectedLevelId = result.selectedLevelId;
@@ -142,7 +142,7 @@ export class ResepFavoritComponent implements OnInit {
       this.isFiltering = false;
     });
   }
-  
+
 
   openFilterDialogMobile(): void {
     const dialogRef = this.dialog.open(FilterDialogComponent, {
@@ -150,8 +150,8 @@ export class ResepFavoritComponent implements OnInit {
       width: '100%',
       backdropClass: 'transparent-backdrop',
 
-      data: { 
-        selectedLevelId: this.selectedLevelId, 
+      data: {
+        selectedLevelId: this.selectedLevelId,
         levels: this.levels,
         categoryId: this.categoryId,
         category: this.category,
@@ -159,7 +159,7 @@ export class ResepFavoritComponent implements OnInit {
         sortTime: this.sortTime,
       }
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.selectedLevelId = result.selectedLevelId;
@@ -196,7 +196,7 @@ export class ResepFavoritComponent implements OnInit {
       console.error('addFavorite error: userId is', this.userId);
       return;
     }
-  
+
     console.log('addFavorite called with', recipeId, this.userId);
     this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(response => {
       const bookRecipe = this.filteredRecipes.find(recipe => recipe.recipeId === recipeId);
@@ -229,18 +229,11 @@ export class ResepFavoritComponent implements OnInit {
               panelClass: 'custom-fav-dialog',
             })
           }
-        }, error => {
-          //i dont know what to do
         });
       },
-      reject: (type: ConfirmEventType) => {
-        if (type === ConfirmEventType.REJECT) {
-          //do nothing
-        }
-      }
     });
   }
-  
+
 
   filterByLevel() {
     if (this.selectedLevelId) {

@@ -240,15 +240,7 @@ export class RecipeListComponent implements OnInit {
               });
             }
           },
-          (error) => {
-            //i dont know what to do
-          }
         );
-      },
-      reject: (type: ConfirmEventType) => {
-        if (type === ConfirmEventType.REJECT) {
-          //do nothing
-        }
       },
     });
   }

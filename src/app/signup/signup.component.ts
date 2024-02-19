@@ -24,7 +24,6 @@ export class SignupComponent implements OnInit {
     private router: Router,
     private accountService: AccountService
   ) {
-    // redirect to home if already logged in
     if (this.accountService.userValue) {
       this.router.navigate(['/login']);
     }
@@ -39,7 +38,6 @@ export class SignupComponent implements OnInit {
     });
   }
 
-  // convenience getter for easy access to form fields
   get f() {
     return this.form.controls;
   }
@@ -47,10 +45,8 @@ export class SignupComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    // reset alert on submit
     this.error = '';
 
-    // stop here if form is invalid
     if (this.form.invalid) {
       return;
     }

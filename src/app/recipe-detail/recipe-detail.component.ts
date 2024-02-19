@@ -105,9 +105,6 @@ export class RecipeDetailComponent {
             }
           });
       },
-      reject: () => {
-        // Logic for rejection goes here
-      },
     });
   }
 }

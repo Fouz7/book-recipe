@@ -1,17 +1,15 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { AddrecipeService } from '../services/addrecipe.service';
 import {
-  FormArray,
   FormControl,
   FormGroup,
-  NgForm,
   Validators,
 } from '@angular/forms';
-import { FileHandle } from '../model/file-handle.model';
-import { HttpErrorResponse } from '@angular/common/http';
-import { CategoryFoodResponse } from '../model/categoryfoodresponse.model';
-import { LevelFoodResponse } from '../model/levelfoodresponse.model';
 import { Router } from '@angular/router';
+import { CategoryFoodResponse } from '../models/categoryfoodresponse.model';
+import { FileHandle } from '../models/file-handle.model';
+import { LevelFoodResponse } from '../models/levelfoodresponse.model';
+import { AddrecipeService } from '../services/addrecipe.service';
 
 @Component({
   selector: 'app-addrecipe',
@@ -91,7 +89,7 @@ export class AddrecipeComponent {
       levelId: new FormControl(''),
       levelName: new FormControl(''),
     }),
-    userId: new FormControl('372'),
+    userId: new FormControl('330'),
     timeCook: new FormControl('', Validators.required),
     ingridient: new FormControl('', Validators.required),
     howToCook: new FormControl('', Validators.required),
@@ -170,7 +168,6 @@ export class AddrecipeComponent {
     this.addrecipeService.add(formRecipes).subscribe(
       (res: any) => {
         this.router.navigate(['/daftar-resep']);
-        // this.addRecipeForm.reset();
       },
       (error: HttpErrorResponse) => {
         console.log(error);
