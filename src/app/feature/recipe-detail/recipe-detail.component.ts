@@ -20,6 +20,7 @@ export class RecipeDetailComponent {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
+  imageLoaded: boolean = false;
   starState: string = 'star_border';
   recipeDetail: any;
   ingredients: any;
@@ -46,6 +47,7 @@ export class RecipeDetailComponent {
   ngOnInit(): void {
   const id = this.route.snapshot.paramMap.get('id');
   if (id !== null) {
+      this.imageLoaded = false;
       this.recipeId = Number(id);
       this.recipeBookService.getRecipeDetail(id).subscribe(detail => {
       this.recipeDetail = detail;
