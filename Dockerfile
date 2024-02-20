@@ -1,7 +1,5 @@
 # Stage 1: Compile and Build angular codebase
-
-# Use official node image as the base image
-FROM node:latest as angular
+FROM node:20.11.0-alpine as angular
 
 # Set the working directory
 WORKDIR /usr/src/app
@@ -10,11 +8,11 @@ WORKDIR /usr/src/app
 COPY . /usr/src/app
 
 # Install all the dependencies
-RUN npm install -g @angular/cli
+RUN npm install -g @angular/cli@latest
 RUN npm install
 
 # Expose port 4200
 EXPOSE 4200
 
-# Start the application
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+# Start the application without live reload
+CMD ["ng", "serve", "--host", "0.0.0.0", "--disable-host-check", "--live-reload=false"]
