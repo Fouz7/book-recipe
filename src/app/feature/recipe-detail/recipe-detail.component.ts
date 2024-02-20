@@ -24,6 +24,7 @@ export class RecipeDetailComponent {
   starState: string = 'star_border';
   recipeDetail: any;
   ingredients: any;
+  howToCook: any;
   recipeId: number | undefined = undefined;
   userId: number | null = null;
   
@@ -51,7 +52,8 @@ export class RecipeDetailComponent {
       this.recipeId = Number(id);
       this.recipeBookService.getRecipeDetail(id).subscribe(detail => {
       this.recipeDetail = detail;
-      this.ingredients = this.recipeDetail?.data?.ingridient.split(', ');
+      this.ingredients = this.recipeDetail?.data?.ingridient;
+      this.howToCook = this.recipeDetail?.data?.howToCook;
       this.starState = this.recipeDetail?.data?.isFavorite ? 'star' : 'star_border';
     });
   }

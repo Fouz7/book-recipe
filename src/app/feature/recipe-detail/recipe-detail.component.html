@@ -43,12 +43,12 @@
         <div class="ingr">
             <h2>Bahan - Bahan</h2>
             <mat-divider></mat-divider>
-            {{recipeDetail?.data?.ingridient}}
+            <p [innerHTML]="ingredients">
         </div>
         <div class="step">
             <h2>Cara Memasak</h2>
             <mat-divider></mat-divider>
-            <span>{{recipeDetail?.data?.howToCook}}</span>
+            <p [innerHTML]="howToCook">
         </div>
     </section>
 </div>

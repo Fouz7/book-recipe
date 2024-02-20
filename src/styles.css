@@ -39,7 +39,7 @@ body {
   --bs-pagination-disabled-bg: none !important;
   --bs-pagination-disabled-border-color: none !important;
   display: flex;
-  gap: 0.2rem;
+  gap: 3px;
   padding-left: 0;
   list-style: none;
 }
