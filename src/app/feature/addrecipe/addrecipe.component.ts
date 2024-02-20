@@ -60,8 +60,6 @@ export class AddrecipeComponent {
         };
         currentImages.push(fileHandle);
       } else {
-        // Tampilkan pesan kesalahan jika ukuran gambar melebihi 1 MB
-        // Anda juga bisa mengatur pesan kesalahan di FormControl atau FormGroup yang sesuai
         console.log('Gambar yang dibolehkan maks 1 MB');
       }
     }
@@ -70,7 +68,7 @@ export class AddrecipeComponent {
   }
 
   isFileTooLarge(): boolean {
-    return this.files.some((file) => file.size > 1048576); // 1 MB = 1048576 bytes
+    return this.files.some((file) => file.size > 1048576);
   }
 
   onRemove(event: any) {
