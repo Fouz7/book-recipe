@@ -88,3 +88,21 @@
     }
   }
 }
+
+@media (min-width: 601px) {
+  .logo {
+    padding: 0 6%;
+  }
+
+  .nav {
+    padding: 0 6%;
+  }
+
+  .nav mat-icon {
+    padding: 0;
+    font-size: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

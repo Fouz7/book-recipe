@@ -1,0 +1,93 @@
+# apiVersion: v1
+# kind: ServiceAccount
+# metadata:
+#   name: book-recipe-fe-angular-development-service-account
+#   annotation: {}
+#   namespace: multitech-case-study
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: book-recipe-fe-angular-development
+  namespace: multitech-case-study
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: book-recipe-fe-angular-development
+  template:
+    metadata:
+      labels:
+        app: book-recipe-fe-angular-development
+    spec:
+      # serviceAccountName: book-recipe-fe-angular-development-service-account
+      # securityContext:
+      #   runAsUser: 1001
+      imagePullSecrets: 
+        - name: credpull79
+      containers:
+      - name: book-recipe-fe-angular-development
+        image: harbor.cloudias79.com/internal-book-recipe/book-recipe-fe-angular-development:latest
+        pullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8000
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            # Define your path to healhcheck service
+            path: /
+            port: http
+          initialDelaySeconds: 120
+          failureThreshold: 2
+          periodSeconds: 20
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            # Define your path to healhcheck service
+            path: /
+            port: http
+          initialDelaySeconds: 120
+          failureThreshold: 2
+          periodSeconds: 20
+          timeoutSeconds: 10
+        resources:
+          limits:
+            cpu: 1
+            memory: 1Gi
+          requests:
+            cpu: 0.5
+            memory: 256Mi              
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: book-recipe-fe-angular-development
+  namespace: multitech-case-study  
+spec:
+  type: ClusterIP
+  selector:
+    app: book-recipe-fe-angular-development
+  ports:
+  - protocol: TCP
+    port: 8000
+    targetPort: 8000
+    name: http
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: book-recipe-fe-angular-development
+  namespace: multitech-case-study
+spec:
+  rules:
+  - host: mt-angular.cloudias79.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: book-recipe-fe-angular-development
+            port:
+              number: 8000
