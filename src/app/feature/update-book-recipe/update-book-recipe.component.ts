@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UpdateRecipeDialogComponent } from '@app/core/components/update-recipe-dialog/update-recipe-dialog.component';
 import { Category } from '@app/core/models/category';
 import { Level } from '@app/core/models/level';
 import { EditRecipeService } from '@app/core/services/edit-recipe.service';
@@ -27,7 +29,8 @@ export class UpdateBookRecipeComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {
     const userItem = localStorage.getItem('user');
     let user = null;
@@ -148,14 +151,23 @@ export class UpdateBookRecipeComponent implements OnInit {
     }
 
     this.editRecipeService.updateRecipe(formData).subscribe((res: any) => {
-      let message = "Resep Berhasil Diubah";
-      this.router.navigate(['/resep-saya']);
-
-      this.snackBar.open(message, '', {
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-        duration: 2000,
-      });
+      this.openSuccessModal();
     });
+  }
+
+  openSuccessModal(): void {
+    const recipeNameControl = this.editRecipeForm.get('recipeName');
+    if (recipeNameControl) {
+      const recipeName = recipeNameControl.value;
+      const dialogRef = this.dialog.open(UpdateRecipeDialogComponent, {
+        disableClose: true,
+        panelClass: 'custom-fav-dialog',
+        data: { recipeName: recipeName },
+      });
+
+      dialogRef.afterClosed().subscribe(() => {
+        this.router.navigate(['/resep-saya']);
+      });
+    }
   }
 }
