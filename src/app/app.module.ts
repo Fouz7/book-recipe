@@ -45,6 +45,7 @@ import { AddrecipeComponent } from './feature/addrecipe/addrecipe.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ConfirmationDialogComponent } from './core/components/delete-dialog/confirmationdialog.component';
 import { DeleteDialogSuccessComponent } from './core/components/delete-dialog-success/delete-dialog-success.component';
+import { AddRecipeDialogComponent } from './core/components/add-recipe-dialog/add-recipe-dialog.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { DeleteDialogSuccessComponent } from './core/components/delete-dialog-su
     AddrecipeComponent,
     ConfirmationDialogComponent,
     DeleteDialogSuccessComponent,
+    AddRecipeDialogComponent,
   ],
   imports: [
     BrowserModule,
