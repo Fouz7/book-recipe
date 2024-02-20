@@ -81,6 +81,23 @@ body {
   border-radius: 4px !important;
 }
 
+.mat-mdc-snack-bar-container.error .mdc-snackbar__label {
+  color: #bf0101 !important;
+  font-size: 16px !important;
+  font-family: "Mulish" !important;
+  font-weight: 600 !important;
+  background-color: white !important;
+  border-radius: 4px 0 0 4px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat-mdc-snack-bar-container.error .mdc-snackbar__surface {
+  background-color: white !important;
+  border-radius: 4px !important;
+}
+
 .confirmDialog .close-button {
   align-self: flex-end;
   color: darkgray;
@@ -229,35 +246,4 @@ body {
     align-self: center;
     width: 50%;
   }
-
-  /* .mdc-notched-outline {
-    height: 35px !important;
-    width: 75% !important;
-  }
-
-  .mat-mdc-form-field-infix {
-    min-height: 0 !important;
-    padding: 5px 0 0 !important;
-  }
-
-  .mat-mdc-select {
-    width: 70% !important;
-    font-size: 14px !important;
-  }
-
-  .mat-mdc-option {
-    font-size: 14px !important;
-  }
-
-  .dekstopFilter .mat-mdc-button {
-    height: 40px !important;
-    width: 30% !important;
-  }
-
-  .dialog {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-  } */
 }

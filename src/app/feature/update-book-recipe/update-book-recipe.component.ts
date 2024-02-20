@@ -58,11 +58,6 @@ export class UpdateBookRecipeComponent implements OnInit {
       if (this.editRecipeForm.get('imageFilename')) {
         this.editRecipeForm.get('imageFilename')!.setErrors({ 'required': true });
       }
-
-      if (this.editRecipe.imageFilename) {
-        const currentFile = new File([this.editRecipe.imageFilename], this.editRecipe.imageFilename);
-        this.files.push(currentFile);
-      }
     });
     this.getCategoryFoodList();
     this.getLevelFoodList();
@@ -100,7 +95,7 @@ export class UpdateBookRecipeComponent implements OnInit {
         horizontalPosition: 'center',
         verticalPosition: 'top',
         duration: 2000,
-        panelClass: 'warning-snackbar'
+        panelClass: ['error']
       });
       return;
     }
@@ -114,7 +109,7 @@ export class UpdateBookRecipeComponent implements OnInit {
           horizontalPosition: 'center',
           verticalPosition: 'top',
           duration: 2000,
-          panelClass: 'warning-snackbar'
+          panelClass: ['error']
         });
         return;
       }
@@ -123,7 +118,7 @@ export class UpdateBookRecipeComponent implements OnInit {
           horizontalPosition: 'center',
           verticalPosition: 'top',
           duration: 2000,
-          panelClass: 'warning-snackbar'
+          panelClass: ['error']
         });
         return;
       }
@@ -148,6 +143,9 @@ export class UpdateBookRecipeComponent implements OnInit {
 
     const formData = new FormData();
     formData.append('request', jsonBlob, 'request.json');
+    for (const file of this.files) {
+      formData.append('file', file, file.name);
+    }
 
     this.editRecipeService.updateRecipe(formData).subscribe((res: any) => {
       let message = "Resep Berhasil Diubah";
@@ -157,7 +155,6 @@ export class UpdateBookRecipeComponent implements OnInit {
         horizontalPosition: 'center',
         verticalPosition: 'top',
         duration: 2000,
-        panelClass: 'warning-snackbar'
       });
     });
   }
