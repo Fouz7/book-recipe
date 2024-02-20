@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../../core/components/filter-dialog/filter-dialog.component';
 import { RecipeBookService } from '../../core/services/recipe-book-service.service';
@@ -23,11 +23,11 @@ export class RecipeListComponent implements OnInit {
   searchText: string = '';
   pageSizeOptions = [8, 16, 48];
   pageSize = 8;
-  pageNumber = 1;
+  pageNumber = 0;
   userId: number | null = null;
   categoryId: number | undefined = undefined;
   time: string = '';
-  sortBy: string = 'asc';
+  sortBy: string | null = null;
   totalItems: number = 1;
   totalPages: number = 1;
   starState: string = 'star_border';
@@ -35,6 +35,7 @@ export class RecipeListComponent implements OnInit {
   selectedLevelId: number = 0;
   selectedSortOption: string = '';
   isFiltering = false;
+  maxSize: number = 5;
 
   levels = [
     { id: 3, name: 'Easy' },
@@ -71,7 +72,7 @@ export class RecipeListComponent implements OnInit {
     private recipeBookService: RecipeBookService,
     private confirmationService: ConfirmationService,
     private snackbar: MatSnackBar,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) {
     const userItem = localStorage.getItem('user');
     let user = null;
@@ -84,6 +85,11 @@ export class RecipeListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadBookRecipes();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.maxSize = event.target.innerWidth <= 768 ? 3 : 5;
   }
 
   loadBookRecipes(): void {
@@ -116,6 +122,7 @@ export class RecipeListComponent implements OnInit {
         { length: this.totalPages },
         (_, i) => i + 1
       );
+      this.onResize({target: window});
     });
   }
 
@@ -156,8 +163,8 @@ export class RecipeListComponent implements OnInit {
 
   openFilterDialogMobile(): void {
     const dialogRef = this.dialog.open(FilterDialogComponent, {
-      position: { top: '175px', left: '27px' },
-      width: '100%',
+      position: { top: '175px', left: '7%' },
+      width: 'auto',
       backdropClass: 'dialog',
 
       data: {
@@ -194,7 +201,7 @@ export class RecipeListComponent implements OnInit {
   }
 
   addFavorite(recipeId: number) {
-    let message = 'Berhasil Ditambahkan ke favorit';
+    let message = 'Berhasil Ditambahkan ke Favorit';
     if (this.userId === null || this.userId === undefined) {
       console.error('addFavorite error: userId is', this.userId);
       return;

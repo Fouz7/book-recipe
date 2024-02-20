@@ -1,15 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FileHandle } from '@app/core/models/file-handle.model';
 import { CategoryFoodResponse } from '@app/core/models/categoryfoodresponse.model';
 import { LevelFoodResponse } from '@app/core/models/levelfoodresponse.model';
 import { Router } from '@angular/router';
 import { AddrecipeService } from '@app/core/services/addrecipe.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AddRecipeDialogComponent } from '@app/core/components/add-recipe-dialog/add-recipe-dialog.component';
 
 @Component({
   selector: 'app-addrecipe',
@@ -17,10 +15,25 @@ import { AddrecipeService } from '@app/core/services/addrecipe.service';
   styleUrl: './addrecipe.component.css',
 })
 export class AddrecipeComponent {
+  userId: number | null = null;
+  submitted: boolean = false;
+
   constructor(
     private addrecipeService: AddrecipeService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private dialog: MatDialog
+  ) {
+    const userItem = localStorage.getItem('user');
+    let user = null;
+
+    if (userItem) {
+      user = JSON.parse(userItem);
+      this.userId = user && user.data && user.data.id;
+      console.log(this.userId);
+
+      this.addRecipeForm.controls['userId'].setValue(this.userId);
+    }
+  }
 
   categoryFood!: CategoryFoodResponse[];
   levelFood!: LevelFoodResponse[];
@@ -41,13 +54,21 @@ export class AddrecipeComponent {
     const currentImages = imageUrls.value || [];
 
     for (const file of selectedFiles) {
-      const fileHandle: FileHandle = {
-        file: file,
-      };
-      currentImages.push(fileHandle);
+      if (file.size <= 1048576) {
+        const fileHandle: FileHandle = {
+          file: file,
+        };
+        currentImages.push(fileHandle);
+      } else {
+        console.log('Gambar yang dibolehkan maks 1 MB');
+      }
     }
 
     imageUrls.setValue(currentImages);
+  }
+
+  isFileTooLarge(): boolean {
+    return this.files.some((file) => file.size > 1048576);
   }
 
   onRemove(event: any) {
@@ -82,15 +103,15 @@ export class AddrecipeComponent {
   addRecipeForm: FormGroup = new FormGroup({
     recipeName: new FormControl('', Validators.required),
     categories: new FormGroup({
-      categoryId: new FormControl(''),
+      categoryId: new FormControl('', Validators.required),
       categoryName: new FormControl(''),
     }),
     levels: new FormGroup({
-      levelId: new FormControl(''),
+      levelId: new FormControl('', Validators.required),
       levelName: new FormControl(''),
     }),
-    userId: new FormControl('330'),
-    timeCook: new FormControl('', Validators.required),
+    userId: new FormControl(this.userId),
+    timeCook: new FormControl('', [Validators.required, Validators.min(1)]),
     ingridient: new FormControl('', Validators.required),
     howToCook: new FormControl('', Validators.required),
     imageUrl: new FormControl([]),
@@ -161,18 +182,41 @@ export class AddrecipeComponent {
   }
 
   addRecipe() {
-    console.log(this.addRecipeForm);
+    this.submitted = true;
+    const imageUrlControl = this.addRecipeForm.get('imageUrl');
+    if (this.addRecipeForm.valid && this.files.length > 0) {
+      console.log(this.addRecipeForm);
 
-    const formRecipes = this.prepareFormData(this.addRecipeForm.value);
+      const formRecipes = this.prepareFormData(this.addRecipeForm.value);
 
-    this.addrecipeService.add(formRecipes).subscribe(
-      (res: any) => {
+      this.addrecipeService.add(formRecipes).subscribe(
+        (res: any) => {
+          this.openSuccessModal();
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error);
+        }
+      );
+    }
+    if (imageUrlControl) {
+      imageUrlControl.setErrors({ required: true });
+    }
+  }
+
+  openSuccessModal(): void {
+    const recipeNameControl = this.addRecipeForm.get('recipeName');
+    if (recipeNameControl) {
+      const recipeName = recipeNameControl.value;
+      const dialogRef = this.dialog.open(AddRecipeDialogComponent, {
+        disableClose: true,
+        panelClass: 'custom-fav-dialog',
+        data: { recipeName: recipeName },
+      });
+
+      dialogRef.afterClosed().subscribe(() => {
         this.router.navigate(['/daftar-resep']);
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error);
-      }
-    );
+      });
+    }
   }
 
   prepareFormData(addRecipeForm2Value: any): FormData {
@@ -193,5 +237,9 @@ export class AddrecipeComponent {
       );
     }
     return formData;
+  }
+
+  resetForm() {
+    this.addRecipeForm.reset();
   }
 }

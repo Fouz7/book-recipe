@@ -14,8 +14,8 @@
             <span>{{recipeDetail?.data?.recipeName}}</span>
         </div>
         <div class="pic">
-            <img src="{{recipeDetail?.data?.imageFilename}}" alt="food">
-            <div class="mFavButton"  (click)="recipeDetail?.data?.isFavorite ? removeFavorite() : addFavorite()">
+            <img src="{{recipeDetail?.data?.imageFilename}}" (load)="imageLoaded = true" alt="food">
+            <div class="mFavButton" *ngIf="imageLoaded" (click)="recipeDetail?.data?.isFavorite ? removeFavorite() : addFavorite()">
                 <mat-icon>{{ recipeDetail?.data?.isFavorite ? 'star' : 'star_border' }}</mat-icon>
                 <span>Favorit</span>
             </div>
@@ -43,12 +43,12 @@
         <div class="ingr">
             <h2>Bahan - Bahan</h2>
             <mat-divider></mat-divider>
-            {{recipeDetail?.data?.ingridient}}
+            <p [innerHTML]="ingredients">
         </div>
         <div class="step">
             <h2>Cara Memasak</h2>
             <mat-divider></mat-divider>
-            <span>{{recipeDetail?.data?.howToCook}}</span>
+            <p [innerHTML]="howToCook">
         </div>
     </section>
 </div>
