@@ -27,7 +27,7 @@ export class RecipeListComponent implements OnInit {
   userId: number | null = null;
   categoryId: number | undefined = undefined;
   time: string = '';
-  sortBy: string = 'asc';
+  sortBy: string | null = null;
   totalItems: number = 1;
   totalPages: number = 1;
   starState: string = 'star_border';
@@ -241,15 +241,7 @@ export class RecipeListComponent implements OnInit {
               });
             }
           },
-          (error) => {
-            //i dont know what to do
-          }
         );
-      },
-      reject: (type: ConfirmEventType) => {
-        if (type === ConfirmEventType.REJECT) {
-          //do nothing
-        }
       },
     });
   }

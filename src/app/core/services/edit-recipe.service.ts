@@ -1,15 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '@environments/environments';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EditRecipeService {
+  private apiUrl = `${environment.apiUrl}/book-recipe/book-recipes`;
 
-  private apiUrl = 'https://mt-springboot.cloudias79.com/api/book-recipe/book-recipes';
-
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   find(recipeId: number): Observable<any> {
     const url = `${this.apiUrl}/${recipeId}`;
@@ -18,19 +18,18 @@ export class EditRecipeService {
 
   updateRecipe(formData: FormData): Observable<any> {
     const url = `${this.apiUrl}`;
-    const headers = new HttpHeaders();
     return this.httpClient.put<any>(url, formData);
   }
 
-  getCategories(){
+  getCategories() {
     return this.httpClient.get(
-      `https://mt-springboot.cloudias79.com/api/book-recipe-masters/category-option-lists`
+      `${environment.apiUrl}/book-recipe-masters/category-option-lists`
     );
   }
 
-  getLevels(){
+  getLevels() {
     return this.httpClient.get(
-      `https://mt-springboot.cloudias79.com/api/book-recipe-masters/level-option-lists`
+      `${environment.apiUrl}/book-recipe-masters/level-option-lists`
     );
-  } 
+  }
 }

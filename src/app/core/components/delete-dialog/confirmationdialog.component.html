@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="dialogbox">
+    <mat-icon
+      class="buttonclose"
+      style="cursor: pointer"
+      (click)="onCloseClick()"
+      >close</mat-icon
+    >
+    <div class="imageset">
+      <img src="assets/error_outline_24px.png" />
+    </div>
+    <div mat-dialog-content class="description-modal">
+      Apakah anda yakin akan menghapus resep {{ recipeName }}?
+    </div>
+    <div mat-dialog-actions class="dialog-button">
+      <button mat-button [mat-dialog-close]="false" class="button-1">
+        Tidak
+      </button>
+      <button
+        mat-button
+        [mat-dialog-close]="true"
+        cdkFocusInitial
+        class="button-2"
+      >
+        Ya
+      </button>
+    </div>
+  </div>
+</div>
