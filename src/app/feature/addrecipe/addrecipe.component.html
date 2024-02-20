@@ -20,8 +20,8 @@
             />
             <div
               *ngIf="
-                addRecipeForm.get('recipeName')?.invalid &&
-                addRecipeForm.get('recipeName')?.touched
+                (submitted || addRecipeForm.get('recipeName')?.touched) &&
+                addRecipeForm.get('recipeName')?.invalid
               "
               class="text-danger"
             >
@@ -37,7 +37,7 @@
                 <p class="title-dropzone">
                   <strong>Click to upload</strong> or drag and drop
                 </p>
-                <p class="title2-dropzone">PNG, JPG, JPEG (MAX 2 MB)</p>
+                <p class="title2-dropzone">PNG, JPG, JPEG (MAX 1 MB)</p>
               </div>
             </ngx-dropzone-label>
             <ngx-dropzone-image-preview
@@ -52,6 +52,12 @@
               >
             </ngx-dropzone-image-preview>
           </div>
+          <div *ngIf="submitted && files.length === 0" class="text-danger">
+            Gambar harap diisi.
+          </div>
+          <div *ngIf="submitted && isFileTooLarge()" class="text-danger">
+            Gambar yang dibolehkan maks 1 MB.
+          </div>
         </div>
         <div class="displaybox1">
           <label class="label-form">Bahan - Bahan *</label>
@@ -62,8 +68,8 @@
           ></quill-editor>
           <div
             *ngIf="
-              addRecipeForm.get('ingridient')?.invalid &&
-              addRecipeForm.get('ingridient')?.touched
+              (submitted || addRecipeForm.get('ingridient')?.touched) &&
+              addRecipeForm.get('ingridient')?.invalid
             "
             class="text-danger"
           >
@@ -82,6 +88,7 @@
               formControlName="categoryId"
               name="categordId"
             >
+              <option value="" disabled selected>Pilih Kategori</option>
               <option
                 [value]="category.categoryId"
                 *ngFor="let category of this.categoryFood"
@@ -89,6 +96,16 @@
                 {{ category.categoryName }}
               </option>
             </select>
+            <div
+              *ngIf="
+                (submitted ||
+                  addRecipeForm.get('categories.categoryId')?.touched) &&
+                addRecipeForm.get('categories.categoryId')?.errors?.required
+              "
+              class="text-danger"
+            >
+              Kategori Masakan harus dipilih.
+            </div>
           </div>
         </div>
         <!-- hasil {{ selectedCategory }} -->
@@ -106,12 +123,22 @@
                 />
                 <div
                   *ngIf="
-                    addRecipeForm.get('timeCook')?.invalid &&
-                    addRecipeForm.get('timeCook')?.touched
+                    (submitted || addRecipeForm.get('timeCook')?.touched) &&
+                    addRecipeForm.get('timeCook')?.errors
                   "
-                  class="text-danger"
                 >
-                  Waktu Memasak harus diisi.
+                  <div
+                    *ngIf="addRecipeForm.get('timeCook')?.errors?.required"
+                    class="text-danger"
+                  >
+                    Waktu Memasak harus diisi.
+                  </div>
+                  <div
+                    *ngIf="addRecipeForm.get('timeCook')?.errors?.min"
+                    class="text-danger"
+                  >
+                    Min 1 menit.
+                  </div>
                 </div>
               </div>
             </div>
@@ -124,6 +151,7 @@
                 formControlName="levelId"
                 (change)="changeLevel($event)"
               >
+                <option value="" disabled selected>Pilih Tingkatan</option>
                 <option
                   [value]="level.levelId"
                   *ngFor="let level of this.levelFood"
@@ -131,6 +159,15 @@
                   {{ level.levelName }}
                 </option>
               </select>
+              <div
+                *ngIf="
+                  (submitted || addRecipeForm.get('levels.levelId')?.touched) &&
+                  addRecipeForm.get('levels.levelId')?.errors?.required
+                "
+                class="text-danger"
+              >
+                Kategori Masakan harus dipilih.
+              </div>
             </div>
           </div>
           <div class="displaybox6">
@@ -142,8 +179,8 @@
             ></quill-editor>
             <div
               *ngIf="
-                addRecipeForm.get('howToCook')?.invalid &&
-                addRecipeForm.get('howToCook')?.touched
+                (submitted || addRecipeForm.get('howToCook')?.touched) &&
+                addRecipeForm.get('howToCook')?.invalid
               "
               class="text-danger"
             >
@@ -153,7 +190,9 @@
 
           <div class="button-details">
             <div>
-              <button class="button-cancel">Batal</button>
+              <button type="button" class="button-cancel" (click)="resetForm()">
+                Batal
+              </button>
             </div>
             <div>
               <button type="submit" class="button-addSubmit">Submit</button>
