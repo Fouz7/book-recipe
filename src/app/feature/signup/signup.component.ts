@@ -61,7 +61,7 @@ export class SignupComponent implements OnInit {
       .pipe(first())
       .subscribe({
         next: () => {
-          this.router.navigate(['/login'], {
+          this.router.navigate([''], {
             queryParams: { registered: true },
           });
         },
