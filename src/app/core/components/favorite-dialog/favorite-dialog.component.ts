@@ -1,15 +1,19 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FilterDialogComponent } from '@app/core/components/filter-dialog/filter-dialog.component';
 
 @Component({
   selector: 'app-favorite-dialog',
   templateUrl: './favorite-dialog.component.html',
-  styleUrl: './favorite-dialog.component.css'
+  styleUrls: ['./favorite-dialog.component.css']
 })
 export class FavoriteDialogComponent {
+  recipeName: string = '';
 
-  constructor(public dialogRef: MatDialogRef<FilterDialogComponent>) {}
+  constructor(
+    public dialogRef: MatDialogRef<FilterDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { recipeName: string }
+    ) {this.recipeName = data.recipeName;}
 
   onCloseClick(): void {
     this.dialogRef.close();

@@ -38,6 +38,7 @@ export class ResepFavoritComponent implements OnInit {
   selectedSortOption: string = '';
   isFiltering = false;
   maxSize: number = 5;
+  confirmationMessage: string ="";
 
   levels = [
     {id: 3, name: 'Easy'},
@@ -222,23 +223,25 @@ export class ResepFavoritComponent implements OnInit {
   }
 
   removeFavorite(recipeId: number) {
-    this.confirmationService.confirm({
-      message: `Apakah Anda yakin ingin menghapus resep ini dari favorit?`,
-      header: 'Konfirmasi',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        if (this.userId === null || this.userId === undefined) return;
-        this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(response => {
-          const bookRecipe = this.filteredRecipes.find(recipe => recipe.recipeId === recipeId);
-          if (bookRecipe) {
+    const bookRecipe = this.filteredRecipes.find(recipe => recipe.recipeId === recipeId);
+    if (bookRecipe) {
+      const recipeName = bookRecipe.recipeName;
+      this.confirmationMessage = `Apakah Anda yakin ingin menghapus ${recipeName} dari favorit?`;
+      this.confirmationService.confirm({
+        message: this.confirmationMessage,
+        accept: () => {
+          if (this.userId === null || this.userId === undefined) return;
+          this.recipeBookService.addFavorite(recipeId, this.userId).subscribe(response => {
             bookRecipe.isFavorite = !bookRecipe.isFavorite;
             const dialogRef = this.dialog.open(FavoriteDialogComponent, {
               panelClass: 'custom-fav-dialog',
-            })
-          }
-        });
-      },
-    });
+              data: { recipeName: bookRecipe.recipeName },
+            });
+            this.filteredRecipes = this.filteredRecipes.filter(recipe => recipe.recipeId !== recipeId);
+          });
+        },
+      });
+    }
   }
 
 
