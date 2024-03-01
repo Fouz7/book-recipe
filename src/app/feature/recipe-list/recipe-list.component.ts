@@ -17,7 +17,6 @@ import { FavoriteDialogComponent } from '@app/core/components/favorite-dialog/fa
   styleUrl: './recipe-list.component.css',
 })
 export class RecipeListComponent implements OnInit {
-  sidebarVisible2: boolean = false;
   bookRecipes: any[] = [];
   filteredRecipes = [...this.bookRecipes];
   searchText: string = '';

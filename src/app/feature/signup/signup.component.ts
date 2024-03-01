@@ -23,11 +23,7 @@ export class SignupComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private accountService: AccountService
-  ) {
-    if (this.accountService.userValue) {
-      this.router.navigate(['/login']);
-    }
-  }
+  ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
